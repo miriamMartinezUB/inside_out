@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 class PaletteColors {
-  static const Color primary = Color(0xff28d0b5);
-  static const Color secondary = Color(0xff9df0e5);
-  static const Color active = Color(0xfff3b4fa);
+  Color primary = const Color(0xff28d0b5);
+  Color secondary = const Color(0xff9df0e5);
+  Color active = const Color(0xfff3b4fa);
 }
 
 class PaletteColorsLight extends PaletteColors {
-  static const Color background = Color(0xfff3edf5);
-  static const Color text = Color(0xff313047);
+  Color background = const Color(0xfff3edf5);
+  Color text = const Color(0xff313047);
 }
 
 class PaletteColorsDark extends PaletteColors {
-  static const Color background = Color(0xff313047);
-  static const Color text = Color(0xfff3edf5);
+  Color background = const Color(0xff313047);
+  Color text = const Color(0xfff3edf5);
 }
 
 class PaletteMaterialColors {
