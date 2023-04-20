@@ -14,7 +14,7 @@ void main() async {
 
   InfrastructureSetup infrastructureSetup = InfrastructureSetup();
 
-  await infrastructureSetup.initializeConfigurationServices();
+  await infrastructureSetup.initializeSetupServices();
 
   final delegate = infrastructureSetup.languageService.delegate;
 

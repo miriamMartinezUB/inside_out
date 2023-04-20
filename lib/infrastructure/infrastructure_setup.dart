@@ -6,8 +6,6 @@ import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-/// List of providers that need to be acceess in all the aplication, wich one is related
-/// to one service of infrastructure directory
 class InfrastructureSetup {
   late LocaleStorageService localeStorageService;
   late LanguageService languageService;
@@ -22,12 +20,14 @@ class InfrastructureSetup {
   }
 
   /// Warning: the order is important, to keep the dependencies right
-  Future<void> initializeConfigurationServices() async {
+  Future<void> initializeSetupServices() async {
     await localeStorageService.init();
     await languageService.initDelegate();
     themeService.init();
   }
 
+  /// List of providers that need to be accessed in all the application, each one is related
+  /// to one service of infrastructure directory
   List<SingleChildWidget> getProviders(BuildContext context) => [
         Provider<LocaleStorageService>(
           create: (context) => localeStorageService,
