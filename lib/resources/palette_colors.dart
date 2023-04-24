@@ -4,6 +4,7 @@ class PaletteColors {
   Color primary = const Color(0xff28d0b5);
   Color secondary = const Color(0xff9df0e5);
   Color active = const Color(0xfff3b4fa);
+  Color textError = Colors.red.shade400;
   late Color background;
   late Color text;
   late Color textSubtitle;
