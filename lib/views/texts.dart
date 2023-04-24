@@ -21,15 +21,15 @@ class AppText extends StatelessWidget {
 
   const AppText(
     this.text, {
-    required this.type,
-    required this.align,
+    this.type = TextTypes.body,
+    this.align = TextAlign.start,
     this.color,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
+    final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
     return FlutterStylizedText(
       text: text,
       fontSize: _getFontSize(type: type),
