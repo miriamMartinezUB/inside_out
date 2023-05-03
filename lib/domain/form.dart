@@ -4,18 +4,21 @@ class AppForm {
   final String id;
   final String name;
   final List<Question> questions;
-  bool isByPerson;
+
+  /// Button Text
+  final String actionText;
 
   AppForm({
     required this.id,
     required this.name,
     required this.questions,
-    this.isByPerson = false,
+    this.actionText = 'common_save',
   });
 
   AppForm copyWith({List<Question>? questions}) => AppForm(
         id: id,
         name: name,
+        actionText: actionText,
         questions: questions ?? this.questions,
       );
 }
