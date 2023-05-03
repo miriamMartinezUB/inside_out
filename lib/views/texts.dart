@@ -7,9 +7,14 @@ import 'package:provider/provider.dart';
 
 enum TextTypes {
   title,
+  titleBold,
   subtitle,
+  subtitleBold,
   body,
+  bodyMedium,
+  bodyBold,
   smallBody,
+  smallBodyMedium,
   tinyBody,
 }
 
