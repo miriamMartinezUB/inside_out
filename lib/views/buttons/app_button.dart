@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
+import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
@@ -19,12 +20,14 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
+
     return InkWell(
       onTap: onTap,
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Provider.of<ThemeService>(context).paletteColors.primary,
+          color: paletteColors.primary,
           borderRadius: BorderRadius.circular(Dimens.radiusMedium),
         ),
         child: Padding(
@@ -33,6 +36,7 @@ class AppButton extends StatelessWidget {
             shouldTranslate ? translate(text) : text,
             type: TextTypes.body,
             align: TextAlign.center,
+            color: paletteColors.textButton,
           ),
         ),
       ),
