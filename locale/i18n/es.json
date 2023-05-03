@@ -1,3 +1,19 @@
 {
-  "title": "Inside out"
+  "title": "Inside out",
+  "common_save": "Save",
+  "common_confirm": "Confirm",
+  "common_cancel": "Cancel",
+  "email": "Email",
+  "password": "Password",
+  "forgot_password": "Do you forgot the password?",
+  "repeat_password": "Repeat password",
+  "login": "Login",
+  "sign_up": "Sign up",
+  "welcome_text": "Welcome text",
+  "not_register": "Not registered yet?",
+  "hi": "Hi, ",
+  "activities_title": "Activities",
+  "how_do_you_feel_card_title": "How have you been feeling today?",
+  "how_do_you_feel_card_subtitle": "Write your emotions here",
+  "see_results_button": "Click here to see your results"
 }
