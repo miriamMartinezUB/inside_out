@@ -43,6 +43,7 @@ dependencies:
   flutter_stylized_text:
     git: https://github.com/miriamMartinezUB/flutter_stylized_text.git
   flutter_svg: ^2.0.5
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:
