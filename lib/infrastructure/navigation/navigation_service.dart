@@ -30,6 +30,10 @@ class NavigationService {
     }
   }
 
+  void closeView({dynamic arguments}) {
+    navigatorKey.currentState!.pop(arguments);
+  }
+
   Future<dynamic> goToInitialRoute() async {
     _navigationStack.clear();
     _navigationStack.add(Routes.initialRoute);
