@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class PaletteColors {
-  Color primary = const Color(0xff28d0b5);
-  Color secondary = const Color(0xff9df0e5);
+  Color primary = const Color(0xffED7354);
+  Color secondary = const Color.fromRGBO(237, 115, 84, 57);
   Color active = const Color(0xfff3b4fa);
+  Color textAppBar = const Color(0xfff3edf5);
+  Color textButton = const Color(0xfff3edf5);
   Color textError = Colors.red.shade400;
+  Color icons = const Color(0xfff3edf5);
+  Color card = const Color(0xfff3edf5);
+  Color shadow = const Color.fromRGBO(237, 115, 84, 150);
   late Color background;
   late Color text;
   late Color textSubtitle;
@@ -12,9 +17,9 @@ class PaletteColors {
 
 class PaletteColorsLight extends PaletteColors {
   PaletteColorsLight() {
-    background = const Color(0xfff3edf5);
+    background = const Color(0xffFFF2EF);
     text = const Color(0xff313047);
-    textSubtitle = const Color.fromRGBO(49, 48, 71, .6);
+    textSubtitle = const Color(0xff5F5F5F);
   }
 }
 
@@ -27,14 +32,14 @@ class PaletteColorsDark extends PaletteColors {
 }
 
 class PaletteMaterialColors {
-  static const MaterialColor primary = MaterialColor(0xff28d0b5, {
-    50: Color.fromRGBO(40, 208, 181, .1),
-    100: Color.fromRGBO(40, 208, 181, .2),
-    200: Color.fromRGBO(40, 208, 181, .3),
-    300: Color.fromRGBO(40, 208, 181, .4),
-    400: Color.fromRGBO(40, 208, 181, .5),
-    500: Color.fromRGBO(40, 208, 181, .6),
-    600: Color.fromRGBO(40, 208, 181, .7),
-    700: Color.fromRGBO(40, 208, 181, .8),
+  static const MaterialColor primary = MaterialColor(0xffED7354, {
+    50: Color.fromRGBO(237, 115, 84, .1),
+    100: Color.fromRGBO(237, 115, 84, .2),
+    200: Color.fromRGBO(237, 115, 84, .3),
+    300: Color.fromRGBO(237, 115, 84, .4),
+    400: Color.fromRGBO(237, 115, 84, .5),
+    500: Color.fromRGBO(237, 115, 84, .6),
+    600: Color.fromRGBO(237, 115, 84, .7),
+    700: Color.fromRGBO(237, 115, 84, .8),
   });
 }
