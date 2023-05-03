@@ -4,20 +4,21 @@ import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
-class QuestionCheckBox extends StatelessWidget {
+class SingleSelectQuestionView extends StatelessWidget {
   final List<String> values;
-  final List valuesSelected;
-  final Function(String newValue) onChange;
+  final String initialValue;
+  final Function(String value) onChange;
 
-  const QuestionCheckBox({
+  const SingleSelectQuestionView({
     Key? key,
     required this.values,
-    required this.valuesSelected,
+    required this.initialValue,
     required this.onChange,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int group = values.indexOf(initialValue);
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
@@ -26,10 +27,11 @@ class QuestionCheckBox extends StatelessWidget {
         String value = values[index];
         return Row(
           children: [
-            Checkbox(
+            Radio(
               fillColor: MaterialStateProperty.all(Provider.of<ThemeService>(context).paletteColors.primary),
-              value: valuesSelected.contains(value),
-              onChanged: (bool? selected) {
+              value: index,
+              groupValue: group,
+              onChanged: (index) {
                 onChange(value);
               },
             ),

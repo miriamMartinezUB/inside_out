@@ -4,12 +4,12 @@ import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
-class QuestionFreeText extends StatefulWidget {
+class FreeTextQuestionView extends StatefulWidget {
   final String? initialText;
   final Function(String) onChanged;
   final bool isLong;
 
-  const QuestionFreeText({
+  const FreeTextQuestionView({
     Key? key,
     this.initialText,
     required this.onChanged,
@@ -17,10 +17,10 @@ class QuestionFreeText extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<QuestionFreeText> createState() => _QuestionFreeTextState();
+  State<FreeTextQuestionView> createState() => _FreeTextQuestionViewState();
 }
 
-class _QuestionFreeTextState extends State<QuestionFreeText> {
+class _FreeTextQuestionViewState extends State<FreeTextQuestionView> {
   late final TextEditingController _controller;
 
   @override

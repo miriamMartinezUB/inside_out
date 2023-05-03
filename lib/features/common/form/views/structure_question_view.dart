@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/domain/question/index.dart';
-import 'package:inside_out/features/form/views/question_checkbox..dart';
-import 'package:inside_out/features/form/views/question_free_text.dart';
-import 'package:inside_out/features/form/views/question_single_select.dart';
+import 'package:inside_out/features/common/form/views/checkbox_question_view.dart';
+import 'package:inside_out/features/common/form/views/free_text_question_view.dart';
+import 'package:inside_out/features/common/form/views/single_select_question_view.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
-class QuestionStructure extends StatelessWidget {
+class StructureQuestionView extends StatelessWidget {
   final Question question;
-  final Function(String value) onChange;
+  final Function(dynamic value) onChange;
 
-  const QuestionStructure({super.key, required this.question, required this.onChange});
+  const StructureQuestionView({
+    super.key,
+    required this.question,
+    required this.onChange,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,19 +50,19 @@ class QuestionStructure extends StatelessWidget {
         ],
         const SizedBox(height: Dimens.paddingLarge),
         if (question is FreeTextQuestion)
-          QuestionFreeText(
+          FreeTextQuestionView(
             initialText: (question as FreeTextQuestion).value,
             isLong: (question as FreeTextQuestion).longText,
             onChanged: onChange,
           ),
         if (question is SingleSelectionQuestion)
-          QuestionSingleSelect(
+          SingleSelectQuestionView(
             values: (question as SingleSelectionQuestion).values,
             initialValue: (question as SingleSelectionQuestion).selectedValue,
             onChange: onChange,
           ),
         if (question is CheckBoxQuestion)
-          QuestionCheckBox(
+          CheckBoxQuestionView(
             values: (question as CheckBoxQuestion).values!,
             valuesSelected: (question as CheckBoxQuestion).selectedValues ?? [],
             onChange: onChange,
