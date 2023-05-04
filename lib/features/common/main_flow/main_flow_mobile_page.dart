@@ -40,15 +40,15 @@ class MainFlowPage extends StatelessWidget {
                 ),
                 BottomNavigationBarItem(
                   icon: const Icon(Icons.info_outline_rounded),
-                  label: translate('home'),
+                  label: translate('information'),
                 ),
                 BottomNavigationBarItem(
                   icon: const Icon(Icons.add_chart_sharp),
-                  label: translate('home'),
+                  label: translate('results'),
                 ),
                 BottomNavigationBarItem(
-                  icon: const Icon(Icons.history),
-                  label: translate('home'),
+                  icon: const Icon(Icons.calendar_month_outlined),
+                  label: translate('history'),
                 )
               ],
             ),

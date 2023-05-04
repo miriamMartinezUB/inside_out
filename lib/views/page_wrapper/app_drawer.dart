@@ -48,7 +48,7 @@ class AppDrawer extends StatelessWidget {
                     ),
                     DrawerItem(
                       text: translate('history'),
-                      iconData: Icons.history,
+                      iconData: Icons.calendar_month_outlined,
                       color: paletteColors.icons,
                       onTap: () => navigationService.navigateTo(Routes.history),
                     ),

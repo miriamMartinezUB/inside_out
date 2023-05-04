@@ -15,5 +15,9 @@
   "activities_title": "Activities",
   "how_do_you_feel_card_title": "How have you been feeling today?",
   "how_do_you_feel_card_subtitle": "Write your emotions here",
-  "see_results_button": "Click here to see your results"
+  "see_results_button": "Click here to see your results",
+  "home": "Home",
+  "information": "Information",
+  "results": "Results",
+  "history": "History"
 }

@@ -58,6 +58,7 @@ class HomePage extends StatelessWidget {
                       done: false,
                       context: context,
                     ),
+                    const SizedBox(height: Dimens.paddingXLarge),
                   ],
                 ),
               ),
