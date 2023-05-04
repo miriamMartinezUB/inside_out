@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:inside_out/features/information/views/card_information.dart';
+import 'package:inside_out/features/information/views/wave_shape_app_bar.dart';
 import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
@@ -23,19 +24,25 @@ class InformationPage extends StatelessWidget {
       },
       body: Column(
         children: [
+          const WaveShapeAppBar(
+            title: 'Descubre más',
+            imagePath: 'descubre_mas.png',
+          ),
           Expanded(
             child: GridView.count(
               primary: false,
               padding: const EdgeInsets.all(Dimens.paddingLarge),
+              // We can use this:
               crossAxisSpacing: Dimens.paddingMedium,
               mainAxisSpacing: Dimens.paddingMedium,
+              //  or aspect ratio
               shrinkWrap: true,
               crossAxisCount: 2,
               children: const <Widget>[
-                CardInformation(),
-                CardInformation(),
-                CardInformation(),
-                CardInformation(),
+                CardInformation(title: 'Las 4 emociones primarias'),
+                CardInformation(title: 'Cómo identificar lo que sientes'),
+                CardInformation(title: 'Que es el temperamento'),
+                CardInformation(title: 'Las 4 emociones primarias'),
               ],
             ),
           ),
