@@ -7,6 +7,7 @@ import 'package:inside_out/features/information/information_page.dart';
 import 'package:inside_out/features/results/results_page.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/palette_colors.dart';
+import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
 class MainFlowPage extends StatelessWidget {
@@ -28,6 +29,8 @@ class MainFlowPage extends StatelessWidget {
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               showUnselectedLabels: true,
+              selectedLabelStyle: getTextStyle(paletteColors: paletteColors, type: TextTypes.tinyBody),
+              unselectedLabelStyle: getTextStyle(paletteColors: paletteColors, type: TextTypes.tinyBody),
               backgroundColor: paletteColors.card,
               unselectedItemColor: paletteColors.textSubtitle,
               selectedItemColor: paletteColors.primary,
