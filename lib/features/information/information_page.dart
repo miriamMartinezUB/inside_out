@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:inside_out/features/information/views/card_information.dart';
-import 'package:inside_out/features/information/views/wave_shape_app_bar.dart';
 import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
+import 'package:inside_out/views/wave_shape_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class InformationPage extends StatelessWidget {
