@@ -24,6 +24,8 @@ class ThemeService {
     }
   }
 
+  ThemePreference get themePreference => _theme;
+
   PaletteColors get paletteColors => _theme == ThemePreference.light ? PaletteColorsLight() : PaletteColorsDark();
 
   void setTheme(ThemePreference themePreference) {
