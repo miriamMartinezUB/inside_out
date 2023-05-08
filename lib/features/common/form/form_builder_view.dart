@@ -23,37 +23,41 @@ class FormBuilderView extends StatelessWidget {
 
     return ChangeNotifierProvider<FormProvider>(
       create: (context) => formProvider,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            primary: false,
-            itemCount: formProvider.form.questions.length,
-            itemBuilder: (context, index) {
-              Question question = formProvider.form.questions[index];
-              return Padding(
-                padding:
-                    EdgeInsets.only(bottom: question == formProvider.form.questions.last ? 0 : Dimens.paddingLarge),
-                child: StructureQuestionView(
-                  question: question,
-                  onChange: (dynamic newValue) {
-                    formProvider.setAnswer(questionId: question.id, value: newValue);
-                  },
+      child: Consumer<FormProvider>(
+        builder: (context, formProvider, child) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListView.builder(
+                shrinkWrap: true,
+                primary: false,
+                itemCount: formProvider.form.questions.length,
+                itemBuilder: (context, index) {
+                  Question question = formProvider.form.questions[index];
+                  return Padding(
+                    padding:
+                        EdgeInsets.only(bottom: question == formProvider.form.questions.last ? 0 : Dimens.paddingLarge),
+                    child: StructureQuestionView(
+                      question: question,
+                      onChange: (dynamic newValue) {
+                        formProvider.setAnswer(questionId: question.id, value: newValue);
+                      },
+                    ),
+                  );
+                },
+              ),
+              if (onAction != null) ...[
+                const SizedBox(height: Dimens.paddingXLarge),
+                AppButton(
+                  text: formProvider.form.actionText,
+                  shouldTranslate: true,
+                  onTap: onAction!(formProvider.form),
                 ),
-              );
-            },
-          ),
-          if (onAction != null) ...[
-            const SizedBox(height: Dimens.paddingXLarge),
-            AppButton(
-              text: formProvider.form.actionText,
-              shouldTranslate: true,
-              onTap: onAction!(formProvider.form),
-            ),
-          ]
-        ],
+              ]
+            ],
+          );
+        },
       ),
     );
   }
