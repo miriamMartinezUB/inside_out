@@ -4,8 +4,10 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/features/common/main_flow/main_flow_item_id.dart';
 import 'package:inside_out/features/common/main_flow/main_flow_provider.dart';
 import 'package:inside_out/features/home/views/card_activity_view.dart';
+import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
+import 'package:inside_out/resources/routes.dart';
 import 'package:inside_out/views/app_divider.dart';
 import 'package:inside_out/views/buttons/app_asymmetric_button.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
@@ -67,7 +69,13 @@ class HomePage extends StatelessWidget {
           const SizedBox(height: Dimens.paddingXLarge),
           AppAsymmetricButton(
             text: 'see_results_button',
-            onTap: () => Provider.of<MainFLowProvider>(context).currentItemId = MainFlowItemId.results,
+            onTap: () {
+              if (kIsWeb) {
+                Provider.of<NavigationService>(context, listen: false).navigateTo(Routes.results);
+              } else {
+                Provider.of<MainFLowProvider>(context, listen: false).currentItemId = MainFlowItemId.results;
+              }
+            },
           ),
           const SizedBox(height: Dimens.paddingXLarge),
         ],
