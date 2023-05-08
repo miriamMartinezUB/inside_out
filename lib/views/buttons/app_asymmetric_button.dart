@@ -28,6 +28,7 @@ class AppAsymmetricButton extends StatelessWidget {
     final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
 
     return InkWell(
+      onTap: onTap,
       borderRadius: _borderRadiusAsymmetricButton,
       child: Container(
         decoration: BoxDecoration(
