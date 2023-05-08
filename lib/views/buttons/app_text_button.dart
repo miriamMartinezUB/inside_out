@@ -9,14 +9,10 @@ class AppTextButton extends StatelessWidget {
   final bool shouldTranslate;
   final Color? color;
   final GestureTapCallback? onTap;
+  final IconData? icon;
 
-  const AppTextButton({
-    Key? key,
-    required this.text,
-    this.shouldTranslate = true,
-    this.color,
-    this.onTap,
-  }) : super(key: key);
+  const AppTextButton({Key? key, required this.text, this.shouldTranslate = true, this.color, this.onTap, this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +23,23 @@ class AppTextButton extends StatelessWidget {
         ),
       ),
       onPressed: onTap,
-      child: AppText(
-        shouldTranslate ? translate(text) : text,
-        type: TextTypes.body,
-        color: color,
-        align: TextAlign.center,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null)
+            Icon(
+              icon,
+              color: color,
+            ),
+          Flexible(
+            child: AppText(
+              shouldTranslate ? translate(text) : text,
+              type: TextTypes.body,
+              color: color,
+              align: TextAlign.center,
+            ),
+          ),
+        ],
       ),
     );
   }
