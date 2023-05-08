@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
+import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
 import 'package:inside_out/views/texts.dart';
+import 'package:inside_out/views/wave_shape_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class ResultsPage extends StatelessWidget {
@@ -19,10 +21,19 @@ class ResultsPage extends StatelessWidget {
         navigationService.goBack();
         navigationService.closeView();
       },
-      body: const Center(
-        child: AppText(
-          'NOT IMPLEMENTED',
-        ),
+      body: Column(
+        children: const [
+          WaveShapeAppBar(
+            title: 'Results',
+            imagePath: 'descubre_mas.png',
+          ),
+          SizedBox(height: Dimens.paddingXLarge),
+          Center(
+            child: AppText(
+              'NOT IMPLEMENTED',
+            ),
+          ),
+        ],
       ),
     );
   }
