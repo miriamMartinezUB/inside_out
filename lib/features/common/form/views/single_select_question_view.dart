@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class SingleSelectQuestionView extends StatelessWidget {
   final List<String> values;
-  final String initialValue;
+  final String? initialValue;
   final Function(String value) onChange;
 
   const SingleSelectQuestionView({
@@ -18,7 +18,7 @@ class SingleSelectQuestionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int group = values.indexOf(initialValue);
+    int group = initialValue == null ? 0 : values.indexOf(initialValue!);
     return ListView.builder(
       shrinkWrap: true,
       primary: false,

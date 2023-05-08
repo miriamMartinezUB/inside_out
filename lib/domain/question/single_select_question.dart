@@ -2,13 +2,13 @@ import 'package:inside_out/domain/question/question.dart';
 
 class SingleSelectionQuestion extends Question {
   final List<String> values;
-  final String selectedValue;
+  final String? selectedValue;
 
   SingleSelectionQuestion({
     required this.values,
     required String title,
     required String id,
-    required this.selectedValue,
+    this.selectedValue,
     String? subtitle,
     bool mandatory = true,
   }) : super(
