@@ -3,7 +3,9 @@ import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
+import 'package:inside_out/resources/routes.dart';
 import 'package:inside_out/views/buttons/app_back_button.dart';
+import 'package:inside_out/views/buttons/app_settings_button.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +29,7 @@ class InsideOutAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       iconTheme: IconThemeData(color: paletteColors.icons),
       leading: !isMainPage ? AppBackButton(onPop: onPop) : null,
-      actions: !isMainPage ? [const _HomeButton()] : null,
+      actions: isMainPage ? [const AppSettingsButton()] : [const _HomeButton()],
       title: AppText(
         appBarName,
         type: TextTypes.title,
@@ -49,19 +51,13 @@ class _HomeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
-    // final NavigationService navigationService = Provider.of<NavigationService>(context);
 
     return InkWell(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingLarge),
         child: Icon(Icons.home, color: paletteColors.primary),
       ),
-      onTap: () {
-        Provider.of<NavigationService>(context).goBack();
-        //TODO
-        // BlocProvider.of<MainFlowBloc>(context).add(ChangeMainScreenEvent(itemId: DrawerItemId.home));
-        // BlocProvider.of<NavigatorBloc>(context).add(HomeNavigationEvent());
-      },
+      onTap: () => Provider.of<NavigationService>(context, listen: false).replace(Routes.home),
     );
   }
 }
