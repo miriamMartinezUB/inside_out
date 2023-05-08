@@ -17,6 +17,8 @@ class LanguageService {
   List<String> get languageCodes {
     return [
       LanguageCode.spanish,
+      LanguageCode.catalan,
+      LanguageCode.english,
     ];
   }
 
