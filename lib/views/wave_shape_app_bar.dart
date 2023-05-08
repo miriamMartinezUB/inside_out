@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
+import 'package:inside_out/views/buttons/app_back_button.dart';
+import 'package:inside_out/views/buttons/app_settings_button.dart';
 import 'package:inside_out/views/image_view.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:proste_bezier_curve/proste_bezier_curve.dart';
@@ -10,11 +12,13 @@ import 'package:provider/provider.dart';
 class WaveShapeAppBar extends StatelessWidget {
   final String title;
   final String imagePath;
+  final bool isMainPage;
 
   const WaveShapeAppBar({
     Key? key,
     required this.title,
     required this.imagePath,
+    this.isMainPage = true,
   }) : super(key: key);
 
   @override
@@ -45,22 +49,46 @@ class WaveShapeAppBar extends StatelessWidget {
             width: double.infinity,
             height: 150,
             color: paletteColors.primary,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: Dimens.paddingXXLarge,
-                horizontal: Dimens.paddingXLarge,
-              ),
-              child: AppText(
-                title,
-                color: paletteColors.textAppBar,
-                type: TextTypes.titleBold,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: Dimens.paddingLarge),
+                if (isMainPage)
+                  const Align(
+                    alignment: Alignment.topRight,
+                    child: AppSettingsButton(),
+                  ),
+                const SizedBox(height: Dimens.paddingLarge),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: Dimens.paddingXLarge),
+                    if (!isMainPage) ...[
+                      const AppBackButton(),
+                      const SizedBox(width: Dimens.paddingMedium),
+                    ],
+                    Flexible(
+                      child: Container(
+                        margin: const EdgeInsets.only(right: Dimens.iconLarge),
+                        child: AppText(
+                          title,
+                          color: paletteColors.textAppBar,
+                          type: TextTypes.titleBold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
-        ImageView(
-          imagePath,
-          height: Dimens.iconLarge,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingBase),
+          child: ImageView(
+            imagePath,
+            height: Dimens.iconLarge,
+          ),
         ),
       ],
     );
