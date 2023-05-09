@@ -52,13 +52,15 @@ class WaveShapeAppBar extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: Dimens.paddingLarge),
+                const SizedBox(height: Dimens.paddingXLarge),
                 if (isMainPage)
                   const Align(
                     alignment: Alignment.topRight,
-                    child: AppSettingsButton(),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Dimens.paddingLarge),
+                      child: AppSettingsButton(),
+                    ),
                   ),
-                const SizedBox(height: Dimens.paddingLarge),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
