@@ -42,7 +42,7 @@ class _FreeTextQuestionViewState extends State<FreeTextQuestionView> {
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 2,
+            width: Dimens.borderThickness,
             color: paletteColors.primary,
           ),
         ),

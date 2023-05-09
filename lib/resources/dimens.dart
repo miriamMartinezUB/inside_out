@@ -31,4 +31,6 @@ class Dimens {
   static const double iconMedium = 28;
   static const double iconLarge = 100;
   static const double iconXLarge = 200;
+
+  static const double borderThickness = 1.5;
 }
