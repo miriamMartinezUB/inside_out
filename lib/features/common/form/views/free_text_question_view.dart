@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
+import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +47,12 @@ class _FreeTextQuestionViewState extends State<FreeTextQuestionView> {
             color: paletteColors.primary,
           ),
         ),
-        border: const OutlineInputBorder(),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: Dimens.borderThickness,
+            color: paletteColors.textSubtitle,
+          ),
+        ),
       ),
       onChanged: widget.onChanged,
     );
