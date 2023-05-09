@@ -7,9 +7,11 @@ import 'package:inside_out/features/home/views/card_activity_view.dart';
 import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
+import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/resources/routes.dart';
 import 'package:inside_out/views/app_divider.dart';
 import 'package:inside_out/views/buttons/app_asymmetric_button.dart';
+import 'package:inside_out/views/buttons/app_settings_button.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
     return PageWrapper(
       showAppBar: kIsWeb,
       isMainPage: true,
@@ -34,10 +37,19 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: Dimens.paddingXLarge),
-                    AppText(
-                      '${translate('hi')}Miriam',
-                      type: TextTypes.titleBold,
-                      color: Provider.of<ThemeService>(context).paletteColors.primary,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: AppText(
+                            '${translate('hi')}Miriam',
+                            type: TextTypes.titleBold,
+                            color: paletteColors.primary,
+                          ),
+                        ),
+                        AppSettingsButton(
+                          color: paletteColors.primary,
+                        )
+                      ],
                     ),
                     const SizedBox(height: Dimens.paddingXLarge),
                     CardActivity.howDoYouFeel(context),
@@ -47,7 +59,7 @@ class HomePage extends StatelessWidget {
                     AppText(
                       translate('activities_title'),
                       type: TextTypes.subtitleBold,
-                      color: Provider.of<ThemeService>(context).paletteColors.secondary,
+                      color: paletteColors.secondary,
                     ),
                     CardActivity.forgivenessDiet(
                       day: 2,
