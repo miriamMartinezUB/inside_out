@@ -24,79 +24,81 @@ class SettingsPage extends StatelessWidget {
       languageService: languageService,
       themeService: themeService,
     );
-    return PageWrapper(
-      showAppBar: false,
-      isMainPage: false,
-      body: Column(
-        children: [
-          const WaveShapeAppBar(
-            title: 'Settings',
-            imagePath: 'settings.png',
+    return ChangeNotifierProvider<SettingsProvider>(
+      create: (BuildContext context) => settingsProvider,
+      child: Consumer<SettingsProvider>(
+        builder: (context, settingsProvider, child) {
+          return PageWrapper(
+            showAppBar: false,
             isMainPage: false,
-          ),
-          const SizedBox(height: Dimens.paddingXLarge),
-          ChangeNotifierProvider<SettingsProvider>(
-            create: (BuildContext context) => settingsProvider,
-            child: Consumer<SettingsProvider>(builder: (context, settingsProvider, child) {
-              return Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(Dimens.paddingLarge),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        StructureQuestionView(
-                          question: settingsProvider.selectLanguageQuestion,
-                          onChange: (value) => settingsProvider.setSelectLanguageQuestion(value),
-                        ),
-                        const SizedBox(height: Dimens.paddingLarge),
-                        StructureQuestionView(
-                          question: settingsProvider.selectThemeQuestion,
-                          onChange: (value) => settingsProvider.setSelectThemeQuestion(value),
-                        ),
-                        const SizedBox(height: Dimens.paddingLarge),
-                        StructureQuestionView(
-                          question: settingsProvider.sendFeedbackQuestion,
-                          onChange: (value) => settingsProvider.feedback = value,
-                        ),
-                        const SizedBox(height: Dimens.paddingLarge),
-                        AppButton(
-                          text: translate('send_feedback_button'),
-                          onTap: () {
-                            //TODO show dialog or snack bar
-                            settingsProvider.sendFeedback();
-                            //TODO disabled if feedback is null or empty
-                          },
-                        ),
-                        const SizedBox(height: Dimens.paddingLarge),
-                        AppTextButton(
-                          text: translate('remove_all_data'),
-                          color: paletteColors.textError,
-                          icon: Icons.delete,
-                          onTap: () {
-                            //TODO show dialog or snack bar
-                            settingsProvider.removeAllData();
-                          },
-                        ),
-                        const SizedBox(height: Dimens.paddingLarge),
-                        AppTextButton(
-                          text: translate('delete_account'),
-                          color: paletteColors.textError,
-                          icon: Icons.delete,
-                          onTap: () {
-                            //TODO show dialog or snack bar
-                            settingsProvider.deleteAccount();
-                          },
-                        ),
-                        const SizedBox(height: Dimens.paddingLarge),
-                      ],
+            body: Column(
+              children: [
+                const WaveShapeAppBar(
+                  title: 'Settings',
+                  imagePath: 'settings.png',
+                  isMainPage: false,
+                ),
+                const SizedBox(height: Dimens.paddingXLarge),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(Dimens.paddingLarge),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          StructureQuestionView(
+                            question: settingsProvider.selectLanguageQuestion,
+                            onChange: (value) => settingsProvider.setLanguage(value),
+                          ),
+                          const SizedBox(height: Dimens.paddingLarge),
+                          StructureQuestionView(
+                            question: settingsProvider.selectThemeQuestion,
+                            onChange: (value) => settingsProvider.setTheme(value),
+                          ),
+                          const SizedBox(height: Dimens.paddingLarge),
+                          StructureQuestionView(
+                            question: settingsProvider.sendFeedbackQuestion,
+                            onChange: (value) => settingsProvider.feedback = value,
+                          ),
+                          const SizedBox(height: Dimens.paddingLarge),
+                          AppButton(
+                            text: translate('send_feedback_button'),
+                            onTap: () {
+                              //TODO show dialog or snack bar
+                              settingsProvider.sendFeedback();
+                              //TODO disabled if feedback is null or empty
+                            },
+                          ),
+                          const SizedBox(height: Dimens.paddingLarge),
+                          AppTextButton(
+                            text: translate('remove_all_data'),
+                            color: paletteColors.textError,
+                            icon: Icons.delete,
+                            onTap: () {
+                              //TODO show dialog or snack bar
+                              settingsProvider.removeAllData();
+                            },
+                          ),
+                          const SizedBox(height: Dimens.paddingLarge),
+                          AppTextButton(
+                            text: translate('delete_account'),
+                            color: paletteColors.textError,
+                            icon: Icons.delete,
+                            onTap: () {
+                              //TODO show dialog or snack bar
+                              settingsProvider.deleteAccount();
+                            },
+                          ),
+                          const SizedBox(height: Dimens.paddingLarge),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              );
-            }),
-          ),
-        ],
+              ],
+            ),
+          );
+        },
       ),
     );
   }

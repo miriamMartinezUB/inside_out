@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/domain/question/index.dart';
 import 'package:inside_out/features/settings/questions.dart';
 import 'package:inside_out/infrastructure/language_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
-import 'package:inside_out/resources/languages.dart';
 
 class SettingsProvider extends ChangeNotifier {
   final LanguageService languageService;
@@ -19,50 +17,48 @@ class SettingsProvider extends ChangeNotifier {
     required this.languageService,
     required this.themeService,
   }) {
-    setSelectLanguageQuestion(translate(languageService.currentLanguageCode));
-    setSelectThemeQuestion(translate(themeService.themePreference.name));
+    _setSelectLanguageQuestion(languageService.currentLanguageCode);
+    _setSelectThemeQuestion(themeService.themePreference.name);
   }
 
   set feedback(String newFeedback) => _feedback = newFeedback;
 
   SingleSelectionQuestion get selectLanguageQuestion => _selectLanguageQuestion;
 
-  void setSelectLanguageQuestion(String value) {
-    _selectLanguageQuestion = _selectLanguageQuestion.copyWith(selectedValue: value);
-    late String newLocale;
-    if (value == translate(LanguageCode.spanish)) {
-      newLocale = LanguageCode.spanish;
-    } else if (value == translate(LanguageCode.catalan)) {
-      newLocale = LanguageCode.catalan;
-    } else if (value == translate(LanguageCode.english)) {
-      newLocale = LanguageCode.english;
-    } else {
-      throw FlutterError('The language $value is not implemented for change');
-    }
-    languageService.changeCurrentLocale(newLocale);
+  Future<void> setLanguage(String value) async {
+    _setSelectLanguageQuestion(value);
+    await languageService.changeCurrentLocale(value);
     notifyListeners();
+  }
+
+  Future<void> _setSelectLanguageQuestion(String value) async {
+    _selectLanguageQuestion = _selectLanguageQuestion.copyWith(selectedValue: value);
   }
 
   SingleSelectionQuestion get selectThemeQuestion => _selectThemeQuestion;
 
-  void setSelectThemeQuestion(String value) {
-    _selectThemeQuestion = _selectThemeQuestion.copyWith(selectedValue: value);
+  void setTheme(String value) {
+    _setSelectThemeQuestion(value);
     ThemePreference newThemePreference =
         value == ThemePreference.light.name ? ThemePreference.light : ThemePreference.dark;
     themeService.setTheme(newThemePreference);
     notifyListeners();
   }
 
-  FreeTextQuestion get sendFeedbackQuestion => _sendFeedbackQuestion;
+  void _setSelectThemeQuestion(String value) {
+    _selectThemeQuestion = _selectThemeQuestion.copyWith(selectedValue: value);
+  }
 
-  void setSendFeedbackQuestion(String value) => _sendFeedbackQuestion = _sendFeedbackQuestion.copyWith(value: value);
+  FreeTextQuestion get sendFeedbackQuestion => _sendFeedbackQuestion;
 
   void sendFeedback() {
     //TODO send email
     // Clear feedback
-    setSendFeedbackQuestion('');
+    _setSendFeedbackQuestion('');
     notifyListeners();
   }
+
+  void _setSendFeedbackQuestion(String value) => _sendFeedbackQuestion = _sendFeedbackQuestion.copyWith(value: value);
 
   void removeAllData() {
     //TODO

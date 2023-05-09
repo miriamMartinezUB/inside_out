@@ -1,5 +1,5 @@
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/domain/question/index.dart';
+import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/languages.dart';
 
 enum SettingsFormQuestion {
@@ -20,9 +20,9 @@ SingleSelectionQuestion selectLanguageQuestionForm = SingleSelectionQuestion(
   title: 'selected_language',
   mandatory: false,
   values: [
-    translate(LanguageCode.spanish),
-    translate(LanguageCode.catalan),
-    translate(LanguageCode.english),
+    LanguageCode.spanish,
+    LanguageCode.catalan,
+    LanguageCode.english,
   ],
 );
 
@@ -31,7 +31,7 @@ SingleSelectionQuestion selectThemeQuestionForm = SingleSelectionQuestion(
   title: 'selected_theme',
   mandatory: false,
   values: [
-    translate('light'),
-    translate('dark'),
+    ThemePreference.light.name,
+    ThemePreference.dark.name,
   ],
 );
