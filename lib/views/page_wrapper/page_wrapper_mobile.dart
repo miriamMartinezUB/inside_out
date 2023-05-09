@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
-import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/views/page_wrapper/inside_out_app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +9,7 @@ class PageWrapper extends StatelessWidget {
   final bool showAppBar;
   final String? appBarName;
   final Function? onPop;
+  final Color? background;
 
   PageWrapper({
     Key? key,
@@ -18,6 +18,7 @@ class PageWrapper extends StatelessWidget {
     this.showAppBar = true,
     this.appBarName,
     this.onPop,
+    this.background,
   }) : super(key: key) {
     if (showAppBar && appBarName == null) {
       throw FlutterError('If showAppBar is true appBarName attribute is required');
@@ -29,14 +30,13 @@ class PageWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
     return WillPopScope(
       onWillPop: () async {
         onPop?.call();
         return !isMainPage;
       },
       child: Scaffold(
-        backgroundColor: paletteColors.background,
+        backgroundColor: background ?? Provider.of<ThemeService>(context).paletteColors.background,
         appBar: showAppBar
             ? InsideOutAppBar(
                 isMainPage: isMainPage,
