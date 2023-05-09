@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:inside_out/infrastructure/locale_storage_service.dart';
 import 'package:inside_out/resources/palette_colors.dart';
@@ -6,8 +8,12 @@ enum ThemePreference { light, dark }
 
 class ThemeService {
   final LocaleStorageService _localeStorageService;
+  late StreamController<bool> themeChange;
 
-  ThemeService(this._localeStorageService);
+  ThemeService(this._localeStorageService) {
+    themeChange = StreamController<bool>();
+    themeChange.add(false);
+  }
 
   static const String _keyTheme = 'themePreferenceInsideOut';
 
@@ -30,6 +36,7 @@ class ThemeService {
 
   void setTheme(ThemePreference themePreference) {
     _theme = themePreference;
+    themeChange.add(true);
     _saveCurrentTheme();
   }
 

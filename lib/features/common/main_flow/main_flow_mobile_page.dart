@@ -15,15 +15,20 @@ class MainFlowPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
+    final ThemeService themeService = Provider.of<ThemeService>(context);
 
-    final MainFLowProvider mainFLowProvider = MainFLowProvider();
-    List<Widget> screens = [const HomePage(), const InformationPage(), const ResultsPage(), const HistoryPage()];
+    final MainFLowProvider mainFLowProvider = MainFLowProvider(themeService);
 
     return ChangeNotifierProvider<MainFLowProvider>(
       create: (context) => mainFLowProvider,
       child: Consumer<MainFLowProvider>(
         builder: (context, mainFLowProvider, child) {
+          final PaletteColors paletteColors = themeService.paletteColors;
+
+          /// The list of screens is inside of consumer and each one with
+          /// the prefix new, to update it every time the theme change
+          List<Widget> screens = [new HomePage(), new InformationPage(), new ResultsPage(), new HistoryPage()];
+
           return Scaffold(
             body: screens[mainFLowProvider.currentItemId],
             bottomNavigationBar: BottomNavigationBar(
