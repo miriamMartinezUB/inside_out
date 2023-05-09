@@ -33,7 +33,7 @@ class CardInformation extends StatelessWidget {
                   topLeft: _radius,
                   topRight: _radius,
                 ),
-                color: paletteColors.card,
+                color: paletteColors.secondary,
               ),
             ),
           ),
