@@ -8,11 +8,11 @@ class PaletteColors {
   Color textButton = const Color(0xfff3edf5);
   Color textError = Colors.red.shade400;
   Color icons = const Color(0xfff3edf5);
-  Color card = const Color(0xfff3edf5);
   Color shadow = const Color.fromRGBO(237, 115, 84, 150);
   late Color background;
   late Color text;
   late Color textSubtitle;
+  late Color card;
 }
 
 class PaletteColorsLight extends PaletteColors {
@@ -20,6 +20,7 @@ class PaletteColorsLight extends PaletteColors {
     background = const Color(0xffFFF2EF);
     text = const Color(0xff313047);
     textSubtitle = const Color(0xff5F5F5F);
+    card = const Color(0xfff3edf5);
   }
 }
 
@@ -28,6 +29,7 @@ class PaletteColorsDark extends PaletteColors {
     background = const Color(0xff313047);
     text = const Color(0xfff3edf5);
     textSubtitle = const Color.fromRGBO(243, 237, 245, .6);
+    card = background.withOpacity(0.6);
   }
 }
 
