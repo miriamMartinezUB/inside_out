@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:inside_out/features/common/activity/activity_stepper_page.dart';
+import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
+import 'package:inside_out/resources/activity_id.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
+import 'package:inside_out/resources/routes.dart';
 import 'package:inside_out/views/image_view.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +19,10 @@ abstract class CardActivity extends StatelessWidget {
     final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
 
     return _CardActivity(
-      onTap: () {},
+      onTap: () => Provider.of<NavigationService>(context, listen: false).navigateTo(
+        Routes.activity,
+        arguments: ActivityStepperPageArgs(activityId: ActivityId.thoughtDiaryActivityId),
+      ),
       alignment: Alignment.bottomRight,
       imagePath: 'card_how_do_you_feel.png',
       child: Column(
@@ -23,7 +30,7 @@ abstract class CardActivity extends StatelessWidget {
         children: [
           AppText(
             translate('how_do_you_feel_card_title'),
-            type: TextTypes.subtitleBold,
+            type: TextTypes.subtitleLight,
           ),
           const SizedBox(height: Dimens.paddingMedium),
           Row(
@@ -57,22 +64,22 @@ abstract class CardActivity extends StatelessWidget {
     return _CardActivityWithIconLeft(
       onTap: () {},
       done: done,
-      imagePath: 'forgiveness_diet_card.png',
-      title: AppText(
-        'Gestiona tu rabia (miss translation)',
-        type: TextTypes.subtitleBold,
-        color: paletteColors.primary,
-      ),
+      imagePath: 'anger.png',
+      title: translate('forgiveness_diet_card_title'),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           AppText(
-            'Día $day/7 (miss translation)',
-            type: TextTypes.smallBodyMedium,
+            '${translate('day')} $day/7',
+            type: TextTypes.tinyBody,
+            align: TextAlign.right,
+            color: paletteColors.textSubtitle,
           ),
           const SizedBox(height: Dimens.paddingMedium),
           LinearProgressIndicator(
             value: day / 7,
+            color: paletteColors.active,
+            backgroundColor: paletteColors.inactive,
           ),
         ],
       ),
@@ -81,7 +88,7 @@ abstract class CardActivity extends StatelessWidget {
 }
 
 class _CardActivityWithIconLeft extends CardActivity {
-  final Widget title;
+  final String title;
   final Widget child;
   final bool done;
   final String imagePath;
@@ -111,10 +118,18 @@ class _CardActivityWithIconLeft extends CardActivity {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(right: Dimens.iconLarge),
-                  child: title,
+                  margin: const EdgeInsets.only(right: Dimens.iconXLarge),
+                  child: AppText(
+                    title,
+                    type: TextTypes.smallBodyMedium,
+                  ),
                 ),
-                const SizedBox(height: Dimens.paddingMedium),
+                const SizedBox(height: Dimens.paddingBase),
+                Container(
+                  margin: const EdgeInsets.only(right: Dimens.iconXLarge),
+                  child: AppText(translate('manage_your_emotions'), type: TextTypes.smallBodyLight),
+                ),
+                const SizedBox(height: Dimens.paddingSmall),
                 child,
               ],
             ),
@@ -182,7 +197,7 @@ class _CardActivity extends CardActivity {
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.only(right: Dimens.iconLarge - Dimens.paddingLarge),
+              padding: const EdgeInsets.only(right: Dimens.iconXLarge - Dimens.paddingXXLarge),
               child: child,
             ),
           ),
@@ -190,7 +205,7 @@ class _CardActivity extends CardActivity {
             padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium),
             child: ImageView(
               imagePath,
-              width: Dimens.iconLarge,
+              width: Dimens.iconXLarge,
             ),
           ),
         ],

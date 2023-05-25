@@ -4,18 +4,19 @@ import 'package:inside_out/domain/form.dart';
 import 'package:inside_out/domain/question/index.dart';
 
 class FormProvider extends ChangeNotifier {
-  final String formId;
-  late final AppForm _form;
+  final String? formId;
+  late AppForm? form;
 
-  FormProvider(this.formId) {
-    _form = Database().getFormById(formId);
+  FormProvider({this.formId, this.form}) {
+    if (formId == null && form == null) {
+      throw FlutterError('formId and form cannot be null at the same time');
+    }
+    form ??= Database().getFormById(formId!);
   }
-
-  AppForm get form => _form;
 
   void setAnswer({required String questionId, dynamic value}) {
     List<Question> questions = [];
-    for (Question question in _form.questions) {
+    for (Question question in form!.questions) {
       late final Question newQuestion;
       if (question.id == questionId) {
         if (question is FreeTextQuestion) {
@@ -30,13 +31,29 @@ class FormProvider extends ChangeNotifier {
             values.add(value);
           }
           newQuestion = question.copyWith(selectedValues: values);
+        } else if (question is CarrouselQuestion) {
+          List<CarrouselQuestionItem> items = [];
+          for (CarrouselQuestionItem item in question.items) {
+            List values = item.selectedValues ?? [];
+            bool valueExistInThisItem = item.values.where((element) => element.value == value).isNotEmpty;
+            if (valueExistInThisItem) {
+              if (values.contains(value)) {
+                values.remove(value);
+              } else {
+                values.add(value);
+              }
+            }
+            CarrouselQuestionItem newItem = item.copyWith(selectedValues: values);
+            items.add(newItem);
+          }
+          newQuestion = question.copyWith(items: items);
         }
         questions.add(newQuestion);
       } else {
         questions.add(question);
       }
     }
-    _form = _form.copyWith(questions: questions);
+    form = form!.copyWith(questions: questions);
     notifyListeners();
   }
 }

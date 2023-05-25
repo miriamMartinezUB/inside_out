@@ -1,7 +1,7 @@
 import 'package:inside_out/domain/question/question.dart';
 
 class CheckBoxQuestion extends Question {
-  final List<String>? values;
+  final List<ValueCheckBox>? values;
   final List? selectedValues;
 
   CheckBoxQuestion({
@@ -20,7 +20,7 @@ class CheckBoxQuestion extends Question {
 
   CheckBoxQuestion copyWith({
     List? selectedValues,
-    List<String>? values,
+    List<ValueCheckBox>? values,
   }) =>
       CheckBoxQuestion(
         id: id,
@@ -30,4 +30,11 @@ class CheckBoxQuestion extends Question {
         subtitle: subtitle,
         mandatory: mandatory,
       );
+}
+
+class ValueCheckBox {
+  final String value;
+  final String? hint;
+
+  ValueCheckBox(this.value, {this.hint});
 }

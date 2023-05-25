@@ -25,7 +25,7 @@ class InformationPage extends StatelessWidget {
       body: Column(
         children: [
           const WaveShapeAppBar(
-            title: 'Descubre más',
+            title: 'Descubre más miss translation',
             imagePath: 'descubre_mas.png',
           ),
           Expanded(
@@ -37,12 +37,18 @@ class InformationPage extends StatelessWidget {
               mainAxisSpacing: Dimens.paddingMedium,
               //  or aspect ratio
               shrinkWrap: true,
-              crossAxisCount: 2,
+              crossAxisCount: kIsWeb ? 5 : 2,
               children: const <Widget>[
-                CardInformation(title: 'Las 4 emociones primarias'),
+                CardInformation(
+                  title: 'Las 4 emociones primarias',
+                  isPrimary: true,
+                  timesCompleted: 3,
+                ),
                 CardInformation(title: 'Cómo identificar lo que sientes'),
-                CardInformation(title: 'Que es el temperamento'),
-                CardInformation(title: 'Las 4 emociones primarias'),
+                CardInformation(
+                  title: 'Que es el temperamento',
+                  timesCompleted: 1,
+                ),
               ],
             ),
           ),

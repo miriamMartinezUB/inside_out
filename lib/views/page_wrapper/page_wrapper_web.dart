@@ -13,14 +13,16 @@ class PageWrapper extends StatelessWidget {
   final bool showAppBar;
   final String? appBarName;
   final Function? onPop;
+  final Color? background;
 
   PageWrapper({
     Key? key,
     required this.body,
     this.isMainPage = false,
-    this.showAppBar = true,
+    this.showAppBar = false,
     this.appBarName,
     this.onPop,
+    this.background,
   }) : super(key: key) {
     if (showAppBar && appBarName == null) {
       throw FlutterError('If showAppBar is true appBarName attribute is required');
@@ -33,13 +35,14 @@ class PageWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
+    final NavigationService navigationService = Provider.of<NavigationService>(context);
     return WillPopScope(
       onWillPop: () async {
         onPop?.call();
-        return Provider.of<NavigationService>(context).currentRoute == Routes.home ? false : !isMainPage;
+        return navigationService.currentRoute == Routes.home ? false : !isMainPage;
       },
       child: Scaffold(
-        backgroundColor: paletteColors.background,
+        backgroundColor: background ?? paletteColors.background,
         drawer: isMainPage ? const AppDrawer() : null,
         appBar: showAppBar
             ? InsideOutAppBar(

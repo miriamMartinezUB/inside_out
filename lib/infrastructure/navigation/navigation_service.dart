@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:inside_out/infrastructure/auth_service.dart';
 import 'package:inside_out/resources/routes.dart';
 
 class NavigationService {
+  final AuthService authService;
+
+  NavigationService(this.authService);
+
   final List<String> _navigationStack = [Routes.initialRoute];
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -35,9 +40,12 @@ class NavigationService {
   }
 
   Future<dynamic> goToInitialRoute() async {
-    _navigationStack.clear();
-    _navigationStack.add(Routes.initialRoute);
-    //No olvidar mirar si esta autenticado
-    replace(Routes.initialRoute);
+    authService.isAuthenticated$.listen((isAuthenticated) {
+      if (isAuthenticated) {
+        replace(Routes.home);
+      } else {
+        replace(Routes.welcome);
+      }
+    });
   }
 }

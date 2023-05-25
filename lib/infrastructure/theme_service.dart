@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:inside_out/infrastructure/locale_storage_service.dart';
+import 'package:inside_out/infrastructure/storage/locale_storage_service.dart';
 import 'package:inside_out/resources/palette_colors.dart';
 
 enum ThemePreference { light, dark }
@@ -11,7 +11,7 @@ class ThemeService {
   late StreamController<bool> themeChange;
 
   ThemeService(this._localeStorageService) {
-    themeChange = StreamController<bool>();
+    themeChange = StreamController<bool>.broadcast();
     themeChange.add(false);
   }
 

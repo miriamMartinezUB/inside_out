@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
-import 'package:inside_out/features/history/domain/event.dart';
+import 'package:inside_out/domain/event.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarProvider extends ChangeNotifier {
@@ -53,13 +53,38 @@ class CalendarProvider extends ChangeNotifier {
     )..addAll(
         {
           for (var item in List.generate(50, (index) => index))
-            DateTime.utc(_firstDay.year, _firstDay.month, item * 5):
-                List.generate(item % 4 + 1, (index) => Event('Event $item | ${index + 1}'))
+            DateTime.utc(_firstDay.year, _firstDay.month, item * 5): List.generate(
+              item % 4 + 1,
+              (index) => EventThoughtDiary(
+                id: item.toString(),
+                dateTime: DateTime.now(),
+                emotions: ['ansiedad', 'insegura', 'example', 'example', 'example', 'example'],
+                behaviours: ['insomnio', 'aumento de ritmo cardiaco'],
+                bodySensations: ['tension muscular'],
+                thingsToImprove: ['ejemplo', 'ejemplo'],
+                reason: 'No he gestionado bien el tiempo, y quizas no acabo el tfg',
+              ),
+            )
         }..addAll({
             //TODO change for real data
             _today: [
-              const Event('Today\'s Event 1'),
-              const Event('Today\'s Event 2'),
+              EventForgivenessDiet(
+                id: '1',
+                dateTime: DateTime.now(),
+                forgivenessPhrases: [
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis lobortis turpis, eget rutrum nisl. Nullam eu nibh eget dui malesuada commodo mollis auctor libero.',
+                  'Quisque feugiat mi ac ex viverra pellentesque.'
+                ],
+              ),
+              EventPrioritisingPrinciples(
+                id: '2',
+                dateTime: DateTime.now(),
+                principlesAndValues: [
+                  'transparencia',
+                  'respeto',
+                  'coherencia',
+                ],
+              ),
             ],
           }),
       );

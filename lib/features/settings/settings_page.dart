@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/features/common/form/views/structure_question_view.dart';
 import 'package:inside_out/features/settings/settings_provider.dart';
+import 'package:inside_out/infrastructure/auth_service.dart';
 import 'package:inside_out/infrastructure/language_service.dart';
+import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
+import 'package:inside_out/resources/routes.dart';
 import 'package:inside_out/views/buttons/app_button.dart';
 import 'package:inside_out/views/buttons/app_text_button.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
 import 'package:inside_out/views/wave_shape_app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -19,10 +23,12 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final LanguageService languageService = Provider.of<LanguageService>(context);
     final ThemeService themeService = Provider.of<ThemeService>(context);
+    final AuthService authService = Provider.of<AuthService>(context);
     final PaletteColors paletteColors = themeService.paletteColors;
     final SettingsProvider settingsProvider = SettingsProvider(
       languageService: languageService,
       themeService: themeService,
+      authService: authService,
     );
     return ChangeNotifierProvider<SettingsProvider>(
       create: (BuildContext context) => settingsProvider,
@@ -33,8 +39,9 @@ class SettingsPage extends StatelessWidget {
             isMainPage: false,
             body: Column(
               children: [
-                const WaveShapeAppBar(
-                  title: 'Settings',
+                WaveShapeAppBar(
+                  key: Key(const Uuid().v4()),
+                  title: 'Settings miss translation',
                   imagePath: 'settings.png',
                   isMainPage: false,
                 ),
@@ -71,12 +78,11 @@ class SettingsPage extends StatelessWidget {
                           ),
                           const SizedBox(height: Dimens.paddingLarge),
                           AppTextButton(
-                            text: translate('remove_all_data'),
+                            text: translate('logout'),
                             color: paletteColors.textError,
-                            icon: Icons.delete,
-                            onTap: () {
-                              //TODO show dialog or snack bar
-                              settingsProvider.removeAllData();
+                            icon: Icons.logout_rounded,
+                            onTap: () async {
+                              await settingsProvider.logout();
                             },
                           ),
                           const SizedBox(height: Dimens.paddingLarge),
@@ -87,6 +93,7 @@ class SettingsPage extends StatelessWidget {
                             onTap: () {
                               //TODO show dialog or snack bar
                               settingsProvider.deleteAccount();
+                              Provider.of<NavigationService>(context, listen: false).replace(Routes.initialRoute);
                             },
                           ),
                           const SizedBox(height: Dimens.paddingLarge),

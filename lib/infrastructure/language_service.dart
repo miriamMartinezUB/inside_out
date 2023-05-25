@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/resources/languages.dart';
 
 class LanguageService {
   late LocalizationDelegate _delegate;
+  late StreamController<bool> languageChange;
 
   Future<LocalizationDelegate> initDelegate() async {
     _delegate = await LocalizationDelegate.create(
@@ -11,6 +14,8 @@ class LanguageService {
       supportedLocales: languageCodes,
       basePath: 'locale/i18n',
     );
+    languageChange = StreamController<bool>.broadcast();
+    languageChange.add(false);
     return _delegate;
   }
 
@@ -43,6 +48,7 @@ class LanguageService {
   Future<void> changeCurrentLocale(String languageCode) async {
     if (_delegate.currentLocale.languageCode != languageCode) {
       await _delegate.changeLocale(Locale(languageCode, ''));
+      languageChange.add(true);
     }
   }
 }

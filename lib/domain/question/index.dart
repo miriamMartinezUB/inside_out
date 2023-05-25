@@ -1,3 +1,4 @@
+export 'package:inside_out/domain/question/carrousel_question.dart';
 export 'package:inside_out/domain/question/check_box_question.dart';
 export 'package:inside_out/domain/question/free_text_question.dart';
 export 'package:inside_out/domain/question/question.dart';

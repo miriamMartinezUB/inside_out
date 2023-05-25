@@ -71,7 +71,7 @@ class WaveShapeAppBar extends StatelessWidget {
                     ],
                     Flexible(
                       child: Container(
-                        margin: const EdgeInsets.only(right: Dimens.iconLarge),
+                        margin: const EdgeInsets.only(right: Dimens.iconXLarge),
                         child: AppText(
                           title,
                           color: paletteColors.textAppBar,
@@ -89,7 +89,7 @@ class WaveShapeAppBar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingBase),
           child: ImageView(
             imagePath,
-            height: Dimens.iconLarge,
+            height: Dimens.iconXLarge,
           ),
         ),
       ],

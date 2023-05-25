@@ -13,7 +13,7 @@ class Dimens {
   static const double textSizeTitle = 24;
   static const double textSizeSubtitle = 22;
   static const double textSizeBody = 20;
-  static const double textSizeBodySmall = 16;
+  static const double textSizeBodySmall = 17;
   static const double textSizeBodyTiny = 14;
 
   static const FontWeight fontWeightLight = FontWeight.w300;
@@ -29,8 +29,10 @@ class Dimens {
   static const double iconSmall = 16;
   static const double iconBase = 22;
   static const double iconMedium = 28;
-  static const double iconLarge = 100;
-  static const double iconXLarge = 200;
+  static const double iconLarge = 50;
+  static const double iconXLarge = 100;
+  static const double iconXXLarge = 150;
+  static const double iconXXXLarge = 200;
 
   static const double borderThickness = 1.5;
 }

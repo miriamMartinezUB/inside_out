@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                     AppText(
                       translate('activities_title'),
                       type: TextTypes.subtitleBold,
-                      color: paletteColors.secondary,
+                      color: paletteColors.primary,
                     ),
                     CardActivity.forgivenessDiet(
                       day: 2,

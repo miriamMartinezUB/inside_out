@@ -1,5 +1,5 @@
 {
-  "title": "Del revés",
+  "app_name": "Del revés",
   "common_save": "Guardar",
   "common_confirm": "Confirma",
   "common_cancel": "Cancela",
@@ -29,6 +29,6 @@
   "send_feedback_button": "Send feedback",
   "selected_language": "Select language",
   "selected_theme": "Select theme",
-  "remove_all_data": "Remove all my data",
+  "logout": "Logout",
   "delete_account": "Delete my account"
 }

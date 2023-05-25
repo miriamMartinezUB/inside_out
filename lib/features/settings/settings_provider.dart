@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:inside_out/domain/question/index.dart';
 import 'package:inside_out/features/settings/questions.dart';
+import 'package:inside_out/infrastructure/auth_service.dart';
 import 'package:inside_out/infrastructure/language_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 
 class SettingsProvider extends ChangeNotifier {
   final LanguageService languageService;
   final ThemeService themeService;
+  final AuthService authService;
 
   SingleSelectionQuestion _selectLanguageQuestion = selectLanguageQuestionForm;
   SingleSelectionQuestion _selectThemeQuestion = selectThemeQuestionForm;
@@ -16,6 +18,7 @@ class SettingsProvider extends ChangeNotifier {
   SettingsProvider({
     required this.languageService,
     required this.themeService,
+    required this.authService,
   }) {
     _setSelectLanguageQuestion(languageService.currentLanguageCode);
     _setSelectThemeQuestion(themeService.themePreference.name);
@@ -60,11 +63,11 @@ class SettingsProvider extends ChangeNotifier {
 
   void _setSendFeedbackQuestion(String value) => _sendFeedbackQuestion = _sendFeedbackQuestion.copyWith(value: value);
 
-  void removeAllData() {
-    //TODO
+  Future<void> logout() async {
+    await authService.logout();
   }
 
-  void deleteAccount() {
-    //TODO
+  Future<void> deleteAccount() async {
+    await authService.deleteAccount();
   }
 }

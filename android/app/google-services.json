@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1005187080907",
+    "project_id": "inside-out-d0bd8",
+    "storage_bucket": "inside-out-d0bd8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005187080907:android:6bdae730f7768d3b65f14e",
+        "android_client_info": {
+          "package_name": "com.miriam.inside_out"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005187080907-onkkaag6b1ahulb6cu8hiv07juqfv6sg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALnSkfhi71HklirqA12PrON-SSTtbRDxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005187080907-onkkaag6b1ahulb6cu8hiv07juqfv6sg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1005187080907-kacqd6n3hdkbmg3ktuttjlv925a0kjpc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.miriam.insideOut"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

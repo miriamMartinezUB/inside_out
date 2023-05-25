@@ -15,7 +15,7 @@ class PageWrapper extends StatelessWidget {
     Key? key,
     required this.body,
     this.isMainPage = false,
-    this.showAppBar = true,
+    this.showAppBar = false,
     this.appBarName,
     this.onPop,
     this.background,

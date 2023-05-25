@@ -2,7 +2,7 @@ import 'package:inside_out/domain/question/question.dart';
 
 class AppForm {
   final String id;
-  final String name;
+  final String? name;
   final List<Question> questions;
 
   /// Button Text
@@ -10,8 +10,8 @@ class AppForm {
 
   AppForm({
     required this.id,
-    required this.name,
     required this.questions,
+    this.name,
     this.actionText = 'common_save',
   });
 

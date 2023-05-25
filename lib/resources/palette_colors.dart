@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class PaletteColors {
-  Color primary = const Color(0xffED7354);
-  Color secondary = const Color.fromRGBO(237, 115, 84, 57);
-  Color active = const Color(0xfff3b4fa);
-  Color textAppBar = const Color(0xfff3edf5);
-  Color textButton = const Color(0xfff3edf5);
+  Color primary = const Color(0xffEEC083);
+  Color secondary = const Color(0xfffdedcb);
+  Color active = const Color(0xffD19136);
+  Color inactive = const Color(0xffD9D9D9);
   Color textError = Colors.red.shade400;
-  Color icons = const Color(0xfff3edf5);
-  Color shadow = const Color.fromRGBO(237, 115, 84, 150);
+  late Color shadow;
+  late Color textButton;
+  late Color icons;
+  late Color textAppBar;
   late Color background;
   late Color text;
   late Color textSubtitle;
@@ -17,31 +18,39 @@ class PaletteColors {
 
 class PaletteColorsLight extends PaletteColors {
   PaletteColorsLight() {
-    background = const Color(0xffFFF2EF);
-    text = const Color(0xff313047);
-    textSubtitle = const Color(0xff5F5F5F);
-    card = const Color(0xfff3edf5);
+    textButton = const Color(0xffffffff);
+    icons = const Color(0xffffffff);
+    textAppBar = const Color(0xffffffff);
+    background = const Color(0xfffefdf9);
+    text = const Color(0xff242e37);
+    textSubtitle = const Color(0xff3f484f);
+    card = const Color(0xffffffff);
+    shadow = Colors.grey.shade300;
   }
 }
 
 class PaletteColorsDark extends PaletteColors {
   PaletteColorsDark() {
-    background = const Color(0xff313047);
+    textButton = const Color(0xff242e37);
+    icons = const Color(0xff242e37);
+    textAppBar = const Color(0xff242e37);
+    background = const Color(0xff242e37);
     text = const Color(0xfff3edf5);
     textSubtitle = const Color.fromRGBO(243, 237, 245, .6);
-    card = background.withOpacity(0.6);
+    card = const Color(0xff3f484f);
+    shadow = const Color(0xff3f484f).withOpacity(0.4);
   }
 }
 
 class PaletteMaterialColors {
-  static const MaterialColor primary = MaterialColor(0xffED7354, {
-    50: Color.fromRGBO(237, 115, 84, .1),
-    100: Color.fromRGBO(237, 115, 84, .2),
-    200: Color.fromRGBO(237, 115, 84, .3),
-    300: Color.fromRGBO(237, 115, 84, .4),
-    400: Color.fromRGBO(237, 115, 84, .5),
-    500: Color.fromRGBO(237, 115, 84, .6),
-    600: Color.fromRGBO(237, 115, 84, .7),
-    700: Color.fromRGBO(237, 115, 84, .8),
+  static const MaterialColor primary = MaterialColor(0xffEEC083, {
+    50: Color.fromRGBO(238, 192, 131, .1),
+    100: Color.fromRGBO(238, 192, 131, .2),
+    200: Color.fromRGBO(238, 192, 131, .3),
+    300: Color.fromRGBO(238, 192, 131, .4),
+    400: Color.fromRGBO(238, 192, 131, .5),
+    500: Color.fromRGBO(238, 192, 131, .6),
+    600: Color.fromRGBO(238, 192, 131, .7),
+    700: Color.fromRGBO(238, 192, 131, .8),
   });
 }

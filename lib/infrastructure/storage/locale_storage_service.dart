@@ -15,4 +15,13 @@ class LocaleStorageService {
   int? getInt(String key) {
     return _prefs.getInt(key);
   }
+
+  /// String methods
+  void saveString(String key, String value) {
+    _prefs.setString(key, value);
+  }
+
+  String getString(String key) {
+    return _prefs.getString(key) ?? '';
+  }
 }

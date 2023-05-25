@@ -10,6 +10,7 @@ import 'package:inside_out/views/buttons/app_settings_button.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -19,62 +20,63 @@ class HistoryPage extends StatelessWidget {
     final NavigationService navigationService = Provider.of<NavigationService>(context);
     final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
     return PageWrapper(
-        background: paletteColors.primary,
-        showAppBar: kIsWeb,
-        isMainPage: true,
-        appBarName: kIsWeb ? 'History Page (miss translation)' : null, //TODO
-        onPop: () {
-          navigationService.goBack();
-          navigationService.closeView();
-        },
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: Dimens.paddingXLarge),
-                child: Row(
+      background: paletteColors.primary,
+      showAppBar: kIsWeb,
+      isMainPage: true,
+      appBarName: kIsWeb ? 'History Page (miss translation)' : null, //TODO
+      onPop: () {
+        navigationService.goBack();
+        navigationService.closeView();
+      },
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: Dimens.paddingXLarge),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(width: Dimens.paddingXLarge),
+                  Expanded(
+                    child: AppText(
+                      translate('history'),
+                      type: TextTypes.titleBold,
+                      color: paletteColors.textAppBar,
+                    ),
+                  ),
+                  const AppSettingsButton(),
+                  const SizedBox(width: Dimens.paddingLarge),
+                ],
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(Dimens.radiusXLarge),
+                  topRight: Radius.circular(Dimens.radiusXLarge),
+                ),
+                color: paletteColors.background,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(Dimens.paddingXLarge),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(width: Dimens.paddingXLarge),
-                    Expanded(
-                      child: AppText(
-                        translate('history'),
-                        type: TextTypes.titleBold,
-                        color: paletteColors.textAppBar,
-                      ),
-                    ),
-                    const AppSettingsButton(),
-                    const SizedBox(width: Dimens.paddingLarge),
+                    /// The random key is important to refresh it every time and get refresh
+                    /// after change theme
+                    CalendarView(key: Key(const Uuid().v4())),
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity,
-                constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(Dimens.radiusXLarge),
-                    topRight: Radius.circular(Dimens.radiusXLarge),
-                  ),
-                  color: paletteColors.background,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(Dimens.paddingXLarge),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// The new prefix is important to refresh it every time and get refresh
-                      /// after change theme
-                      new CalendarView(),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -30,7 +30,7 @@ class WelcomePage extends StatelessWidget {
               child: Center(
                 child: ImageView(
                   'logo.png',
-                  height: Dimens.iconXLarge,
+                  height: Dimens.iconXXXLarge,
                 ),
               ),
             ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inside_out/features/history/domain/event.dart';
+import 'package:inside_out/domain/event.dart';
 import 'package:inside_out/features/history/views/calendar_provider.dart';
 import 'package:inside_out/features/history/views/event_view.dart';
 import 'package:inside_out/infrastructure/language_service.dart';
