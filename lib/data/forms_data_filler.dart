@@ -50,8 +50,20 @@ class FormsDataFiller {
       ],
     );
 
+    AppForm forgotPasswordForm = AppForm(
+      id: FormId.forgotPasswordFormId,
+      actionText: 'recover_password',
+      questions: [
+        FreeTextQuestion(
+          title: 'email',
+          id: 'e21e1f6b-111b-4b55-af24-21ce754589e7',
+        ),
+      ],
+    );
+
     ///Adding forms
     database.addForm(loginForm);
     database.addForm(signUpForm);
+    database.addForm(forgotPasswordForm);
   }
 }

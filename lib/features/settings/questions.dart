@@ -8,13 +8,6 @@ enum SettingsFormQuestion {
   sendFeedback,
 }
 
-FreeTextQuestion sendFeedbackQuestionForm = FreeTextQuestion(
-  title: 'send_feedback_title',
-  id: SettingsFormQuestion.sendFeedback.name,
-  longText: true,
-  mandatory: false,
-);
-
 SingleSelectionQuestion selectLanguageQuestionForm = SingleSelectionQuestion(
   id: SettingsFormQuestion.selectLanguage.name,
   title: 'selected_language',

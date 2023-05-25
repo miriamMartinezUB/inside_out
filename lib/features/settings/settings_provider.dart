@@ -4,6 +4,7 @@ import 'package:inside_out/features/settings/questions.dart';
 import 'package:inside_out/infrastructure/auth_service.dart';
 import 'package:inside_out/infrastructure/language_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsProvider extends ChangeNotifier {
   final LanguageService languageService;
@@ -12,8 +13,6 @@ class SettingsProvider extends ChangeNotifier {
 
   SingleSelectionQuestion _selectLanguageQuestion = selectLanguageQuestionForm;
   SingleSelectionQuestion _selectThemeQuestion = selectThemeQuestionForm;
-  FreeTextQuestion _sendFeedbackQuestion = sendFeedbackQuestionForm;
-  String _feedback = '';
 
   SettingsProvider({
     required this.languageService,
@@ -23,8 +22,6 @@ class SettingsProvider extends ChangeNotifier {
     _setSelectLanguageQuestion(languageService.currentLanguageCode);
     _setSelectThemeQuestion(themeService.themePreference.name);
   }
-
-  set feedback(String newFeedback) => _feedback = newFeedback;
 
   SingleSelectionQuestion get selectLanguageQuestion => _selectLanguageQuestion;
 
@@ -52,16 +49,14 @@ class SettingsProvider extends ChangeNotifier {
     _selectThemeQuestion = _selectThemeQuestion.copyWith(selectedValue: value);
   }
 
-  FreeTextQuestion get sendFeedbackQuestion => _sendFeedbackQuestion;
-
-  void sendFeedback() {
-    //TODO send email
-    // Clear feedback
-    _setSendFeedbackQuestion('');
-    notifyListeners();
+  Future<void> sendEmail() async {
+    String urlString = 'mailto:miriam.app.service@gmail.com';
+    if (await canLaunchUrlString(urlString)) {
+      launchUrlString(urlString);
+    }else{
+      throw FlutterError('Invalid url');
+    }
   }
-
-  void _setSendFeedbackQuestion(String value) => _sendFeedbackQuestion = _sendFeedbackQuestion.copyWith(value: value);
 
   Future<void> logout() async {
     await authService.logout();

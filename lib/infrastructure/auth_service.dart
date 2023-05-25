@@ -30,6 +30,14 @@ class AuthService {
     await _firebaseAuth.currentUser?.delete();
   }
 
+  Future<void> recoverPassword(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on auth.FirebaseAuthException catch (e) {
+      throw _determineError(e);
+    }
+  }
+
   Future<User> signInWithEmailAndPassword({
     required String email,
     required String password,
@@ -88,7 +96,7 @@ class AuthService {
         return AuthError.weakPassword;
       case 'ERROR_MISSING_GOOGLE_AUTH_TOKEN':
       default:
-        return AuthError.error;
+        return AuthError.emptyFields;
     }
   }
 }
@@ -103,5 +111,5 @@ enum AuthError {
   invalidCredential,
   operationNotAllowed,
   weakPassword,
-  error,
+  emptyFields,
 }

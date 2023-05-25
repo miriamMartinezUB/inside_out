@@ -192,7 +192,7 @@ class _CardActivity extends CardActivity {
                   color: paletteColors.shadow,
                   blurRadius: 2.5,
                   spreadRadius: 0.5,
-                  offset: const Offset(2, 3),
+                  offset: const Offset(2, 4),
                 ),
               ],
             ),

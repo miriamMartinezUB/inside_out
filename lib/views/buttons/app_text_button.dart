@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
+import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
@@ -21,22 +22,26 @@ class AppTextButton extends StatelessWidget {
         overlayColor: MaterialStateProperty.all(
           Provider.of<ThemeService>(context).paletteColors.secondary.withOpacity(0.5),
         ),
+        padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
       ),
       onPressed: onTap,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null)
+          if (icon != null) ...[
             Icon(
               icon,
               color: color,
             ),
+            const SizedBox(width: Dimens.paddingSmall)
+          ],
           Flexible(
             child: AppText(
               shouldTranslate ? translate(text) : text,
               type: TextTypes.body,
               color: color,
-              align: TextAlign.center,
+              align: TextAlign.start,
             ),
           ),
         ],

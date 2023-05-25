@@ -61,7 +61,7 @@ class WelcomePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(
-                        height: Dimens.paddingLarge,
+                        width: Dimens.paddingSmall,
                       ),
                       AppTextButton(
                         text: 'sign_up',

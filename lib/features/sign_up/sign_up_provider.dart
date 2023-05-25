@@ -17,9 +17,8 @@ class SignUpProvider extends ChangeNotifier {
         (form.questions.firstWhere((element) => element.title == 'repeat_password') as FreeTextQuestion).value ?? '';
     try {
       await authService.createUserWithEmailAndPassword(
-          email: email, password: password, repeatedPassword: repeatedPassword, name: name);
+          email: email.trim(), password: password, repeatedPassword: repeatedPassword, name: name.trim());
     } on AuthError catch (e) {
-      print(e.toString());
       switch (e) {
         case AuthError.emailAlreadyInUse:
           throw Exception('Este email ya se encuentra en uso -miss translation');
@@ -30,7 +29,7 @@ class SignUpProvider extends ChangeNotifier {
         case AuthError.weakPassword:
           throw Exception(
               'La seguridd de la contraseña es muy debil pruebe con una que contenga minimo una mayuscula, una minuscula, un numero y un caracter -miss translation');
-        case AuthError.error:
+        case AuthError.emptyFields:
           throw Exception('Los campos obligatorios no pueden estar vacios -miss translation');
         default:
           throw Exception('Ha ocurrido un error, intentalo más adelante -miss translation');

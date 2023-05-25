@@ -9,9 +9,9 @@ import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/resources/routes.dart';
-import 'package:inside_out/views/buttons/app_button.dart';
 import 'package:inside_out/views/buttons/app_text_button.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
+import 'package:inside_out/views/show_my_dialog.dart';
 import 'package:inside_out/views/wave_shape_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -24,6 +24,7 @@ class SettingsPage extends StatelessWidget {
     final LanguageService languageService = Provider.of<LanguageService>(context);
     final ThemeService themeService = Provider.of<ThemeService>(context);
     final AuthService authService = Provider.of<AuthService>(context);
+    final NavigationService navigationService = Provider.of<NavigationService>(context, listen: false);
     final PaletteColors paletteColors = themeService.paletteColors;
     final SettingsProvider settingsProvider = SettingsProvider(
       languageService: languageService,
@@ -63,23 +64,16 @@ class SettingsPage extends StatelessWidget {
                             onChange: (value) => settingsProvider.setTheme(value),
                           ),
                           const SizedBox(height: Dimens.paddingLarge),
-                          StructureQuestionView(
-                            question: settingsProvider.sendFeedbackQuestion,
-                            onChange: (value) => settingsProvider.feedback = value,
-                          ),
-                          const SizedBox(height: Dimens.paddingLarge),
-                          AppButton(
-                            text: translate('send_feedback_button'),
-                            onTap: () {
-                              //TODO show dialog or snack bar
-                              settingsProvider.sendFeedback();
-                              //TODO disabled if feedback is null or empty
+                          AppTextButton(
+                            text: translate('send_feedback'),
+                            icon: Icons.email_rounded,
+                            onTap: () async {
+                              await settingsProvider.sendEmail();
                             },
                           ),
                           const SizedBox(height: Dimens.paddingLarge),
                           AppTextButton(
                             text: translate('logout'),
-                            color: paletteColors.textError,
                             icon: Icons.logout_rounded,
                             onTap: () async {
                               await settingsProvider.logout();
@@ -91,9 +85,24 @@ class SettingsPage extends StatelessWidget {
                             color: paletteColors.textError,
                             icon: Icons.delete,
                             onTap: () {
-                              //TODO show dialog or snack bar
-                              settingsProvider.deleteAccount();
-                              Provider.of<NavigationService>(context, listen: false).replace(Routes.initialRoute);
+                              ShowMyDialog(
+                                  title: '¿Estas seguro que quieres eliminar tu cuenta? - miss translation',
+                                  text: 'Se eliminaran todos tus datos si continus - miss translation',
+                                  actions: [
+                                    ContentAction(
+                                      textAction: 'accept',
+                                      onPress: () async {
+                                        await settingsProvider.deleteAccount();
+                                        navigationService.replace(Routes.initialRoute);
+                                      },
+                                    ),
+                                    ContentAction(
+                                      textAction: 'cancel',
+                                      onPress: () async {
+                                        navigationService.closeView();
+                                      },
+                                    ),
+                                  ]).show(context);
                             },
                           ),
                           const SizedBox(height: Dimens.paddingLarge),

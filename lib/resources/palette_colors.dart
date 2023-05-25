@@ -21,7 +21,7 @@ class PaletteColorsLight extends PaletteColors {
     textButton = const Color(0xffffffff);
     icons = const Color(0xffffffff);
     textAppBar = const Color(0xffffffff);
-    background = const Color(0xfffefdf9);
+    background = const Color(0xfffbf7ee);
     text = const Color(0xff242e37);
     textSubtitle = const Color(0xff3f484f);
     card = const Color(0xffffffff);

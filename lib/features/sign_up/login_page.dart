@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
                     try {
                       await loginProvider.logIn(form);
                       navigationService.navigateTo(Routes.home);
-                    } on Exception catch (e) {
+                    } catch (e) {
                       ShowMyDialog(title: 'Error - miss translation', text: e.toString()).show(context);
                     }
                   },
