@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
+import 'package:inside_out/domain/activity_answer.dart';
 import 'package:inside_out/features/common/activity/activity_stepper_provider.dart';
 import 'package:inside_out/features/common/form/form_builder_view.dart';
 import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
@@ -7,13 +9,18 @@ import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/views/buttons/app_back_button.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
+import 'package:inside_out/views/show_my_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class ActivityStepperPageArgs {
   final String activityId;
+  final Function(ActivityAnswer activityAnswer)? onFinish;
 
-  ActivityStepperPageArgs({required this.activityId});
+  ActivityStepperPageArgs({
+    required this.activityId,
+    this.onFinish,
+  });
 }
 
 class ActivityStepperPage extends StatelessWidget {
@@ -59,8 +66,12 @@ class ActivityStepperPage extends StatelessWidget {
                         form: activityStepperProvider.steps[currentIndexStep].form,
                         onAction: (appForm) {
                           if (currentIndexStep == activityStepperProvider.steps.length - 1) {
-                            //TODO
-                            Provider.of<NavigationService>(context, listen: false).goBack();
+                            try {
+                              activityStepperPageArgs.onFinish?.call(activityStepperProvider.activityAnswer);
+                              Provider.of<NavigationService>(context, listen: false).goBack();
+                            } catch (e) {
+                              ShowMyDialog(title: translate('error'), text: e.toString()).show(context);
+                            }
                           } else {
                             activityStepperProvider.setActivity(appForm);
                             activityStepperProvider.setCurrentStep(currentIndexStep + 1);

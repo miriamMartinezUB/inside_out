@@ -2,20 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:inside_out/domain/question/question.dart';
+import 'package:inside_out/domain/content/simple_text.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/views/texts.dart';
 
 class SimpleTextView extends StatelessWidget {
   final List<SimpleText> simpleTexts;
   final TextAlign textAlign;
-  final TextTypes textType;
+  final TextTypes textTypeContent;
+  final TextTypes textTypeTitle;
 
   const SimpleTextView(
     this.simpleTexts, {
     Key? key,
     this.textAlign = TextAlign.start,
-    this.textType = TextTypes.body,
+    this.textTypeContent = TextTypes.body,
+    this.textTypeTitle = TextTypes.title,
   }) : super(key: key);
 
   @override
@@ -29,20 +31,28 @@ class SimpleTextView extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText(
-              translate(simpleTexts[index].text),
-              align: textAlign,
-              type: textType,
-            ),
-            if (simpleTexts[index].bulletPoints != null || simpleTexts[index].bulletPoints!.isNotEmpty)
+            if (simpleTexts[index].title != null)
+              AppText(
+                translate(simpleTexts[index].title!),
+                align: textAlign,
+                type: textTypeTitle,
+              ),
+            if (simpleTexts[index].text != null)
+              AppText(
+                translate(simpleTexts[index].text!),
+                align: textAlign,
+                type: textTypeContent,
+              ),
+            if (simpleTexts[index].bulletPoints != null && simpleTexts[index].bulletPoints!.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: Dimens.paddingLarge),
                 child: BulletPoints(
-                  simpleTexts[index].bulletPoints!,
-                  textType: textType,
+                  (simpleTexts[index].bulletPoints!),
+                  textType: textTypeContent,
                   textAlign: textAlign,
                 ),
-              )
+              ),
+            if (index < simpleTexts.length - 1) const SizedBox(height: Dimens.paddingLarge),
           ],
         );
       },
@@ -58,8 +68,8 @@ class BulletPoints extends StatelessWidget {
   const BulletPoints(
     this.bulletPoints, {
     Key? key,
-    this.textAlign = TextAlign.start,
-    this.textType = TextTypes.body,
+    required this.textAlign,
+    required this.textType,
   }) : super(key: key);
 
   @override
@@ -78,7 +88,7 @@ class BulletPoints extends StatelessWidget {
               align: textAlign,
               type: textType,
             ),
-            if (bulletPoints[index].children != null || bulletPoints[index].children!.isNotEmpty)
+            if (bulletPoints[index].children != null && bulletPoints[index].children!.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: Dimens.paddingLarge),
                 child: ChildBulletPoints(
@@ -102,8 +112,8 @@ class ChildBulletPoints extends StatelessWidget {
   const ChildBulletPoints(
     this.children, {
     Key? key,
-    this.textAlign = TextAlign.start,
-    this.textType = TextTypes.body,
+    required this.textAlign,
+    required this.textType,
   }) : super(key: key);
 
   @override

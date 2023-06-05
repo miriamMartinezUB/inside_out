@@ -7,6 +7,7 @@ import 'package:inside_out/features/common/form/views/structure_question_view.da
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/views/buttons/app_button.dart';
+import 'package:inside_out/views/show_my_dialog.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
@@ -74,7 +75,23 @@ class FormBuilderView extends StatelessWidget {
                       AppButton(
                         text: formProvider.form!.actionText,
                         shouldTranslate: true,
-                        onTap: () => onAction!(formProvider.form!),
+                        onTap: () {
+                          List<String> errorMessages = [];
+                          bool valid = true;
+                          for (var element in formProvider.form!.questions) {
+                            valid = valid && element.isValid;
+                            errorMessages.add(element.errorMessage);
+                          }
+                          String errorMessage = '';
+                          errorMessages
+                              .toSet()
+                              .forEach((element) => errorMessage = '$errorMessage${translate(element)}\n');
+                          if (valid) {
+                            onAction!(formProvider.form!);
+                          } else {
+                            ShowMyDialog(title: translate('error'), text: errorMessage).show(context);
+                          }
+                        },
                       ),
                     ]
                   ],

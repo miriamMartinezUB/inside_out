@@ -1,10 +1,19 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:inside_out/domain/event.dart';
+import 'package:inside_out/domain/user.dart';
+import 'package:inside_out/infrastructure/firebase/firebase_service.dart';
+import 'package:inside_out/infrastructure/storage/locale_storage_service.dart';
+import 'package:inside_out/infrastructure/storage/remote/event_storage.dart';
+import 'package:inside_out/resources/storage_keys.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarProvider extends ChangeNotifier {
+  final FirebaseService firebaseService;
+  final LocaleStorageService localeStorageService;
+  late final EventsStorage _eventsStorage;
   late List<Event> selectedEvents;
   late LinkedHashMap<DateTime, List<Event>> _events;
   late DateTime _firstDay;
@@ -12,24 +21,23 @@ class CalendarProvider extends ChangeNotifier {
   CalendarFormat calendarFormat = CalendarFormat.month;
   DateTime focusedDay = DateTime.now();
   DateTime selectedDay = DateTime.now();
+  bool loading = true;
 
   final DateTime _today = DateTime.now();
 
-  CalendarProvider() {
-    // TODO: change _firstDay for the day of register of user
-    _firstDay = DateTime(2023, 1, 1);
-    _events = _getEvents();
-    selectedEvents = getEventsForDay(selectedDay);
+  CalendarProvider({
+    required this.firebaseService,
+    required this.localeStorageService,
+  }) {
+    User user = User.fromJson(jsonDecode(localeStorageService.getString(StorageKeys.keyUser)));
+    _eventsStorage = EventsStorage(firebaseService: firebaseService, localeStorageService: localeStorageService);
+    _firstDay = user.registerDay;
+    _getEvents();
   }
 
   DateTime get firstDay => _firstDay;
 
   set firstDay(value) => _firstDay = value;
-
-  List<Event> getEventsForDay(DateTime day) {
-    return _events[day] ?? [];
-  }
-
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(this.selectedDay, selectedDay)) {
       this.selectedDay = selectedDay;
@@ -46,48 +54,25 @@ class CalendarProvider extends ChangeNotifier {
     }
   }
 
-  LinkedHashMap<DateTime, List<Event>> _getEvents() {
-    return LinkedHashMap<DateTime, List<Event>>(
+  Future<void> _getEvents() async {
+    List<Event> events = await _eventsStorage.all;
+    List<DateTime> days = [];
+    DateTime startDay = _firstDay;
+    while (!isSameDay(startDay, DateTime.now().add(const Duration(days: 1)))) {
+      days.add(startDay);
+      startDay = startDay.add(const Duration(days: 1));
+    }
+    _events = LinkedHashMap<DateTime, List<Event>>(
       equals: isSameDay,
       hashCode: _getHashCode,
-    )..addAll(
-        {
-          for (var item in List.generate(50, (index) => index))
-            DateTime.utc(_firstDay.year, _firstDay.month, item * 5): List.generate(
-              item % 4 + 1,
-              (index) => EventThoughtDiary(
-                id: item.toString(),
-                dateTime: DateTime.now(),
-                emotions: ['ansiedad', 'insegura', 'example', 'example', 'example', 'example'],
-                behaviours: ['insomnio', 'aumento de ritmo cardiaco'],
-                bodySensations: ['tension muscular'],
-                thingsToImprove: ['ejemplo', 'ejemplo'],
-                reason: 'No he gestionado bien el tiempo, y quizas no acabo el tfg',
-              ),
-            )
-        }..addAll({
-            //TODO change for real data
-            _today: [
-              EventForgivenessDiet(
-                id: '1',
-                dateTime: DateTime.now(),
-                forgivenessPhrases: [
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sagittis lobortis turpis, eget rutrum nisl. Nullam eu nibh eget dui malesuada commodo mollis auctor libero.',
-                  'Quisque feugiat mi ac ex viverra pellentesque.'
-                ],
-              ),
-              EventPrioritisingPrinciples(
-                id: '2',
-                dateTime: DateTime.now(),
-                principlesAndValues: [
-                  'transparencia',
-                  'respeto',
-                  'coherencia',
-                ],
-              ),
-            ],
-          }),
-      );
+    )..addAll({for (DateTime day in days) day: events.where((element) => isSameDay(day, element.dateTime)).toList()});
+    selectedEvents = getEventsForDay(selectedDay);
+    loading = false;
+    notifyListeners();
+  }
+
+  List<Event> getEventsForDay(DateTime day) {
+    return _events[day] ?? [];
   }
 
   int _getHashCode(DateTime key) {

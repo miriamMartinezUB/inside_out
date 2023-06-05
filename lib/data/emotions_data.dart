@@ -65,7 +65,7 @@ final Map<String, List<String>> _tertiaryEmotionsSurpriseMap = {
 
 final Map<String, List<String>> _tertiaryEmotionsDisgustMap = {
   'critical': ['sarcastic', 'sceptical'],
-  'disapproving': ['judgmental', 'hateful'],
+  'disapproving': ['judgmental', 'abhorred'],
   'disappointed': ['repugnant', 'rebellious'],
   'terrible': ['repulsive', 'detestable'],
   'avoidant': ['aversive', 'indecisive'],

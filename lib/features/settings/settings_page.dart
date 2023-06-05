@@ -3,8 +3,10 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/features/common/form/views/structure_question_view.dart';
 import 'package:inside_out/features/settings/settings_provider.dart';
 import 'package:inside_out/infrastructure/auth_service.dart';
+import 'package:inside_out/infrastructure/firebase/firebase_service.dart';
 import 'package:inside_out/infrastructure/language_service.dart';
 import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
+import 'package:inside_out/infrastructure/storage/locale_storage_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
@@ -22,6 +24,8 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LanguageService languageService = Provider.of<LanguageService>(context);
+    final FirebaseService firebaseService = Provider.of<FirebaseService>(context);
+    final LocaleStorageService localeStorageService = Provider.of<LocaleStorageService>(context);
     final ThemeService themeService = Provider.of<ThemeService>(context);
     final AuthService authService = Provider.of<AuthService>(context);
     final NavigationService navigationService = Provider.of<NavigationService>(context, listen: false);
@@ -29,7 +33,9 @@ class SettingsPage extends StatelessWidget {
     final SettingsProvider settingsProvider = SettingsProvider(
       languageService: languageService,
       themeService: themeService,
+      firebaseService: firebaseService,
       authService: authService,
+      localeStorageService: localeStorageService,
     );
     return ChangeNotifierProvider<SettingsProvider>(
       create: (BuildContext context) => settingsProvider,
@@ -42,7 +48,7 @@ class SettingsPage extends StatelessWidget {
               children: [
                 WaveShapeAppBar(
                   key: Key(const Uuid().v4()),
-                  title: 'Settings miss translation',
+                  title: 'settings',
                   imagePath: 'settings.png',
                   isMainPage: false,
                 ),
@@ -56,12 +62,12 @@ class SettingsPage extends StatelessWidget {
                         children: [
                           StructureQuestionView(
                             question: settingsProvider.selectLanguageQuestion,
-                            onChange: (value) => settingsProvider.setLanguage(value),
+                            onChange: (value) async => await settingsProvider.setLanguage(value),
                           ),
                           const SizedBox(height: Dimens.paddingLarge),
                           StructureQuestionView(
                             question: settingsProvider.selectThemeQuestion,
-                            onChange: (value) => settingsProvider.setTheme(value),
+                            onChange: (value) async => await settingsProvider.setTheme(value),
                           ),
                           const SizedBox(height: Dimens.paddingLarge),
                           AppTextButton(

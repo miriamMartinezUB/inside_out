@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
+import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/views/buttons/app_text_button.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
@@ -19,12 +20,13 @@ class ShowMyDialog {
   });
 
   Future<void> show(BuildContext context) async {
-    _colorActions = Provider.of<ThemeService>(context, listen: false).paletteColors.active;
+    final PaletteColors paletteColors = Provider.of<ThemeService>(context, listen: false).paletteColors;
+    _colorActions = paletteColors.active;
     List<ContentAction>? actions = this.actions;
 
     actions ??= [
       ContentAction(
-        textAction: 'accept - miss translation',
+        textAction: 'accept',
         onPress: () {
           Provider.of<NavigationService>(context, listen: false).closeView();
         },
@@ -38,6 +40,7 @@ class ShowMyDialog {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: paletteColors.card,
           title: title == null
               ? null
               : AppText(
@@ -46,7 +49,7 @@ class ShowMyDialog {
                 ),
           content: AppText(
             text,
-            type: TextTypes.smallBody,
+            type: TextTypes.smallBodyLight,
           ),
           actions: customActions,
         );

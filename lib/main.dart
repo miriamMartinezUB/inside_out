@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LanguageService languageService = infrastructureSetup.languageService;
-// TODO si esta autenticado poner sus preferencias
     return MultiProvider(
       providers: infrastructureSetup.getProviders(context),
       child: MaterialApp(

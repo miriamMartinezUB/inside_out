@@ -4,7 +4,8 @@ import 'package:inside_out/domain/event.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
-import 'package:inside_out/utils/dateFormat.dart';
+import 'package:inside_out/utils/date_format.dart';
+import 'package:inside_out/views/list_section_view.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
@@ -24,13 +25,18 @@ class CardEventView extends StatelessWidget {
     if (event is EventThoughtDiary) {
       child = _EventThoughtDiaryView(event: event as EventThoughtDiary);
     } else if (event is EventForgivenessDiet) {
-      child = EventSection(
+      child = ListSectionView(
         title: 'forgiveness_phrases',
         items: (event as EventForgivenessDiet).forgivenessPhrases,
         axis: Axis.vertical,
       );
     } else if (event is EventPrioritisingPrinciples) {
-      child = EventSection(title: 'principles_list', items: (event as EventPrioritisingPrinciples).principlesAndValues);
+      child = Column(
+        children: [
+          ListSectionView(title: 'principles_list', items: (event as EventPrioritisingPrinciples).principles),
+          ListSectionView(title: 'values_list', items: (event as EventPrioritisingPrinciples).values),
+        ],
+      );
     } else {
       throw FlutterError('Event of type ${event.runtimeType} is not implemented');
     }
@@ -97,12 +103,12 @@ class _EventThoughtDiaryViewState extends State<_EventThoughtDiaryView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EventSection(title: 'day_emotions', items: widget.event.emotions),
+        ListSectionView(title: 'day_emotions', items: widget.event.emotions),
         if (expanded) ...[
           const SizedBox(height: Dimens.paddingMedium),
-          EventSection(title: 'body_sensations', items: widget.event.bodySensations),
+          ListSectionView(title: 'body_sensations', items: widget.event.bodySensations),
           const SizedBox(height: Dimens.paddingMedium),
-          EventSection(title: 'behaviours', items: widget.event.behaviours),
+          ListSectionView(title: 'behaviours', items: widget.event.behaviours),
           const SizedBox(height: Dimens.paddingMedium),
           AppText(
             translate('reason'),
@@ -110,14 +116,15 @@ class _EventThoughtDiaryViewState extends State<_EventThoughtDiaryView> {
             type: TextTypes.smallBodyMedium,
           ),
           const SizedBox(height: Dimens.paddingMedium),
-          ListItem(text: widget.event.reason),
-          if (widget.event.thingsToImprove != null) ...[
+          ListItemView(text: widget.event.reason),
+          if (widget.event.thingsToChange != null) ...[
             const SizedBox(height: Dimens.paddingMedium),
-            EventSection(title: 'things_to_improve', items: widget.event.thingsToImprove!),
+            ListSectionView(title: 'things_to_improve', items: widget.event.thingsToChange!),
           ]
         ],
         Center(
           child: IconButton(
+            padding: EdgeInsets.zero,
             onPressed: () {
               setState(() {
                 expanded = !expanded;
@@ -131,96 +138,6 @@ class _EventThoughtDiaryViewState extends State<_EventThoughtDiaryView> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class EventSection extends StatelessWidget {
-  final String title;
-  final List items;
-  final Axis axis;
-
-  const EventSection({
-    Key? key,
-    required this.title,
-    required this.items,
-    this.axis = Axis.horizontal,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AppText(
-          translate(title),
-          color: paletteColors.textButton,
-          type: TextTypes.smallBodyMedium,
-        ),
-        const SizedBox(height: Dimens.paddingMedium),
-        SizedBox(
-          height: axis == Axis.horizontal ? 42 : null,
-          child: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: axis,
-            primary: false,
-            shrinkWrap: true,
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(
-                  bottom: axis == Axis.horizontal
-                      ? 0
-                      : index == items.length - 1
-                          ? 0
-                          : Dimens.paddingMedium,
-                  right: axis == Axis.vertical
-                      ? 0
-                      : index == items.length - 1
-                          ? 0
-                          : Dimens.paddingMedium,
-                ),
-                child: ListItem(text: items[index]),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class ListItem extends StatelessWidget {
-  final String text;
-  final bool shouldTranslate;
-
-  const ListItem({
-    super.key,
-    required this.text,
-    this.shouldTranslate = true,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeService themeService = Provider.of<ThemeService>(context);
-    final PaletteColors paletteColors = themeService.paletteColors;
-
-    return Container(
-      padding: const EdgeInsets.all(Dimens.paddingMedium),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Dimens.radiusXLarge),
-        color: paletteColors.card,
-      ),
-      child: Container(
-        margin: const EdgeInsets.all(Dimens.paddingSmall),
-        child: AppText(
-          shouldTranslate ? translate(text) : text,
-          color: themeService.themePreference == ThemePreference.light ? paletteColors.active : paletteColors.text,
-          type: TextTypes.tinyBody,
-        ),
-      ),
     );
   }
 }

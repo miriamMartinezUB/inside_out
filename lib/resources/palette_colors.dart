@@ -4,8 +4,8 @@ class PaletteColors {
   Color primary = const Color(0xffEEC083);
   Color secondary = const Color(0xfffdedcb);
   Color active = const Color(0xffD19136);
-  Color inactive = const Color(0xffD9D9D9);
   Color textError = Colors.red.shade400;
+  late Color inactive;
   late Color shadow;
   late Color textButton;
   late Color icons;
@@ -18,6 +18,7 @@ class PaletteColors {
 
 class PaletteColorsLight extends PaletteColors {
   PaletteColorsLight() {
+    inactive = const Color(0xffD9D9D9);
     textButton = const Color(0xffffffff);
     icons = const Color(0xffffffff);
     textAppBar = const Color(0xffffffff);
@@ -31,6 +32,7 @@ class PaletteColorsLight extends PaletteColors {
 
 class PaletteColorsDark extends PaletteColors {
   PaletteColorsDark() {
+    inactive = Colors.grey;
     textButton = const Color(0xff242e37);
     icons = const Color(0xff242e37);
     textAppBar = const Color(0xff242e37);

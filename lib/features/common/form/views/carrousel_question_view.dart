@@ -1,14 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/domain/question/carrousel_question.dart';
 import 'package:inside_out/features/common/form/views/checkbox_question_view.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
-import 'package:inside_out/views/image_view.dart';
-import 'package:inside_out/views/texts.dart';
+import 'package:inside_out/views/carrousel_header_view.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class CarrouselQuestionView extends StatefulWidget {
   final List<CarrouselQuestionItem> items;
@@ -37,11 +36,13 @@ class _CarrouselQuestionViewState extends State<CarrouselQuestionView> {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
+      key: Key(const Uuid().v4()),
       options: CarouselOptions(
         enableInfiniteScroll: false,
         viewportFraction: 1,
         aspectRatio: 0.57,
         scrollPhysics: const BouncingScrollPhysics(),
+        initialPage: currentIndex,
         onPageChanged: (int index, CarouselPageChangedReason reason) {
           if (index >= 0 && index <= widget.items.length - 1) {
             setState(() {
@@ -55,47 +56,23 @@ class _CarrouselQuestionViewState extends State<CarrouselQuestionView> {
         (index) {
           return Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      size: Dimens.iconMedium,
-                      color: currentIndex == 0 ? paletteColors.inactive : paletteColors.primary,
-                    ),
-                    onPressed: currentIndex == 0
-                        ? null
-                        : () {
-                            setState(() {
-                              currentIndex = currentIndex - 1;
-                            });
-                          },
-                  ),
-                  ImageView(
-                    widget.items[currentIndex].imagePath,
-                    height: Dimens.iconXXLarge,
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.arrow_forward_ios,
-                      size: Dimens.iconMedium,
-                      color: currentIndex == widget.items.length - 1 ? paletteColors.inactive : paletteColors.primary,
-                    ),
-                    onPressed: currentIndex == widget.items.length - 1
-                        ? null
-                        : () {
-                            setState(() {
-                              currentIndex = currentIndex + 1;
-                            });
-                          },
-                  ),
-                ],
-              ),
-              AppText(
-                translate(widget.items[currentIndex].title),
-                align: TextAlign.center,
-                color: widget.items[currentIndex].color,
+              CarrouselHeaderView(
+                title: widget.items[currentIndex].title,
+                colorTitle: widget.items[currentIndex].color,
+                imagePath: widget.items[currentIndex].imagePath,
+                sizeImage: Dimens.iconXXLarge,
+                isLeftIconDisabled: currentIndex == 0,
+                onPressLeftIcon: () {
+                  setState(() {
+                    currentIndex = currentIndex - 1;
+                  });
+                },
+                isRightIconDisabled: currentIndex == widget.items.length - 1,
+                onPressRightIcon: () {
+                  setState(() {
+                    currentIndex = currentIndex + 1;
+                  });
+                },
               ),
               const SizedBox(height: Dimens.paddingLarge),
               CheckBoxQuestionView(

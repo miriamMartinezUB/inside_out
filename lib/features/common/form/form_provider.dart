@@ -31,6 +31,8 @@ class FormProvider extends ChangeNotifier {
             values.add(value);
           }
           newQuestion = question.copyWith(selectedValues: values);
+        } else if (question is PrioritisationListQuestion) {
+          newQuestion = question.copyWith(values: value);
         } else if (question is CarrouselQuestion) {
           List<CarrouselQuestionItem> items = [];
           for (CarrouselQuestionItem item in question.items) {

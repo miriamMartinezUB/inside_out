@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:inside_out/domain/user.dart';
 import 'package:inside_out/infrastructure/firebase/firebase_service.dart';
 import 'package:inside_out/infrastructure/storage/locale_storage_service.dart';
+import 'package:inside_out/infrastructure/storage/remote/user_storage.dart';
+import 'package:inside_out/resources/storage_keys.dart';
 
 class AuthService {
   final FirebaseService firebaseService;
@@ -10,9 +14,11 @@ class AuthService {
   AuthService({required this.firebaseService, required this.storageService});
 
   late final auth.FirebaseAuth _firebaseAuth;
+  late final UserStorage _userStorage;
 
   Future<void> init() async {
     _firebaseAuth = firebaseService.firebaseAuth;
+    _userStorage = UserStorage(firebaseService: firebaseService, localeStorageService: storageService);
   }
 
   Stream<bool> get isAuthenticated$ =>
@@ -38,7 +44,7 @@ class AuthService {
     }
   }
 
-  Future<User> signInWithEmailAndPassword({
+  Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -48,17 +54,20 @@ class AuthService {
         password: password,
       );
 
-      return User.fromAuthUser(userCredential.user!);
+      User user = await _userStorage.get(userCredential.user!.uid);
+      _saveAppUser(user);
     } on auth.FirebaseAuthException catch (e) {
       throw _determineError(e);
     }
   }
 
-  Future<User> createUserWithEmailAndPassword({
+  Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
     required String repeatedPassword,
     String? name,
+    String? locale,
+    String? themePreference,
   }) async {
     if (password != repeatedPassword) {
       throw Exception(AuthError.passwordNotEquals);
@@ -69,7 +78,14 @@ class AuthService {
         password: password,
       );
 
-      return User.fromAuthUser(_firebaseAuth.currentUser!, name: name);
+      User user = User.fromAuthUser(
+        _firebaseAuth.currentUser!,
+        name: name,
+        locale: locale,
+        themePreference: themePreference,
+      );
+      _userStorage.add(user);
+      _saveAppUser(user);
     } on auth.FirebaseAuthException catch (e) {
       throw _determineError(e);
     }
@@ -98,6 +114,13 @@ class AuthService {
       default:
         return AuthError.emptyFields;
     }
+  }
+
+  void _saveAppUser(User user) {
+    storageService.saveString(
+      StorageKeys.keyUser,
+      jsonEncode(user.toJson()),
+    );
   }
 }
 

@@ -11,12 +11,14 @@ enum TextTypes {
   subtitleLight,
   subtitle,
   subtitleBold,
+  bodyLight,
   body,
   bodyMedium,
   bodyBold,
   smallBodyLight,
   smallBody,
   smallBodyMedium,
+  tinyBodyLight,
   tinyBody,
 }
 

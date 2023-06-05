@@ -1,31 +1,19 @@
-class Question {
+abstract class Question {
   final String id;
-  final String title;
-  final String? imagePath;
+  final String? title;
   final String? subtitle;
   final bool mandatory;
-  final List<SimpleText>? content;
 
   Question({
     required this.id,
-    required this.title,
-    this.imagePath,
+    this.title,
     this.subtitle,
-    this.content,
     this.mandatory = true,
   });
-}
 
-class SimpleText {
-  final String text;
-  final List<BulletPoint>? bulletPoints;
+  dynamic get answer;
 
-  SimpleText(this.text, {this.bulletPoints});
-}
+  bool get isValid;
 
-class BulletPoint {
-  final String text;
-  final List<String>? children;
-
-  BulletPoint(this.text, {this.children});
+  String get errorMessage => 'mandatory_error';
 }

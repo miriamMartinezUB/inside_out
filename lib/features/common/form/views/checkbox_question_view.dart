@@ -37,7 +37,7 @@ class CheckBoxQuestionView extends StatelessWidget {
             alignment: Alignment.topRight,
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: Dimens.paddingSmall),
+                margin: const EdgeInsets.symmetric(horizontal: Dimens.paddingBase),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimens.radiusXLarge),
                   color: paletteColors.card,

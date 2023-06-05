@@ -23,10 +23,16 @@ class SingleSelectionQuestion extends Question {
   }) =>
       SingleSelectionQuestion(
         id: id,
-        title: title,
+        title: title!,
         values: values,
         selectedValue: selectedValue ?? this.selectedValue,
         subtitle: subtitle,
         mandatory: mandatory,
       );
+
+  @override
+  bool get isValid => (mandatory && selectedValue != null && selectedValue!.isNotEmpty) || !mandatory;
+
+  @override
+  get answer => selectedValue;
 }

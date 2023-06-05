@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inside_out/features/common/form/form_builder_view.dart';
 import 'package:inside_out/features/sign_up/sign_up_provider.dart';
 import 'package:inside_out/infrastructure/auth_service.dart';
+import 'package:inside_out/infrastructure/language_service.dart';
 import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
@@ -20,7 +21,13 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthService authService = Provider.of<AuthService>(context);
     final NavigationService navigationService = Provider.of<NavigationService>(context, listen: false);
-    final SignUpProvider signUpProvider = SignUpProvider(authService);
+    final LanguageService languageService = Provider.of<LanguageService>(context, listen: false);
+    final ThemeService themeService = Provider.of<ThemeService>(context, listen: false);
+    final SignUpProvider signUpProvider = SignUpProvider(
+      authService: authService,
+      languageService: languageService,
+      themeService: themeService,
+    );
     return Provider(
       create: (BuildContext context) => signUpProvider,
       child: PageWrapper(

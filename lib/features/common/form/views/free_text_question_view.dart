@@ -13,6 +13,8 @@ class FreeTextQuestionView extends StatefulWidget {
   final String? hint;
   final Function(String) onChanged;
   final bool isLong;
+  final bool readOnly;
+  final bool canCopyAndPaste;
   final bool isObscureText;
   final int? maxLength;
   final int? minLines;
@@ -21,11 +23,13 @@ class FreeTextQuestionView extends StatefulWidget {
     Key? key,
     required this.onChanged,
     required this.isObscureText,
-    this.initialText,
-    this.hint,
-    this.isLong = false,
-    this.maxLength,
-    this.minLines,
+    required this.initialText,
+    required this.hint,
+    required this.readOnly,
+    required this.isLong,
+    required this.maxLength,
+    required this.minLines,
+    required this.canCopyAndPaste,
   }) : super(key: key);
 
   @override
@@ -55,15 +59,17 @@ class _FreeTextQuestionViewState extends State<FreeTextQuestionView> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      enableInteractiveSelection: widget.canCopyAndPaste,
       controller: _controller,
       style: style,
-      maxLines: widget.isLong ? 5 : 1,
+      maxLines: widget.isLong ? widget.minLines ?? 5 : 1,
       cursorColor: paletteColors.active,
       obscureText: isObscureText,
       maxLength: widget.maxLength,
       minLines: widget.minLines,
       decoration: InputDecoration(
         hintText: translate(widget.hint ?? ''),
+        hintStyle: style,
         focusedBorder: OutlineInputBorder(
           borderRadius: _borderRadius,
           borderSide: BorderSide(

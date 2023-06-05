@@ -30,7 +30,7 @@ class InfrastructureSetup {
     await localeStorageService.init();
     await firebaseService.init();
     await authService.init();
-    await languageService.initDelegate();
+    await languageService.initDelegate(localeStorageService);
     themeService.init();
   }
 

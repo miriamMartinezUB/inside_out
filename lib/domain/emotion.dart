@@ -4,6 +4,26 @@ import 'package:inside_out/domain/question/index.dart';
 
 enum Emotion { sadness, happiness, anger, fear, surprise, disgust }
 
+List<Emotion> getPrimariesEmotions() {
+  return [
+    Emotion.sadness,
+    Emotion.anger,
+    Emotion.fear,
+    Emotion.happiness,
+  ];
+}
+
+extension EmotionFromString on String {
+  Emotion getEmotion() {
+    for (Emotion emotion in getPrimariesEmotions()) {
+      if (emotion.name == this) {
+        return emotion;
+      }
+    }
+    throw FlutterError("Does not exist a primary emotion that correspond to $this");
+  }
+}
+
 extension EmotionsResources on Emotion {
   PrimaryEmotion getPrimaryEmotion() {
     switch (this) {
@@ -114,9 +134,23 @@ class PrimaryEmotion {
   }
 
   List<ValueCheckBox> getCheckBoxTertiaryEmotionsValues() {
+    List<String> saveValue = [];
+    if (emotion == Emotion.disgust) {
+      saveValue.add(Emotion.anger.name);
+      saveValue.add(Emotion.sadness.name);
+    } else if (emotion == Emotion.surprise) {
+      saveValue.add(Emotion.fear.name);
+      saveValue.add(Emotion.happiness.name);
+    } else {
+      saveValue.add(emotion.name);
+    }
     List<ValueCheckBox> values = [];
     _getTertiaryEmotions().forEach((tertiaryEmotion) {
-      values.add(ValueCheckBox(tertiaryEmotion.tertiaryEmotionKey, hint: tertiaryEmotion.descriptionKey));
+      values.add(ValueCheckBox(
+        tertiaryEmotion.tertiaryEmotionKey,
+        hint: tertiaryEmotion.descriptionKey,
+        saveValues: saveValue,
+      ));
     });
     return values;
   }

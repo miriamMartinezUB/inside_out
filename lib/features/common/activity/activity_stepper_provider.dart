@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:inside_out/data/database.dart';
 import 'package:inside_out/domain/activity.dart';
+import 'package:inside_out/domain/activity_answer.dart';
 import 'package:inside_out/domain/emotion.dart';
 import 'package:inside_out/domain/form.dart';
 import 'package:inside_out/domain/question/index.dart';
@@ -22,35 +23,39 @@ class ActivityStepperProvider with ChangeNotifier {
   void setCurrentStep(int step) {
     _currentIndexStep = step;
     ActivityStep activityStep = steps[_currentIndexStep];
-    if (activityStep.form.id == ActivityStepId.thoughtDiaryActivityStep2Id ||
-        activityStep.form.id == ActivityStepId.thoughtDiaryActivityStep3Id) {
+    if (activityStep.form.id == ActivityStepId.thoughtDiaryBodySensations ||
+        activityStep.form.id == ActivityStepId.thoughtDiaryBehaviours) {
       List selectedValues = [];
       for (var item in (steps.first.form.questions.first as CarrouselQuestion).items) {
         selectedValues.addAll(item.selectedValues ?? []);
       }
       List<Emotion> selectedEmotions = _getEmotionsFromSelectedValues(selectedValues);
-      List<ValueCheckBox> values = [];
-      if (activityStep.form.id == ActivityStepId.thoughtDiaryActivityStep2Id) {
+      List<String> values = [];
+      if (activityStep.form.id == ActivityStepId.thoughtDiaryBodySensations) {
         for (var emotion in selectedEmotions) {
           values.addAll(
             emotion.getBodySensations().map(
-                  (e) => ValueCheckBox(e),
+                  (e) => e,
                 ),
           );
         }
       }
-      if (activityStep.form.id == ActivityStepId.thoughtDiaryActivityStep3Id) {
+      if (activityStep.form.id == ActivityStepId.thoughtDiaryBehaviours) {
         for (var emotion in selectedEmotions) {
           values.addAll(
             emotion.getBehaviours().map(
-                  (e) => ValueCheckBox(e),
+                  (e) => e,
                 ),
           );
         }
       }
-      AppForm form = activityStep.form.copyWith(questions: [
-        (activityStep.form.questions.first as CheckBoxQuestion).copyWith(values: values.toSet().toList())
-      ]);
+      AppForm form = activityStep.form.copyWith(
+        questions: [
+          (activityStep.form.questions.first as CheckBoxQuestion).copyWith(
+            values: values.toSet().map((e) => ValueCheckBox(e)).toList(),
+          )
+        ],
+      );
       setActivity(form);
     }
     notifyListeners();
@@ -79,6 +84,24 @@ class ActivityStepperProvider with ChangeNotifier {
       }
       steps.add(newStep);
     }
-    _activity = _activity.copyWith(steps);
+    _activity = _activity.copyWith(steps: steps);
+  }
+
+  void onFinish(AppForm form) {}
+
+  ActivityAnswer get activityAnswer {
+    List<Answer> answers = [];
+    for (ActivityStep step in steps) {
+      for (Question question in step.form.questions) {
+        answers.add(
+          Answer(questionId: question.id, answer: question.answer),
+        );
+      }
+    }
+    final a = ActivityAnswer(
+      activityId: activityId,
+      answers: answers,
+    );
+    return a;
   }
 }

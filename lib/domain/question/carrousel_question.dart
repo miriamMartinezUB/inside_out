@@ -21,10 +21,28 @@ class CarrouselQuestion extends Question {
   }) =>
       CarrouselQuestion(
         id: id,
-        title: title,
+        title: title!,
         items: items ?? this.items,
         mandatory: mandatory,
       );
+
+  @override
+  bool get isValid {
+    List selectedItems = [];
+    for (var element in items) {
+      selectedItems.addAll(element.selectedValues ?? []);
+    }
+    return (mandatory && selectedItems.isNotEmpty) || !mandatory;
+  }
+
+  @override
+  get answer {
+    List selectedItems = [];
+    for (var element in items) {
+      selectedItems.addAll(element.selectedSaveValue);
+    }
+    return selectedItems.isEmpty ? null : selectedItems.toSet().toList();
+  }
 }
 
 class CarrouselQuestionItem {
@@ -43,6 +61,19 @@ class CarrouselQuestionItem {
     required this.values,
     this.selectedValues,
   });
+
+  List get selectedSaveValue {
+    List selectedSaveValue = [];
+    for (var value in selectedValues ?? []) {
+      ValueCheckBox valueCheckBox = values.firstWhere((element) => element.value == value);
+      if (valueCheckBox.saveValues != null) {
+        selectedSaveValue.addAll(valueCheckBox.saveValues!);
+      } else {
+        selectedSaveValue.add(value);
+      }
+    }
+    return selectedSaveValue.toSet().toList();
+  }
 
   CarrouselQuestionItem copyWith({
     List? selectedValues,

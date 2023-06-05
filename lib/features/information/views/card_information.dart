@@ -59,7 +59,7 @@ class CardInformation extends StatelessWidget {
               ],
             ),
             child: Align(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.bottomLeft,
               child: AppText(
                 title,
                 color: isPrimary ? paletteColors.textButton : paletteColors.text,

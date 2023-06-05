@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:inside_out/domain/event.dart';
 import 'package:inside_out/features/history/views/calendar_provider.dart';
 import 'package:inside_out/features/history/views/event_view.dart';
+import 'package:inside_out/infrastructure/firebase/firebase_service.dart';
 import 'package:inside_out/infrastructure/language_service.dart';
+import 'package:inside_out/infrastructure/storage/locale_storage_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
+import 'package:inside_out/views/circular_progress.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -15,7 +18,12 @@ class CalendarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CalendarProvider calendarProvider = CalendarProvider();
+    final FirebaseService firebaseService = Provider.of<FirebaseService>(context);
+    final LocaleStorageService localeStorageService = Provider.of<LocaleStorageService>(context);
+    final CalendarProvider calendarProvider = CalendarProvider(
+      firebaseService: firebaseService,
+      localeStorageService: localeStorageService,
+    );
     final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
     final TextStyle tinyTextStyle = getTextStyle(paletteColors: paletteColors, type: TextTypes.tinyBody);
     final TextStyle smallTextStyle = getTextStyle(paletteColors: paletteColors, type: TextTypes.smallBody);
@@ -24,6 +32,9 @@ class CalendarView extends StatelessWidget {
       create: (BuildContext context) => calendarProvider,
       child: Consumer<CalendarProvider>(
         builder: (context, calendarProvider, child) {
+          if (calendarProvider.loading) {
+            return const CircularProgress();
+          }
           return Column(
             children: [
               TableCalendar<Event>(

@@ -23,10 +23,12 @@ class HistoryPage extends StatelessWidget {
       background: paletteColors.primary,
       showAppBar: kIsWeb,
       isMainPage: true,
-      appBarName: kIsWeb ? 'History Page (miss translation)' : null, //TODO
+      appBarName: kIsWeb ? 'history' : null,
       onPop: () {
-        navigationService.goBack();
-        navigationService.closeView();
+        if (kIsWeb) {
+          navigationService.goBack();
+          navigationService.closeView();
+        }
       },
       body: SingleChildScrollView(
         child: Column(
