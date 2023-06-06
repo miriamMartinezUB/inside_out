@@ -70,7 +70,7 @@ class AuthService {
     String? themePreference,
   }) async {
     if (password != repeatedPassword) {
-      throw Exception(AuthError.passwordNotEquals);
+      throw AuthError.passwordNotEquals;
     }
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(

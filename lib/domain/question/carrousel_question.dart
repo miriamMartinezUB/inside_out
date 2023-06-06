@@ -39,6 +39,15 @@ class CarrouselQuestion extends Question {
   get answer {
     List selectedItems = [];
     for (var element in items) {
+      selectedItems.addAll(element.selectedValues ?? []);
+    }
+    return selectedItems.isEmpty ? null : selectedItems.toSet().toList();
+  }
+
+  @override
+  get answerValue {
+    List selectedItems = [];
+    for (var element in items) {
       selectedItems.addAll(element.selectedSaveValue);
     }
     return selectedItems.isEmpty ? null : selectedItems.toSet().toList();

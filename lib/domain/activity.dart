@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:inside_out/domain/form.dart';
+import 'package:inside_out/encryptor.dart';
 
 class Activity {
   final String id;
@@ -136,7 +137,7 @@ class ForgivenessDietActivity extends TemporaryActivity {
         isDone: json['isDone'],
         activityId: json['activityId'],
         currentDay: json['currentDay'],
-        reason: json['reason'],
+        reason: Encryptor.decrypt64(json['reason']),
       );
 
   factory ForgivenessDietActivity.fromDoc(DocumentSnapshot doc) {
@@ -147,7 +148,7 @@ class ForgivenessDietActivity extends TemporaryActivity {
       isDone: doc['isDone'],
       activityId: doc['activityId'],
       currentDay: doc['currentDay'],
-      reason: doc['reason'],
+      reason: Encryptor.decrypt64(doc['reason']),
     );
   }
 
@@ -159,7 +160,7 @@ class ForgivenessDietActivity extends TemporaryActivity {
         'isDone': isDone,
         'activityId': activityId,
         'currentDay': currentDay,
-        'reason': reason,
+        'reason': Encryptor.encrypt64(reason ?? ''),
         'type': type.name,
       };
 }

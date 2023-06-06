@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:inside_out/encryptor.dart';
 
 class User {
   final String id;
   final String firstName;
   final String lastName;
-  final String email;
   final DateTime registerDay;
   final String locale;
   final String themePreference;
@@ -16,7 +16,6 @@ class User {
     required this.id,
     required this.firstName,
     required this.lastName,
-    required this.email,
     required this.registerDay,
     required this.locale,
     required this.themePreference,
@@ -28,7 +27,6 @@ class User {
         id: id,
         firstName: firstName,
         lastName: lastName,
-        email: email,
         registerDay: registerDay,
         locale: locale ?? this.locale,
         themePreference: themePreference ?? this.themePreference,
@@ -38,9 +36,8 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json['id'],
-        firstName: json['firstName'] ?? "",
-        lastName: json['lastName'] ?? "",
-        email: json['email'],
+        firstName: Encryptor.decrypt64(json['firstName'] ?? ""),
+        lastName: Encryptor.decrypt64(json['lastName'] ?? ""),
         registerDay: DateTime.parse(json['registerDay']),
         locale: json['locale'],
         themePreference: json['themePreference'],
@@ -51,9 +48,8 @@ class User {
   factory User.fromDoc(DocumentSnapshot doc) {
     return User(
       id: doc['id'],
-      firstName: doc['firstName'],
-      lastName: doc['lastName'],
-      email: doc['email'],
+      firstName: Encryptor.decrypt64(doc['firstName']),
+      lastName: Encryptor.decrypt64(doc['lastName']),
       registerDay: doc['registerDay'],
       locale: doc['locale'],
       themePreference: doc['themePreference'],
@@ -64,9 +60,8 @@ class User {
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
-        'firstName': firstName,
-        'lastName': lastName,
-        'email': email,
+        'firstName': Encryptor.encrypt64(firstName),
+        'lastName': Encryptor.encrypt64(lastName),
         'registerDay': registerDay.toString(),
         'locale': locale,
         'themePreference': themePreference,
@@ -78,7 +73,6 @@ class User {
         id: "",
         firstName: "",
         lastName: "",
-        email: "",
         registerDay: DateTime.now(),
         locale: "",
         themePreference: "",
@@ -101,7 +95,6 @@ class User {
 
     return User(
       id: user.uid,
-      email: user.email ?? '',
       firstName: splitName.first,
       lastName: splitName.last,
       registerDay: user.metadata.creationTime ?? DateTime.now(),

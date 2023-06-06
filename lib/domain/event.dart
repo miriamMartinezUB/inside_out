@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:inside_out/encryptor.dart';
 
 enum EventType { thoughtDiary, forgivenessDiet, prioritisingPrinciples }
 
@@ -79,14 +80,15 @@ class EventThoughtDiary extends Event {
       id: doc['id'],
       userId: doc['userId'],
       dateTime: DateTime.parse(doc['dateTime']),
-      emotions: doc['emotions'],
-      bodySensations: doc['bodySensations'],
-      behaviours: doc['behaviours'],
-      reason: doc['reason'],
-      thingsToChange: doc['thingsToChange'],
-      thingsToKeep: doc['thingsToKeep'],
-      thingsToLearn: doc['thingsToLearn'],
-      thingsToPrevent: doc['thingsToPrevent'],
+      emotions: (doc['emotions'] as List).map((emotion) => Encryptor.decrypt64(emotion)).toList(),
+      bodySensations:
+          (doc['bodySensations'] as List).map((bodySensation) => Encryptor.decrypt64(bodySensation)).toList(),
+      behaviours: (doc['behaviours'] as List).map((behaviour) => Encryptor.decrypt64(behaviour)).toList(),
+      reason: Encryptor.decrypt64(doc['reason']),
+      thingsToChange: (doc['thingsToChange'] as List).map((change) => Encryptor.decrypt64(change)).toList(),
+      thingsToKeep: (doc['thingsToKeep'] as List).map((keep) => Encryptor.decrypt64(keep)).toList(),
+      thingsToLearn: (doc['thingsToLearn'] as List).map((learn) => Encryptor.decrypt64(learn)).toList(),
+      thingsToPrevent: (doc['thingsToPrevent'] as List).map((prevent) => Encryptor.decrypt64(prevent)).toList(),
     );
   }
 
@@ -96,24 +98,26 @@ class EventThoughtDiary extends Event {
         'userId': userId,
         'dateTime': dateTime.toString(),
         'type': type.name,
-        'emotions': emotions,
-        'bodySensations': bodySensations,
-        'behaviours': behaviours,
-        'reason': reason,
-        'thingsToChange': thingsToChange,
-        'thingsToKeep': thingsToKeep,
-        'thingsToLearn': thingsToLearn,
-        'thingsToPrevent': thingsToPrevent,
+        'emotions': emotions.map((emotion) => Encryptor.encrypt64(emotion)).toList(),
+        'bodySensations': bodySensations.map((bodySensation) => Encryptor.encrypt64(bodySensation)).toList(),
+        'behaviours': behaviours.map((behaviour) => Encryptor.encrypt64(behaviour)).toList(),
+        'reason': Encryptor.encrypt64(reason),
+        'thingsToChange': (thingsToChange ?? []).map((change) => Encryptor.encrypt64(change)).toList(),
+        'thingsToKeep': (thingsToKeep ?? []).map((keep) => Encryptor.encrypt64(keep)).toList(),
+        'thingsToLearn': (thingsToLearn ?? []).map((learn) => Encryptor.encrypt64(learn)).toList(),
+        'thingsToPrevent': (thingsToPrevent ?? []).map((prevent) => Encryptor.encrypt64(prevent)).toList(),
       };
 }
 
 class EventForgivenessDiet extends Event {
-  final List forgivenessPhrases;
+  final String reason;
+  final String forgivenessPhrases;
 
   EventForgivenessDiet({
     required String id,
     required String userId,
     required DateTime dateTime,
+    required this.reason,
     required this.forgivenessPhrases,
   }) : super(
           id: id,
@@ -128,7 +132,8 @@ class EventForgivenessDiet extends Event {
       id: doc['id'],
       userId: doc['userId'],
       dateTime: DateTime.parse(doc['dateTime']),
-      forgivenessPhrases: doc['forgivenessPhrases'],
+      reason: Encryptor.decrypt64(doc['reason']),
+      forgivenessPhrases: Encryptor.decrypt64(doc['forgivenessPhrases']),
     );
   }
 
@@ -138,7 +143,8 @@ class EventForgivenessDiet extends Event {
         'userId': userId,
         'dateTime': dateTime.toString(),
         'type': type.name,
-        'forgivenessPhrases': forgivenessPhrases,
+        'reason': Encryptor.encrypt64(reason),
+        'forgivenessPhrases': Encryptor.encrypt64(forgivenessPhrases),
       };
 }
 
@@ -165,8 +171,8 @@ class EventPrioritisingPrinciples extends Event {
       id: doc['id'],
       userId: doc['userId'],
       dateTime: DateTime.parse(doc['dateTime']),
-      principles: doc['principles'],
-      values: doc['values'],
+      principles: (doc['principles'] as List).map((principle) => Encryptor.decrypt64(principle)).toList(),
+      values: (doc['values'] as List).map((value) => Encryptor.decrypt64(value)).toList(),
     );
   }
 
@@ -176,7 +182,7 @@ class EventPrioritisingPrinciples extends Event {
         'userId': userId,
         'dateTime': dateTime.toString(),
         'type': type.name,
-        'principles': principles,
-        'values': values,
+        'principles': principles.map((principle) => Encryptor.encrypt64(principle)).toList(),
+        'values': values.map((value) => Encryptor.encrypt64(value)).toList(),
       };
 }

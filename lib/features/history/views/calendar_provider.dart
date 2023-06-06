@@ -58,9 +58,13 @@ class CalendarProvider extends ChangeNotifier {
     List<Event> events = await _eventsStorage.all;
     List<DateTime> days = [];
     DateTime startDay = _firstDay;
-    while (!isSameDay(startDay, DateTime.now().add(const Duration(days: 1)))) {
+    if (isSameDay(startDay, _today)) {
       days.add(startDay);
-      startDay = startDay.add(const Duration(days: 1));
+    } else {
+      while (!isSameDay(startDay, _today)) {
+        days.add(startDay);
+        startDay = startDay.add(const Duration(days: 1));
+      }
     }
     _events = LinkedHashMap<DateTime, List<Event>>(
       equals: isSameDay,

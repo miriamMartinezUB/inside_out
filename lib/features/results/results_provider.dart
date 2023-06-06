@@ -17,6 +17,7 @@ class ResultsProvider extends ChangeNotifier {
   late final ObjectivesStorage _objectivesStorage;
   late CarrouselContent emotionsGrid;
   late CarrouselContent? objectivesGrid;
+  late CarrouselContent? principlesAndValues;
   bool loading = true;
 
   ResultsProvider({
@@ -75,6 +76,11 @@ class ResultsProvider extends ChangeNotifier {
     List<Objectives> listObjectives = (await _objectivesStorage.all);
     if (listObjectives.isEmpty) return null;
     Objectives objectives = listObjectives.first;
+    if (objectives.thingsToChange == null ||
+        objectives.thingsToChange!.isEmpty && objectives.thingsToLearn == null ||
+        objectives.thingsToLearn!.isEmpty && objectives.thingsToKeep == null ||
+        objectives.thingsToKeep!.isEmpty && objectives.thingsToPrevent == null ||
+        objectives.thingsToPrevent!.isEmpty) return null;
     List<CarrouselContentItem> items = [];
     for (CarrouselContentItem item in objectivesGridStatic.items) {
       late List list;

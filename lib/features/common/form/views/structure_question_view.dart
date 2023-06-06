@@ -37,6 +37,7 @@ class StructureQuestionView extends StatelessWidget {
       children: [
         if (question.title != null)
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(child: AppText(translate(question.title!))),
               if (question.mandatory) ...[

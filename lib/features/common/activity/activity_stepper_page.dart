@@ -15,10 +15,12 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class ActivityStepperPageArgs {
   final String activityId;
+  final String? reason;
   final Function(ActivityAnswer activityAnswer)? onFinish;
 
   ActivityStepperPageArgs({
     required this.activityId,
+    this.reason,
     this.onFinish,
   });
 }
@@ -34,7 +36,10 @@ class ActivityStepperPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
-    final ActivityStepperProvider activityStepperProvider = ActivityStepperProvider(activityStepperPageArgs.activityId);
+    final ActivityStepperProvider activityStepperProvider = ActivityStepperProvider(
+      activityStepperPageArgs.activityId,
+      reason: activityStepperPageArgs.reason,
+    );
 
     return ChangeNotifierProvider<ActivityStepperProvider>(
       create: (BuildContext context) => activityStepperProvider,

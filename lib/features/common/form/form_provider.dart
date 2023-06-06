@@ -24,7 +24,7 @@ class FormProvider extends ChangeNotifier {
         } else if (question is SingleSelectionQuestion) {
           newQuestion = question.copyWith(selectedValue: value);
         } else if (question is CheckBoxQuestion) {
-          List values = question.selectedValues ?? [];
+          List<String> values = question.selectedValues ?? [];
           if (values.contains(value)) {
             values.remove(value);
           } else {

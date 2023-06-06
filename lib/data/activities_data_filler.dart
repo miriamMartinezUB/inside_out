@@ -111,7 +111,7 @@ class ActivitiesDataFiller {
 
     AppForm thoughtDiaryFormStep6 = AppForm(
       id: ActivityStepId.thoughtDiaryFinish,
-      name: 'thought_diary_form_step6_title',
+      name: 'finish_form_title',
       actionText: 'finish',
       questions: [
         InformationQuestion(
@@ -292,18 +292,20 @@ class ActivitiesDataFiller {
 
     AppForm forgivenessDietFormStep1 = AppForm(
       id: ActivityStepId.forgivenessDietAddPhrases,
-      name: 'forgiveness_diet_form_step1_title',
+      name: 'forgiveness_diet_card_title',
       actionText: 'next',
       questions: [
         FreeTextQuestion(
           id: ActivityStepQuestionId.forgivenessDietActivityAddAngerPhrases,
           title: 'forgiveness_diet_form_step1_question',
+          subtitle: 'forgiveness_diet_form_step1_question_subtitle',
           longText: true,
           hint: 'write_here',
         ),
         FreeTextQuestion(
           id: ActivityStepQuestionId.forgivenessDietActivityAddForgivenessPhrases,
           title: 'forgiveness_diet_form_step1_question2',
+          subtitle: 'forgiveness_diet_form_step1_question2_subtitle',
           longText: true,
           hint: 'write_here',
         ),
@@ -312,8 +314,8 @@ class ActivitiesDataFiller {
 
     AppForm forgivenessDietFormStep2 = AppForm(
       id: ActivityStepId.forgivenessDietRepeatForgivenessPhrases,
-      name: 'forgiveness_diet_form_step2_title',
-      actionText: 'finish',
+      name: 'forgiveness_diet_card_title',
+      actionText: 'next',
       questions: [
         InformationQuestion(
           id: ActivityStepQuestionId.forgivenessDietActivityShowForgivenessPhrases,
@@ -332,12 +334,12 @@ class ActivitiesDataFiller {
 
     AppForm forgivenessDietFormStep3 = AppForm(
       id: ActivityStepId.forgivenessDietFinish,
-      name: 'forgiveness_diet_form_step3_title',
+      name: 'finish_form_title',
       actionText: 'finish',
       questions: [
         InformationQuestion(
           id: ActivityStepQuestionId.forgivenessDietActivityFinish,
-          title: 'forgiveness_diet_form_step3_question',
+          title: 'finish_form_subtitle',
           imagePath: 'descubre_mas.png',
           mandatory: false,
         ),
@@ -366,13 +368,11 @@ class ActivitiesDataFiller {
       questions: [
         CheckBoxQuestion(
           title: 'prioritisation_principles_form_step1_question',
-          subtitle: 'prioritisation_principles_form_step1_question_subtitle',
           id: ActivityStepQuestionId.prioritisationPrinciplesSelection,
           values: Principles.values.map((e) => ValueCheckBox(e.name)).toList(),
         ),
         CheckBoxQuestion(
           title: 'prioritisation_principles_form_step1_question2',
-          subtitle: 'prioritisation_principles_form_step1_question2_subtitle',
           id: ActivityStepQuestionId.prioritisationPrinciplesValuesSelection,
           values: Values.values.map((e) => ValueCheckBox(e.name)).toList(),
         ),
@@ -397,12 +397,12 @@ class ActivitiesDataFiller {
 
     AppForm prioritisationPrinciplesFormStep3 = AppForm(
       id: ActivityStepId.prioritisationPrinciplesFinish,
-      name: 'prioritisation_principles_form_step3_title',
+      name: 'finish_form_title',
       actionText: 'finish',
       questions: [
         InformationQuestion(
           id: ActivityStepQuestionId.prioritisationPrinciplesActivityStep3QuestionId,
-          title: 'prioritisation_principles_form_step3_question',
+          title: 'finish_form_subtitle',
           imagePath: 'descubre_mas.png',
           mandatory: false,
         ),

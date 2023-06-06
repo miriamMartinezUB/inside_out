@@ -13,6 +13,8 @@ abstract class Question {
 
   dynamic get answer;
 
+  dynamic get answerValue => null;
+
   bool get isValid;
 
   String get errorMessage => 'mandatory_error';

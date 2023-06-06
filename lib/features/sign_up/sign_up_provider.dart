@@ -45,6 +45,8 @@ class SignUpProvider extends ChangeNotifier {
               'La seguridd de la contraseña es muy debil pruebe con una que contenga minimo una mayuscula, una minuscula, un numero y un caracter -miss translation');
         case AuthError.emptyFields:
           throw Exception('Los campos obligatorios no pueden estar vacios -miss translation');
+        default:
+          rethrow;
       }
     }
   }

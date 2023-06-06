@@ -12,12 +12,14 @@ import 'package:inside_out/views/image_view.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
-void _onTap(BuildContext context, Function(ActivityAnswer activityAnswer) onFinish, String activityId) =>
+void _onTap(BuildContext context, Function(ActivityAnswer activityAnswer) onFinish, String activityId,
+        {String? reason}) =>
     Provider.of<NavigationService>(context, listen: false).navigateTo(
       Routes.activity,
       arguments: ActivityStepperPageArgs(
         activityId: activityId,
         onFinish: onFinish,
+        reason: reason,
       ),
     );
 
@@ -65,11 +67,12 @@ abstract class CardActivity extends StatelessWidget {
     required bool done,
     required Function(ActivityAnswer activityAnswer) onFinish,
     required BuildContext context,
+    String? reason,
   }) {
     final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
 
     return _CardActivityWithIconLeft(
-      onTap: () => _onTap(context, onFinish, ActivityId.forgivenessDietActivityId),
+      onTap: () => _onTap(context, onFinish, ActivityId.forgivenessDietActivityId, reason: reason),
       done: done,
       imagePath: 'anger.png',
       title: translate('forgiveness_diet_card_title'),

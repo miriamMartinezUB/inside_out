@@ -109,7 +109,9 @@ class HomePage extends StatelessWidget {
                                     day: activity.currentDay,
                                     done: activity.isDone,
                                     context: context,
-                                    onFinish: (activityAnswer) => homeProvider.onFinishForgiveness(activityAnswer),
+                                    onFinish: (activityAnswer) =>
+                                        homeProvider.onFinishForgiveness(activityAnswer, activity.reason ?? ''),
+                                    reason: activity.reason,
                                   );
                                 } else {
                                   card = CardActivity.prioritisationPrinciples(

@@ -11,9 +11,11 @@ class ActivityAnswer {
 class Answer {
   final String questionId;
   final dynamic answer;
+  final dynamic answerValue;
 
   Answer({
     required this.questionId,
     required this.answer,
+    this.answerValue,
   });
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:inside_out/domain/emotion.dart';
+import 'package:inside_out/encryptor.dart';
 
 class UserEmotion {
   final String id;
@@ -31,8 +32,9 @@ class UserEmotion {
       id: doc['id'],
       userId: doc['userId'],
       emotion: EmotionFromString(doc['emotion']).getEmotion(),
-      bodySensations: doc['bodySensations'],
-      behaviours: doc['behaviours'],
+      bodySensations:
+          (doc['bodySensations'] as List).map((bodySensation) => Encryptor.decrypt64(bodySensation)).toList(),
+      behaviours: (doc['behaviours'] as List).map((behaviour) => Encryptor.decrypt64(behaviour)).toList(),
     );
   }
 
@@ -40,7 +42,7 @@ class UserEmotion {
         'id': id,
         'userId': userId,
         'emotion': emotion.name,
-        'bodySensations': bodySensations,
-        'behaviours': behaviours,
+        'bodySensations': bodySensations.map((bodySensation) => Encryptor.encrypt64(bodySensation)).toList(),
+        'behaviours': behaviours.map((behaviour) => Encryptor.encrypt64(behaviour)).toList(),
       };
 }

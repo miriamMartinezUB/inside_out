@@ -25,10 +25,17 @@ class CardEventView extends StatelessWidget {
     if (event is EventThoughtDiary) {
       child = _EventThoughtDiaryView(event: event as EventThoughtDiary);
     } else if (event is EventForgivenessDiet) {
-      child = ListSectionView(
-        title: 'forgiveness_phrases',
-        items: (event as EventForgivenessDiet).forgivenessPhrases,
-        axis: Axis.vertical,
+      child = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppText(
+            translate('forgiveness_phrases'),
+            color: paletteColors.textButton,
+            type: TextTypes.smallBodyMedium,
+          ),
+          const SizedBox(height: Dimens.paddingMedium),
+          ListItemView(text: (event as EventForgivenessDiet).forgivenessPhrases),
+        ],
       );
     } else if (event is EventPrioritisingPrinciples) {
       child = Column(

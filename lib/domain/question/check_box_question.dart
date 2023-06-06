@@ -2,7 +2,7 @@ import 'package:inside_out/domain/question/question.dart';
 
 class CheckBoxQuestion extends Question {
   final List<ValueCheckBox>? values;
-  final List? selectedValues;
+  final List<String>? selectedValues;
 
   CheckBoxQuestion({
     required String title,
@@ -19,7 +19,7 @@ class CheckBoxQuestion extends Question {
         );
 
   CheckBoxQuestion copyWith({
-    List? selectedValues,
+    List<String>? selectedValues,
     List<ValueCheckBox>? values,
   }) =>
       CheckBoxQuestion(
@@ -50,6 +50,11 @@ class CheckBoxQuestion extends Question {
 
   @override
   get answer {
+    return selectedValues ?? <String>[];
+  }
+
+  @override
+  get answerValue {
     return _selectedSaveValue.isEmpty ? null : _selectedSaveValue;
   }
 }

@@ -1,7 +1,10 @@
+import 'package:inside_out/domain/activity.dart';
 import 'package:inside_out/domain/activity_answer.dart';
 import 'package:inside_out/domain/emotion.dart';
 import 'package:inside_out/domain/event.dart';
+import 'package:inside_out/domain/form.dart';
 import 'package:inside_out/domain/objectives.dart';
+import 'package:inside_out/domain/question/index.dart';
 import 'package:inside_out/domain/user_emotion.dart';
 import 'package:inside_out/infrastructure/firebase/firebase_service.dart';
 import 'package:inside_out/infrastructure/storage/locale_storage_service.dart';
@@ -12,6 +15,18 @@ import 'package:inside_out/infrastructure/storage/remote/user_emotion_storage.da
 import 'package:inside_out/resources/activity_id.dart';
 import 'package:inside_out/utils/temporary_activities_service.dart';
 import 'package:uuid/uuid.dart';
+
+List<Emotion> _getEmotionsFromSelectedValues(List selectedValues) {
+  List<Emotion> emotions = [];
+  for (Emotion emotion in Emotion.values) {
+    bool contains =
+        emotion.getPrimaryEmotion().getTertiaryEmotions().toSet().intersection(selectedValues.toSet()).isNotEmpty;
+    if (contains) {
+      emotions.add(emotion);
+    }
+  }
+  return emotions;
+}
 
 class ThoughtDiaryActivityService {
   final ActivityAnswer thoughtDiaryAnswer;
@@ -25,6 +40,7 @@ class ThoughtDiaryActivityService {
   late final TemporaryActivitiesStorage _temporaryActivitiesStorage;
 
   late final List _emotions;
+  late final List _tertiaryEmotions;
   late final List _bodySensations;
   late final List _behaviours;
   late final String? _changes;
@@ -49,7 +65,8 @@ class ThoughtDiaryActivityService {
 
     for (Answer answer in thoughtDiaryAnswer.answers) {
       if (answer.questionId == ActivityStepQuestionId.thoughtDiaryEmotionsQuestionId) {
-        _emotions = answer.answer;
+        _emotions = answer.answerValue;
+        _tertiaryEmotions = answer.answer;
       } else if (answer.questionId == ActivityStepQuestionId.thoughtDiaryBodySensationsQuestionId) {
         _bodySensations = answer.answer;
       } else if (answer.questionId == ActivityStepQuestionId.thoughtDiaryBehavioursQuestionId) {
@@ -66,6 +83,41 @@ class ThoughtDiaryActivityService {
         _reason = answer.answer;
       }
     }
+  }
+
+  static AppForm getModifiedThoughtDiaryQuestionValues(CarrouselQuestion emotionQuestion, ActivityStep activityStep) {
+    List selectedValues = [];
+    for (var item in emotionQuestion.items) {
+      selectedValues.addAll(item.selectedValues ?? []);
+    }
+    List<Emotion> selectedEmotions = _getEmotionsFromSelectedValues(selectedValues);
+    List<String> values = [];
+    if (activityStep.form.id == ActivityStepId.thoughtDiaryBodySensations) {
+      for (var emotion in selectedEmotions) {
+        values.addAll(
+          emotion.getBodySensations().map(
+                (e) => e,
+              ),
+        );
+      }
+    }
+    if (activityStep.form.id == ActivityStepId.thoughtDiaryBehaviours) {
+      for (var emotion in selectedEmotions) {
+        values.addAll(
+          emotion.getBehaviours().map(
+                (e) => e,
+              ),
+        );
+      }
+    }
+    AppForm form = activityStep.form.copyWith(
+      questions: [
+        (activityStep.form.questions.first as CheckBoxQuestion).copyWith(
+          values: values.toSet().map((e) => ValueCheckBox(e)).toList(),
+        )
+      ],
+    );
+    return form;
   }
 
   Future<void> saveUserEmotion() async {
@@ -93,7 +145,10 @@ class ThoughtDiaryActivityService {
         ),
       );
     }
-    TemporaryActivitiesService( _eventsStorage,_temporaryActivitiesStorage, userId).addActivities(_emotions);
+    TemporaryActivitiesService(
+      firebaseService,
+      localeStorageService,
+    ).addActivities(_emotions, reason: _reason);
   }
 
   Future<void> saveObjectives() async {
@@ -112,7 +167,7 @@ class ThoughtDiaryActivityService {
       id: const Uuid().v4(),
       userId: userId,
       dateTime: DateTime.now(),
-      emotions: _emotions,
+      emotions: _tertiaryEmotions,
       bodySensations: _bodySensations,
       behaviours: _behaviours,
       reason: _reason,
