@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -15,16 +16,25 @@ class AuthService {
 
   late final auth.FirebaseAuth _firebaseAuth;
   late final UserStorage _userStorage;
+  late StreamController<bool> _userLoadController;
+  late bool _userLoad;
 
   Future<void> init() async {
     _firebaseAuth = firebaseService.firebaseAuth;
     _userStorage = UserStorage(firebaseService: firebaseService, localeStorageService: storageService);
+    _userLoadController = StreamController<bool>.broadcast();
+    _userLoad = isAuthenticated;
+    _userLoadController.add(_userLoad);
   }
 
   Stream<bool> get isAuthenticated$ =>
       _firebaseAuth.idTokenChanges().asBroadcastStream().map((auth.User? user) => user != null);
 
+  Stream<bool> get userLoad$ => _userLoadController.stream.distinct();
+
   bool get isAuthenticated => _firebaseAuth.currentUser != null;
+
+  bool get userLoad => _userLoad;
 
   User? get user => User.fromAuthUser(_firebaseAuth.currentUser);
 
@@ -55,7 +65,9 @@ class AuthService {
       );
 
       User user = await _userStorage.get(userCredential.user!.uid);
-      _saveAppUser(user);
+      await _saveAppUser(user);
+      _userLoad = true;
+      _userLoadController.add(_userLoad);
     } on auth.FirebaseAuthException catch (e) {
       throw _determineError(e);
     }
@@ -84,8 +96,10 @@ class AuthService {
         locale: locale,
         themePreference: themePreference,
       );
-      _userStorage.add(user);
-      _saveAppUser(user);
+      await _userStorage.add(user);
+      await _saveAppUser(user);
+      _userLoad = true;
+      _userLoadController.add(_userLoad);
     } on auth.FirebaseAuthException catch (e) {
       throw _determineError(e);
     }
@@ -116,8 +130,8 @@ class AuthService {
     }
   }
 
-  void _saveAppUser(User user) {
-    storageService.saveString(
+  Future<void> _saveAppUser(User user) async {
+    await storageService.saveString(
       StorageKeys.keyUser,
       jsonEncode(user.toJson()),
     );

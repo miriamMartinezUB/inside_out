@@ -68,11 +68,7 @@ class SettingsProvider extends ChangeNotifier {
 
   Future<void> sendEmail() async {
     String urlString = 'mailto:miriam.app.service@gmail.com';
-    if (await canLaunchUrlString(urlString)) {
-      launchUrlString(urlString);
-    } else {
-      throw FlutterError('Invalid url');
-    }
+    launchUrlString(urlString);
   }
 
   Future<void> logout() async {

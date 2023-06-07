@@ -124,10 +124,22 @@ class _EventThoughtDiaryViewState extends State<_EventThoughtDiaryView> {
           ),
           const SizedBox(height: Dimens.paddingMedium),
           ListItemView(text: widget.event.reason),
-          if (widget.event.thingsToChange != null) ...[
+          if (widget.event.thingsToChange != null && widget.event.thingsToChange!.isNotEmpty) ...[
             const SizedBox(height: Dimens.paddingMedium),
             ListSectionView(title: 'things_to_improve', items: widget.event.thingsToChange!),
-          ]
+          ],
+          if (widget.event.thingsToLearn != null && widget.event.thingsToLearn!.isNotEmpty) ...[
+            const SizedBox(height: Dimens.paddingMedium),
+            ListSectionView(title: 'things_to_learn', items: widget.event.thingsToLearn!),
+          ],
+          if (widget.event.thingsToKeep != null && widget.event.thingsToKeep!.isNotEmpty) ...[
+            const SizedBox(height: Dimens.paddingMedium),
+            ListSectionView(title: 'things_to_keep', items: widget.event.thingsToKeep!),
+          ],
+          if (widget.event.thingsToPrevent != null && widget.event.thingsToPrevent!.isNotEmpty) ...[
+            const SizedBox(height: Dimens.paddingMedium),
+            ListSectionView(title: 'things_to_prevent', items: widget.event.thingsToPrevent!),
+          ],
         ],
         Center(
           child: IconButton(

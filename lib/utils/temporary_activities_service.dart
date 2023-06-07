@@ -145,4 +145,8 @@ class TemporaryActivitiesService {
       forgivenessPhrases: forgivenessPhrases,
     ));
   }
+
+  Future<void> markAsDone(TemporaryActivity activity) async {
+    await _temporaryActivitiesStorage.update(activity.copyWith(isDone: true));
+  }
 }

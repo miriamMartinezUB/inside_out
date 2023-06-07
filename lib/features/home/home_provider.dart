@@ -51,11 +51,13 @@ class HomeProvider extends ChangeNotifier {
     service.saveEvent();
   }
 
-  void onFinishForgiveness(ActivityAnswer activityAnswer, String reason) {
-    _temporaryActivitiesService.saveForgivenessDiet(activityAnswer, reason);
+  Future<void> onFinishForgiveness(ActivityAnswer activityAnswer, String reason, TemporaryActivity activity) async {
+    await _temporaryActivitiesService.saveForgivenessDiet(activityAnswer, reason);
+    await _temporaryActivitiesService.markAsDone(activity);
   }
 
-  void onFinishPrioritisationPrinciples(ActivityAnswer activityAnswer) {
-    _temporaryActivitiesService.savePrinciplesAndValues(activityAnswer);
+  Future<void> onFinishPrioritisationPrinciples(ActivityAnswer activityAnswer, TemporaryActivity activity) async {
+    await _temporaryActivitiesService.savePrinciplesAndValues(activityAnswer);
+    await _temporaryActivitiesService.markAsDone(activity);
   }
 }

@@ -12,8 +12,8 @@ class LocaleStorageService {
   }
 
   /// Int methods
-  void saveInt(String key, int value) {
-    _prefs.setInt(key, value);
+  Future<void> saveInt(String key, int value) async {
+    await _prefs.setInt(key, value);
   }
 
   int? getInt(String key) {
@@ -21,8 +21,8 @@ class LocaleStorageService {
   }
 
   /// String methods
-  void saveString(String key, String value) {
-    _prefs.setString(key, value);
+  Future<void> saveString(String key, String value) async {
+    await _prefs.setString(key, value);
   }
 
   String getString(String key) {
@@ -39,19 +39,19 @@ class LocaleStorageService {
   }
 
   /// StringList methods
-  void saveStringList(String key, List<String>? value) {
-    _prefs.setStringList(key, value ?? []);
+  Future<void> saveStringList(String key, List<String>? value) async {
+    await _prefs.setStringList(key, value ?? []);
   }
 
-  void addValueToStringList(String key, String value) {
+  Future<void> addValueToStringList(String key, String value) async {
     List<String> list = _prefs.getStringList(key) ?? [];
     if (!list.contains(value)) {
       list.add(value);
-      _prefs.setStringList(key, list);
+      await _prefs.setStringList(key, list);
     }
   }
 
-  void updateValueToStringList(String key, String oldValue, String newValue) {
+  Future<void> updateValueToStringList(String key, String oldValue, String newValue) async {
     List<String> list = _prefs.getStringList(key) ?? [];
     if (!list.contains(oldValue)) {
       throw FlutterError("Error on try to updateValueToStringList because does not exist the oldValue indicated");
@@ -59,14 +59,14 @@ class LocaleStorageService {
     int index = list.indexOf(oldValue);
     list.remove(oldValue);
     list.insert(index, newValue);
-    _prefs.setStringList(key, list);
+    await _prefs.setStringList(key, list);
   }
 
-  void removeValueToStringList(String key, String value) {
+  Future<void> removeValueToStringList(String key, String value) async {
     List<String> list = _prefs.getStringList(key) ?? [];
     if (list.contains(value)) {
       list.remove(value);
-      _prefs.setStringList(key, list);
+      await _prefs.setStringList(key, list);
     }
   }
 

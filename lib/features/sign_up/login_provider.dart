@@ -16,13 +16,18 @@ class LoginProvider extends ChangeNotifier {
     required this.themeService,
     required this.languageService,
   });
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
 
   Future<void> logIn(AppForm form) async {
     String email = (form.questions.firstWhere((element) => element.title == 'email') as FreeTextQuestion).value ?? '';
     String password =
         (form.questions.firstWhere((element) => element.title == 'password') as FreeTextQuestion).value ?? '';
     try {
-      await authService.signInWithEmailAndPassword(email: email.trim(), password: password);
+      authService.signInWithEmailAndPassword(email: email.trim(), password: password);
+      _isLoading = true;
+      notifyListeners();
       User? user = authService.user;
       if (user != null) {
         await updateLanguage(user);

@@ -42,7 +42,15 @@ class NavigationService {
   Future<dynamic> goToInitialRoute() async {
     authService.isAuthenticated$.listen((isAuthenticated) {
       if (isAuthenticated) {
-        replace(Routes.home);
+        if (authService.userLoad) {
+          replace(Routes.home);
+        } else {
+          authService.userLoad$.listen((userLoad) {
+            if (userLoad) {
+              replace(Routes.home);
+            }
+          });
+        }
       } else {
         replace(Routes.welcome);
       }

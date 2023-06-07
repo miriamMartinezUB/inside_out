@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/features/results/results_provider.dart';
 import 'package:inside_out/features/results/views/carrousel_content_view.dart';
 import 'package:inside_out/infrastructure/firebase/firebase_service.dart';
@@ -9,7 +8,6 @@ import 'package:inside_out/infrastructure/storage/locale_storage_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/views/circular_progress.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
-import 'package:inside_out/views/texts.dart';
 import 'package:inside_out/views/wave_shape_app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -52,6 +50,7 @@ class ResultsPage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(Dimens.paddingLarge),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: Dimens.paddingXLarge),
                           CarrouselContentView(
@@ -59,17 +58,19 @@ class ResultsPage extends StatelessWidget {
                             content: resultsProvider.emotionsGrid,
                           ),
                           if (resultsProvider.objectivesGrid != null) ...[
-                            const SizedBox(height: Dimens.paddingXLarge),
+                            const SizedBox(height: Dimens.paddingLarge),
                             CarrouselContentView(
                               key: Key(resultsProvider.objectivesGrid!.id),
                               content: resultsProvider.objectivesGrid!,
                             ),
                           ],
-                          const SizedBox(height: Dimens.paddingXLarge),
-                          AppText(
-                            translate(''),
-                            type: TextTypes.title,
-                          ),
+                          if (resultsProvider.principlesAndValuesGrid != null) ...[
+                            const SizedBox(height: Dimens.paddingLarge),
+                            CarrouselContentView(
+                              key: Key(resultsProvider.principlesAndValuesGrid!.id),
+                              content: resultsProvider.principlesAndValuesGrid!,
+                            ),
+                          ],
                         ],
                       ),
                     ),

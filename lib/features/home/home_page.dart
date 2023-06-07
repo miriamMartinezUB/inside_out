@@ -59,9 +59,10 @@ class HomePage extends StatelessWidget {
                               color: paletteColors.primary,
                             ),
                           ),
-                          AppSettingsButton(
-                            color: paletteColors.primary,
-                          )
+                          if (!kIsWeb)
+                            AppSettingsButton(
+                              color: paletteColors.primary,
+                            )
                         ],
                       ),
                       const SizedBox(height: Dimens.paddingXLarge),
@@ -109,8 +110,8 @@ class HomePage extends StatelessWidget {
                                     day: activity.currentDay,
                                     done: activity.isDone,
                                     context: context,
-                                    onFinish: (activityAnswer) =>
-                                        homeProvider.onFinishForgiveness(activityAnswer, activity.reason ?? ''),
+                                    onFinish: (activityAnswer) => homeProvider.onFinishForgiveness(
+                                        activityAnswer, activity.reason ?? '', activity),
                                     reason: activity.reason,
                                   );
                                 } else {
@@ -118,7 +119,7 @@ class HomePage extends StatelessWidget {
                                     done: activity.isDone,
                                     context: context,
                                     onFinish: (activityAnswer) =>
-                                        homeProvider.onFinishPrioritisationPrinciples(activityAnswer),
+                                        homeProvider.onFinishPrioritisationPrinciples(activityAnswer, activity),
                                   );
                                 }
                                 return Padding(

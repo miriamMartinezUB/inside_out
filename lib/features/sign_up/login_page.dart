@@ -10,6 +10,7 @@ import 'package:inside_out/resources/form_id.dart';
 import 'package:inside_out/resources/routes.dart';
 import 'package:inside_out/views/buttons/app_back_button.dart';
 import 'package:inside_out/views/buttons/app_text_button.dart';
+import 'package:inside_out/views/circular_progress.dart';
 import 'package:inside_out/views/image_view.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
 import 'package:inside_out/views/show_my_dialog.dart';
@@ -29,46 +30,51 @@ class LoginPage extends StatelessWidget {
       themeService: themeService,
       languageService: languageService,
     );
-    return Provider(
+    return ChangeNotifierProvider(
       create: (BuildContext context) => loginProvider,
-      child: PageWrapper(
-        showAppBar: false,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(Dimens.paddingLarge),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppBackButton(color: Provider.of<ThemeService>(context).paletteColors.textSubtitle),
-                const Padding(
-                  padding: EdgeInsets.all(Dimens.paddingLarge),
-                  child: Center(
-                    child: ImageView(
-                      'logo.png',
-                      height: Dimens.iconXXXLarge,
+      child: Consumer<LoginProvider>(
+        builder: (context, loginProvider, child) {
+          return PageWrapper(
+            showAppBar: false,
+            body: loginProvider.isLoading
+                ? const CircularProgress()
+                : SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(Dimens.paddingLarge),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppBackButton(color: Provider.of<ThemeService>(context).paletteColors.textSubtitle),
+                          const Padding(
+                            padding: EdgeInsets.all(Dimens.paddingLarge),
+                            child: Center(
+                              child: ImageView(
+                                'logo.png',
+                                height: Dimens.iconXXXLarge,
+                              ),
+                            ),
+                          ),
+                          FormBuilderView(
+                            formId: FormId.loginFormId,
+                            onAction: (form) async {
+                              try {
+                                await loginProvider.logIn(form);
+                              } catch (e) {
+                                ShowMyDialog(title: 'Error - miss translation', text: e.toString()).show(context);
+                              }
+                            },
+                          ),
+                          AppTextButton(
+                            text: 'forgot_password',
+                            color: themeService.paletteColors.textSubtitle,
+                            onTap: () => navigationService.navigateTo(Routes.forgotPassword),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                FormBuilderView(
-                  formId: FormId.loginFormId,
-                  onAction: (form) async {
-                    try {
-                      await loginProvider.logIn(form);
-                      navigationService.navigateTo(Routes.home);
-                    } catch (e) {
-                      ShowMyDialog(title: 'Error - miss translation', text: e.toString()).show(context);
-                    }
-                  },
-                ),
-                AppTextButton(
-                  text: 'forgot_password',
-                  color: themeService.paletteColors.textSubtitle,
-                  onTap: () => navigationService.navigateTo(Routes.forgotPassword),
-                ),
-              ],
-            ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

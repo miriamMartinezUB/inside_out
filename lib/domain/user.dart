@@ -50,7 +50,7 @@ class User {
       id: doc['id'],
       firstName: Encryptor.decrypt64(doc['firstName']),
       lastName: Encryptor.decrypt64(doc['lastName']),
-      registerDay: doc['registerDay'],
+      registerDay: DateTime.parse(doc['registerDay']),
       locale: doc['locale'],
       themePreference: doc['themePreference'],
       principles: doc['principles'],

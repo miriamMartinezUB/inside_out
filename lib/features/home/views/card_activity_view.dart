@@ -9,11 +9,16 @@ import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/resources/routes.dart';
 import 'package:inside_out/views/image_view.dart';
+import 'package:inside_out/views/show_my_dialog.dart';
 import 'package:inside_out/views/texts.dart';
 import 'package:provider/provider.dart';
 
 void _onTap(BuildContext context, Function(ActivityAnswer activityAnswer) onFinish, String activityId,
-        {String? reason}) =>
+    {String? reason, bool isDone = false}) {
+  if (isDone) {
+    ShowMyDialog(title: translate('activity_already_done_title'), text: translate('activity_already_done_text'))
+        .show(context);
+  } else {
     Provider.of<NavigationService>(context, listen: false).navigateTo(
       Routes.activity,
       arguments: ActivityStepperPageArgs(
@@ -22,6 +27,8 @@ void _onTap(BuildContext context, Function(ActivityAnswer activityAnswer) onFini
         reason: reason,
       ),
     );
+  }
+}
 
 abstract class CardActivity extends StatelessWidget {
   const CardActivity({Key? key}) : super(key: key);
@@ -72,7 +79,7 @@ abstract class CardActivity extends StatelessWidget {
     final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
 
     return _CardActivityWithIconLeft(
-      onTap: () => _onTap(context, onFinish, ActivityId.forgivenessDietActivityId, reason: reason),
+      onTap: () => _onTap(context, onFinish, ActivityId.forgivenessDietActivityId, reason: reason, isDone: done),
       done: done,
       imagePath: 'anger.png',
       title: translate('forgiveness_diet_card_title'),
@@ -102,7 +109,7 @@ abstract class CardActivity extends StatelessWidget {
     required BuildContext context,
   }) {
     return _CardActivityWithIconLeft(
-      onTap: () => _onTap(context, onFinish, ActivityId.prioritisationPrinciplesActivityId),
+      onTap: () => _onTap(context, onFinish, ActivityId.prioritisationPrinciplesActivityId, isDone: done),
       done: done,
       imagePath: 'sadness.png',
       title: translate('prioritisation_principles_card_title'),

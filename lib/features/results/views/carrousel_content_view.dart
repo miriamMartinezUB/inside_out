@@ -36,29 +36,7 @@ class _CarrouselContentViewState extends State<CarrouselContentView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Flexible(
-              child: AppText(
-                translate(widget.content.title),
-                type: TextTypes.title,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                ShowMyDialog(
-                  title: translate(widget.content.title),
-                  text: translate(widget.content.description),
-                ).show(context);
-              },
-              icon: Icon(
-                Icons.info_outline_rounded,
-                size: Dimens.iconBase,
-                color: paletteColors.active,
-              ),
-            ),
-          ],
-        ),
+        CarrouselContentHeader(title: widget.content.title, description: widget.content.description),
         const SizedBox(height: Dimens.paddingLarge),
         CarouselSlider(
           key: Key(const Uuid().v4()),
@@ -155,6 +133,46 @@ class _CarrouselContentViewState extends State<CarrouselContentView> {
                 ),
               );
             },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CarrouselContentHeader extends StatelessWidget {
+  final String title;
+  final String description;
+
+  const CarrouselContentHeader({
+    super.key,
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
+
+    return Row(
+      children: [
+        Flexible(
+          child: AppText(
+            translate(title),
+            type: TextTypes.title,
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            ShowMyDialog(
+              title: translate(title),
+              text: translate(description),
+            ).show(context);
+          },
+          icon: Icon(
+            Icons.info_outline_rounded,
+            size: Dimens.iconBase,
+            color: paletteColors.active,
           ),
         ),
       ],

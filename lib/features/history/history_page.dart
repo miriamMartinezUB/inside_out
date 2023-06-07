@@ -23,7 +23,7 @@ class HistoryPage extends StatelessWidget {
       background: paletteColors.primary,
       showAppBar: kIsWeb,
       isMainPage: true,
-      appBarName: kIsWeb ? 'history' : null,
+      appBarName: kIsWeb ? translate('history') : null,
       onPop: () {
         if (kIsWeb) {
           navigationService.goBack();

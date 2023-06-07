@@ -24,7 +24,7 @@ class InformationPage extends StatelessWidget {
     return PageWrapper(
       showAppBar: kIsWeb,
       isMainPage: true,
-      appBarName: kIsWeb ? 'Information Page (miss translation)' : null, //TODO
+      appBarName: kIsWeb ? translate('information') : null,
       onPop: () {
         if (kIsWeb) {
           navigationService.goBack();
