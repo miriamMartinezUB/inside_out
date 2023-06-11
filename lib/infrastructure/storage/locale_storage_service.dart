@@ -20,6 +20,15 @@ class LocaleStorageService {
     return _prefs.getInt(key);
   }
 
+  /// Boolean methods
+  Future<void> saveBool(String key, bool value) async {
+    await _prefs.setBool(key, value);
+  }
+
+  bool getBool(String key) {
+    return _prefs.getBool(key) ?? false;
+  }
+
   /// String methods
   Future<void> saveString(String key, String value) async {
     await _prefs.setString(key, value);

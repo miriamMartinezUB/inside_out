@@ -10,4 +10,5 @@ class Routes {
   static const history = '/history';
   static const settings = '/settings';
   static const activity = '/activity';
+  static const privacyPolicy = '/privacy_policy';
 }

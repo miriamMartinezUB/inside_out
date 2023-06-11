@@ -8,6 +8,7 @@ import 'package:inside_out/features/results/results_page.dart';
 import 'package:inside_out/features/settings/settings_page.dart';
 import 'package:inside_out/features/sign_up/forgot_password_page.dart';
 import 'package:inside_out/features/sign_up/login_page.dart';
+import 'package:inside_out/features/sign_up/privacy_policy_page.dart';
 import 'package:inside_out/features/sign_up/sign_up_page.dart';
 import 'package:inside_out/features/welcome_page.dart';
 import 'package:inside_out/resources/routes.dart';
@@ -39,6 +40,8 @@ class InsideOutRouter {
             activityStepperPageArgs: settings.arguments as ActivityStepperPageArgs,
           ),
         );
+      case Routes.privacyPolicy:
+        return MaterialPageRoute(builder: (context) => const PrivacyPolicyPage());
       case Routes.initialRoute:
       default:
         return MaterialPageRoute(builder: (context) => const App());

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:inside_out/infrastructure/auth_service.dart';
+import 'package:inside_out/infrastructure/storage/locale_storage_service.dart';
 import 'package:inside_out/resources/routes.dart';
+import 'package:inside_out/resources/storage_keys.dart';
 
 class NavigationService {
   final AuthService authService;
+  final LocaleStorageService localeStorageService;
 
-  NavigationService(this.authService);
+  NavigationService(this.authService, this.localeStorageService);
 
   final List<String> _navigationStack = [Routes.initialRoute];
 
@@ -52,7 +55,11 @@ class NavigationService {
           });
         }
       } else {
-        replace(Routes.welcome);
+        if (!localeStorageService.getBool(StorageKeys.privacyPolicyAccepted)) {
+          replace(Routes.privacyPolicy);
+        } else {
+          replace(Routes.welcome);
+        }
       }
     });
   }

@@ -22,7 +22,7 @@ class InfrastructureSetup {
     authService = AuthService(firebaseService: firebaseService, storageService: localeStorageService);
     languageService = LanguageService();
     themeService = ThemeService(localeStorageService);
-    navigationService = NavigationService(authService);
+    navigationService = NavigationService(authService, localeStorageService);
   }
 
   /// Warning: the order is important, to keep the dependencies right
