@@ -23,19 +23,19 @@ class InformationDataFiller {
           activityId: ActivityId.primaryEmotionsActivityId,
         ),
         InformationCardContent(
-          title: 'anger_title',
+          title: 'anger',
           activityId: ActivityId.angerActivityId,
         ),
         InformationCardContent(
-          title: 'sadness_title',
+          title: 'sadness',
           activityId: ActivityId.sadnessActivityId,
         ),
         InformationCardContent(
-          title: 'fear_title',
+          title: 'fear',
           activityId: ActivityId.fearActivityId,
         ),
         InformationCardContent(
-          title: 'happiness_title',
+          title: 'happiness',
           activityId: ActivityId.happinessActivityId,
         ),
       ],

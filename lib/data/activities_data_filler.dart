@@ -117,7 +117,7 @@ class ActivitiesDataFiller {
         InformationQuestion(
           id: ActivityStepQuestionId.thoughtDiaryActivityStep6QuestionId,
           title: 'thought_diary_form_step6_question',
-          imagePath: 'descubre_mas.png',
+          imagePath: 'activity_completed.png',
           mandatory: false,
         ),
       ],
@@ -150,6 +150,7 @@ class ActivitiesDataFiller {
             questions: [
               InformationQuestion(
                 id: const Uuid().v4(),
+                imagePath: 'emotion_description.png',
                 content: [
                   SimpleText(text: 'what_are_emotions_text'),
                 ],
@@ -340,7 +341,7 @@ class ActivitiesDataFiller {
         InformationQuestion(
           id: ActivityStepQuestionId.forgivenessDietActivityFinish,
           title: 'finish_form_subtitle',
-          imagePath: 'descubre_mas.png',
+          imagePath: 'activity_completed.png',
           mandatory: false,
         ),
       ],
@@ -403,7 +404,7 @@ class ActivitiesDataFiller {
         InformationQuestion(
           id: ActivityStepQuestionId.prioritisationPrinciplesActivityStep3QuestionId,
           title: 'finish_form_subtitle',
-          imagePath: 'descubre_mas.png',
+          imagePath: 'activity_completed.png',
           mandatory: false,
         ),
       ],

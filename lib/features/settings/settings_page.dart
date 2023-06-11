@@ -48,7 +48,7 @@ class SettingsPage extends StatelessWidget {
               children: [
                 WaveShapeAppBar(
                   key: Key(const Uuid().v4()),
-                  title: 'settings',
+                  title: translate('settings'),
                   imagePath: 'settings.png',
                   isMainPage: false,
                 ),
@@ -75,6 +75,14 @@ class SettingsPage extends StatelessWidget {
                             icon: Icons.email_rounded,
                             onTap: () async {
                               await settingsProvider.sendEmail();
+                            },
+                          ),
+                          const SizedBox(height: Dimens.paddingLarge),
+                          AppTextButton(
+                            text: translate('privacy_policy_title'),
+                            icon: Icons.privacy_tip_rounded,
+                            onTap: () {
+                              navigationService.navigateTo(Routes.privacyPolicy);
                             },
                           ),
                           const SizedBox(height: Dimens.paddingLarge),

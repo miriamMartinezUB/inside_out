@@ -3,8 +3,11 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/features/sign_up/privacy_policy_provider.dart';
 import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/infrastructure/storage/locale_storage_service.dart';
+import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
+import 'package:inside_out/resources/palette_colors.dart';
 import 'package:inside_out/resources/routes.dart';
+import 'package:inside_out/views/buttons/app_back_button.dart';
 import 'package:inside_out/views/buttons/app_button.dart';
 import 'package:inside_out/views/circular_progress.dart';
 import 'package:inside_out/views/image_view.dart';
@@ -20,6 +23,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     final LocaleStorageService localeStorageService = Provider.of<LocaleStorageService>(context);
     final PrivacyPolicyProvider privacyPolicyProvider = PrivacyPolicyProvider(localeStorageService);
     final NavigationService navigationService = Provider.of<NavigationService>(context, listen: false);
+    final PaletteColors paletteColors = Provider.of<ThemeService>(context).paletteColors;
     return ChangeNotifierProvider(
       create: (BuildContext context) => privacyPolicyProvider,
       child: Consumer<PrivacyPolicyProvider>(
@@ -34,6 +38,7 @@ class PrivacyPolicyPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          AppBackButton(color: paletteColors.textSubtitle),
                           const Padding(
                             padding: EdgeInsets.all(Dimens.paddingLarge),
                             child: Center(
@@ -47,6 +52,7 @@ class PrivacyPolicyPage extends StatelessWidget {
                           AppText(
                             translate('privacy_policy_title'),
                             type: TextTypes.title,
+                            color: paletteColors.primary,
                           ),
                           const SizedBox(height: Dimens.paddingLarge),
                           AppText(
@@ -54,14 +60,16 @@ class PrivacyPolicyPage extends StatelessWidget {
                             type: TextTypes.bodyLight,
                             align: TextAlign.justify,
                           ),
-                          const SizedBox(height: Dimens.paddingLarge),
-                          AppButton(
-                            text: 'accept_and_continue',
-                            onTap: () async {
-                              await privacyPolicyProvider.acceptPrivacyPolicy();
-                              navigationService.replace(Routes.welcome);
-                            },
-                          ),
+                          if (!navigationService.canGoBack) ...[
+                            const SizedBox(height: Dimens.paddingLarge),
+                            AppButton(
+                              text: 'accept_and_continue',
+                              onTap: () async {
+                                await privacyPolicyProvider.acceptPrivacyPolicy();
+                                navigationService.replace(Routes.welcome);
+                              },
+                            ),
+                          ],
                         ],
                       ),
                     ),

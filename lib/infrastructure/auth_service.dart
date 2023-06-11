@@ -12,12 +12,16 @@ class AuthService {
   final FirebaseService firebaseService;
   final LocaleStorageService storageService;
 
-  AuthService({required this.firebaseService, required this.storageService});
+  AuthService({
+    required this.firebaseService,
+    required this.storageService,
+  });
 
   late final auth.FirebaseAuth _firebaseAuth;
   late final UserStorage _userStorage;
   late StreamController<bool> _userLoadController;
   late bool _userLoad;
+  late User _user;
 
   Future<void> init() async {
     _firebaseAuth = firebaseService.firebaseAuth;
@@ -25,6 +29,9 @@ class AuthService {
     _userLoadController = StreamController<bool>.broadcast();
     _userLoad = isAuthenticated;
     _userLoadController.add(_userLoad);
+    if (isAuthenticated) {
+      _user = User.fromJson(jsonDecode(storageService.getString(StorageKeys.keyUser)));
+    }
   }
 
   Stream<bool> get isAuthenticated$ =>
@@ -36,7 +43,7 @@ class AuthService {
 
   bool get userLoad => _userLoad;
 
-  User? get user => User.fromAuthUser(_firebaseAuth.currentUser);
+  User? get user => _user;
 
   Future<void> logout() async {
     await _firebaseAuth.signOut();
@@ -64,8 +71,8 @@ class AuthService {
         password: password,
       );
 
-      User user = await _userStorage.get(userCredential.user!.uid);
-      await _saveAppUser(user);
+      _user = await _userStorage.get(userCredential.user!.uid);
+      await _saveAppUser(_user);
       _userLoad = true;
       _userLoadController.add(_userLoad);
     } on auth.FirebaseAuthException catch (e) {
@@ -90,14 +97,14 @@ class AuthService {
         password: password,
       );
 
-      User user = User.fromAuthUser(
+      _user = User.fromAuthUser(
         _firebaseAuth.currentUser!,
         name: name,
         locale: locale,
         themePreference: themePreference,
       );
-      await _userStorage.add(user);
-      await _saveAppUser(user);
+      await _userStorage.add(_user);
+      await _saveAppUser(_user);
       _userLoad = true;
       _userLoadController.add(_userLoad);
     } on auth.FirebaseAuthException catch (e) {

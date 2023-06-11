@@ -19,9 +19,9 @@ class InfrastructureSetup {
   InfrastructureSetup() {
     localeStorageService = LocaleStorageService();
     firebaseService = FirebaseService();
-    authService = AuthService(firebaseService: firebaseService, storageService: localeStorageService);
     languageService = LanguageService();
     themeService = ThemeService(localeStorageService);
+    authService = AuthService(firebaseService: firebaseService, storageService: localeStorageService);
     navigationService = NavigationService(authService, localeStorageService);
   }
 

@@ -39,7 +39,7 @@ abstract class CardActivity extends StatelessWidget {
     return _CardActivity(
       onTap: () => _onTap(context, onFinish, ActivityId.thoughtDiaryActivityId),
       alignment: Alignment.bottomRight,
-      imagePath: 'card_how_do_you_feel.png',
+      imagePath: 'thougth_diary_card.png',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

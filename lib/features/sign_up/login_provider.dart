@@ -25,7 +25,7 @@ class LoginProvider extends ChangeNotifier {
     String password =
         (form.questions.firstWhere((element) => element.title == 'password') as FreeTextQuestion).value ?? '';
     try {
-      authService.signInWithEmailAndPassword(email: email.trim(), password: password);
+      await authService.signInWithEmailAndPassword(email: email.trim(), password: password);
       _isLoading = true;
       notifyListeners();
       User? user = authService.user;
@@ -37,6 +37,7 @@ class LoginProvider extends ChangeNotifier {
       switch (e) {
         case AuthError.wrongPassword:
         case AuthError.invalidCredential:
+        case AuthError.userNotFound:
           throw Exception(
               'Estas credenciales son invalidas, porfavor comprueve que los campos sean correctos -miss translation');
         case AuthError.invalidEmail:

@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: infrastructureSetup.getProviders(context),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: translate('app_name'),
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,

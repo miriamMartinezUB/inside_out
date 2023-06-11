@@ -44,94 +44,102 @@ class HomePage extends StatelessWidget {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingLarge),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: Dimens.paddingXLarge),
-                      Row(
-                        children: [
-                          Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: Dimens.paddingXLarge),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingLarge),
                             child: AppText(
                               '${translate('hi')}${homeProvider.name}',
                               type: TextTypes.titleBold,
                               color: paletteColors.primary,
                             ),
                           ),
-                          if (!kIsWeb)
-                            AppSettingsButton(
-                              color: paletteColors.primary,
-                            )
-                        ],
-                      ),
-                      const SizedBox(height: Dimens.paddingXLarge),
-                      CardActivity.howDoYouFeel(
-                        context,
-                        (activityAnswer) => homeProvider.onFinishThoughtDiary(activityAnswer),
-                      ),
-                      const SizedBox(height: Dimens.paddingLarge),
-                      const AppDivider(),
-                      const SizedBox(height: Dimens.paddingLarge),
-                      AppText(
-                        translate('activities_title'),
-                        type: TextTypes.subtitleBold,
-                        color: paletteColors.primary,
-                      ),
-                      StreamBuilder<List<TemporaryActivity>>(
-                          stream: homeProvider.activities$,
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return const CircularProgress();
-                            }
-                            if (snapshot.data!.isEmpty) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: Dimens.paddingLarge),
-                                  AppText(
-                                    translate('no_activities_text'),
-                                    color: paletteColors.textSubtitle,
-                                    type: TextTypes.bodyLight,
-                                  ),
-                                ],
-                              );
-                            }
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              primary: false,
-                              padding: const EdgeInsets.symmetric(vertical: Dimens.paddingLarge),
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                TemporaryActivity activity = snapshot.data![index];
-                                late CardActivity card;
-                                if (activity is ForgivenessDietActivity) {
-                                  card = CardActivity.forgivenessDiet(
-                                    day: activity.currentDay,
-                                    done: activity.isDone,
-                                    context: context,
-                                    onFinish: (activityAnswer) => homeProvider.onFinishForgiveness(
-                                        activityAnswer, activity.reason ?? '', activity),
-                                    reason: activity.reason,
-                                  );
-                                } else {
-                                  card = CardActivity.prioritisationPrinciples(
-                                    done: activity.isDone,
-                                    context: context,
-                                    onFinish: (activityAnswer) =>
-                                        homeProvider.onFinishPrioritisationPrinciples(activityAnswer, activity),
+                        ),
+                        if (!kIsWeb)
+                          AppSettingsButton(
+                            color: paletteColors.primary,
+                          )
+                      ],
+                    ),
+                    const SizedBox(height: Dimens.paddingXLarge),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingLarge),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CardActivity.howDoYouFeel(
+                            context,
+                            (activityAnswer) => homeProvider.onFinishThoughtDiary(activityAnswer),
+                          ),
+                          const SizedBox(height: Dimens.paddingLarge),
+                          const AppDivider(),
+                          const SizedBox(height: Dimens.paddingLarge),
+                          AppText(
+                            translate('activities_title'),
+                            type: TextTypes.subtitleBold,
+                            color: paletteColors.primary,
+                          ),
+                          StreamBuilder<List<TemporaryActivity>>(
+                              stream: homeProvider.activities$,
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return const CircularProgress();
+                                }
+                                if (snapshot.data!.isEmpty) {
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: Dimens.paddingLarge),
+                                      AppText(
+                                        translate('no_activities_text'),
+                                        color: paletteColors.textSubtitle,
+                                        type: TextTypes.bodyLight,
+                                      ),
+                                    ],
                                   );
                                 }
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom: index == snapshot.data!.length - 1 ? 0 : Dimens.paddingLarge),
-                                  child: card,
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  primary: false,
+                                  padding: const EdgeInsets.symmetric(vertical: Dimens.paddingLarge),
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    TemporaryActivity activity = snapshot.data![index];
+                                    late CardActivity card;
+                                    if (activity is ForgivenessDietActivity) {
+                                      card = CardActivity.forgivenessDiet(
+                                        day: activity.currentDay,
+                                        done: activity.isDone,
+                                        context: context,
+                                        onFinish: (activityAnswer) => homeProvider.onFinishForgiveness(
+                                            activityAnswer, activity.reason ?? '', activity),
+                                        reason: activity.reason,
+                                      );
+                                    } else {
+                                      card = CardActivity.prioritisationPrinciples(
+                                        done: activity.isDone,
+                                        context: context,
+                                        onFinish: (activityAnswer) =>
+                                            homeProvider.onFinishPrioritisationPrinciples(activityAnswer, activity),
+                                      );
+                                    }
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                          bottom: index == snapshot.data!.length - 1 ? 0 : Dimens.paddingLarge),
+                                      child: card,
+                                    );
+                                  },
                                 );
-                              },
-                            );
-                          }),
-                    ],
-                  ),
+                              }),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

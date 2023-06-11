@@ -16,6 +16,8 @@ class NavigationService {
 
   String get currentRoute => _navigationStack.last;
 
+  bool get canGoBack => _navigationStack.length > 1;
+
   Future<dynamic> navigateTo(String routeName, {dynamic arguments}) {
     _navigationStack.add(routeName);
     return navigatorKey.currentState!.pushNamed(routeName, arguments: arguments);

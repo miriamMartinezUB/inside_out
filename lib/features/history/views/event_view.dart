@@ -41,6 +41,7 @@ class CardEventView extends StatelessWidget {
       child = Column(
         children: [
           ListSectionView(title: 'principles_list', items: (event as EventPrioritisingPrinciples).principles),
+          const SizedBox(height: Dimens.paddingMedium),
           ListSectionView(title: 'values_list', items: (event as EventPrioritisingPrinciples).values),
         ],
       );

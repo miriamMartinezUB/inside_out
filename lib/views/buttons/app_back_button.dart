@@ -15,17 +15,20 @@ class AppBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      child: Icon(
-        Icons.arrow_back_ios,
-        color: color ?? Provider.of<ThemeService>(context).paletteColors.icons,
-      ),
-      onTap: () {
-        if (onPop == null) {
-          Provider.of<NavigationService>(context, listen: false).goBack();
-        }
-        onPop?.call();
-      },
-    );
+    final NavigationService navigationService = Provider.of<NavigationService>(context, listen: false);
+    return navigationService.canGoBack
+        ? InkWell(
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: color ?? Provider.of<ThemeService>(context).paletteColors.icons,
+            ),
+            onTap: () {
+              if (onPop == null) {
+                navigationService.goBack();
+              }
+              onPop?.call();
+            },
+          )
+        : Container();
   }
 }

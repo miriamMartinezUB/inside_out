@@ -57,7 +57,6 @@ class StructureQuestionView extends StatelessWidget {
             type: TextTypes.smallBodyLight,
           ),
         ],
-        const SizedBox(height: Dimens.paddingLarge),
         if (question is InformationQuestion) ...[
           if ((question as InformationQuestion).imagePath != null) ...[
             const SizedBox(height: Dimens.paddingXLarge),
@@ -75,8 +74,8 @@ class StructureQuestionView extends StatelessWidget {
             const SizedBox(height: Dimens.paddingLarge),
             SimpleTextView(
               (question as InformationQuestion).content!,
-              textTypeTitle: TextTypes.body,
-              textTypeContent: TextTypes.smallBodyLight,
+              textTypeTitle: TextTypes.title,
+              textTypeContent: TextTypes.bodyLight,
             ),
           ],
         ],

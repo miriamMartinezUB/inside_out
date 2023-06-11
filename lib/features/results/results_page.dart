@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/features/results/results_provider.dart';
 import 'package:inside_out/features/results/views/carrousel_content_view.dart';
 import 'package:inside_out/infrastructure/firebase/firebase_service.dart';
@@ -32,7 +33,7 @@ class ResultsPage extends StatelessWidget {
           return PageWrapper(
             showAppBar: kIsWeb,
             isMainPage: true,
-            appBarName: kIsWeb ? 'results' : null,
+            appBarName: kIsWeb ? translate('results') : null,
             onPop: () {
               if (kIsWeb) {
                 navigationService.goBack();
@@ -41,10 +42,11 @@ class ResultsPage extends StatelessWidget {
             },
             body: Column(
               children: [
-                const WaveShapeAppBar(
-                  title: 'Results',
-                  imagePath: 'descubre_mas.png',
-                ),
+                if (!kIsWeb)
+                  const WaveShapeAppBar(
+                    title: 'Results',
+                    imagePath: 'results_image.png',
+                  ),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(

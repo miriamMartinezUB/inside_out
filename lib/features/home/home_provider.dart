@@ -31,13 +31,15 @@ class HomeProvider extends ChangeNotifier {
 
   String get name => _user.firstName;
 
-  Stream<List<TemporaryActivity>> get activities$ => _temporaryActivitiesStorage.all$.distinct().map(
-        (event) => event
+  Stream<List<TemporaryActivity>> get activities$ => _temporaryActivitiesStorage.all$.distinct().map((event) {
+        List<TemporaryActivity> results = event
             .where((element) =>
                 isSameDay(element.dateTime, DateTime.now()) ||
                 (element.dateTime.isBefore(DateTime.now()) && !element.isDone))
-            .toList(),
-      );
+            .toList();
+        results.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+        return results;
+      });
 
   Future<void> onFinishThoughtDiary(ActivityAnswer activityAnswer) async {
     final ThoughtDiaryActivityService service = ThoughtDiaryActivityService(

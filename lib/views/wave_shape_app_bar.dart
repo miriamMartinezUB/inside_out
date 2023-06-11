@@ -56,10 +56,7 @@ class WaveShapeAppBar extends StatelessWidget {
                 if (isMainPage)
                   const Align(
                     alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimens.paddingLarge),
-                      child: AppSettingsButton(),
-                    ),
+                    child: AppSettingsButton(),
                   ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -86,7 +83,8 @@ class WaveShapeAppBar extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingBase),
+          padding: EdgeInsets.symmetric(
+              horizontal: imagePath == 'information_image.png' ? Dimens.paddingXLarge : Dimens.paddingBase),
           child: ImageView(
             imagePath,
             height: Dimens.iconXLarge,

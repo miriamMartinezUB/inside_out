@@ -56,12 +56,12 @@ class ResultsProvider extends ChangeNotifier {
       items: [
         if (user.principles != null && user.principles!.isNotEmpty)
           CarrouselContentItem(
-            title: 'principles',
+            title: 'principles_list',
             sections: user.principles!.map((principle) => SimpleText(text: principle)).toList(),
           ),
         if (user.values != null && user.values!.isNotEmpty)
           CarrouselContentItem(
-            title: 'values',
+            title: 'values_list',
             sections: user.values!.map((value) => SimpleText(text: value)).toList(),
           ),
       ],
@@ -106,11 +106,10 @@ class ResultsProvider extends ChangeNotifier {
     List<Objectives> listObjectives = (await _objectivesStorage.all);
     if (listObjectives.isEmpty) return null;
     Objectives objectives = listObjectives.first;
-    if (objectives.thingsToChange == null ||
-        objectives.thingsToChange!.isEmpty && objectives.thingsToLearn == null ||
-        objectives.thingsToLearn!.isEmpty && objectives.thingsToKeep == null ||
-        objectives.thingsToKeep!.isEmpty && objectives.thingsToPrevent == null ||
-        objectives.thingsToPrevent!.isEmpty) return null;
+    if (objectives.thingsToChange == null &&
+        objectives.thingsToLearn == null &&
+        objectives.thingsToKeep == null &&
+        objectives.thingsToPrevent == null) return null;
     List<CarrouselContentItem> items = [];
     for (CarrouselContentItem item in objectivesGridStatic.items) {
       late List list;

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.miriam.inside_out">
    <application
-        android:label="inside_out"
+        android:label="Inside Out"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

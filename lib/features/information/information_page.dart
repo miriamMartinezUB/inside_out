@@ -33,10 +33,11 @@ class InformationPage extends StatelessWidget {
       },
       body: Column(
         children: [
-          const WaveShapeAppBar(
-            title: 'Descubre más miss translation',
-            imagePath: 'descubre_mas.png',
-          ),
+          if (!kIsWeb)
+            WaveShapeAppBar(
+              title: translate('information'),
+              imagePath: 'information_image.png',
+            ),
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,

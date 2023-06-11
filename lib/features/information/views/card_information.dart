@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/palette_colors.dart';
@@ -61,7 +62,7 @@ class CardInformation extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomLeft,
               child: AppText(
-                title,
+                translate(title),
                 color: isPrimary ? paletteColors.textButton : paletteColors.text,
                 type: isPrimary ? TextTypes.body : TextTypes.smallBodyMedium,
               ),

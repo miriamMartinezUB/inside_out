@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/features/common/form/form_builder_view.dart';
 import 'package:inside_out/features/sign_up/sign_up_provider.dart';
 import 'package:inside_out/infrastructure/auth_service.dart';
@@ -8,6 +9,7 @@ import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/dimens.dart';
 import 'package:inside_out/resources/form_id.dart';
 import 'package:inside_out/resources/routes.dart';
+import 'package:inside_out/utils/exception_text.dart';
 import 'package:inside_out/views/buttons/app_back_button.dart';
 import 'package:inside_out/views/image_view.dart';
 import 'package:inside_out/views/page_wrapper/page_wrapper.dart';
@@ -55,7 +57,10 @@ class SignUpPage extends StatelessWidget {
                       await signUpProvider.signUp(form);
                       navigationService.navigateTo(Routes.home);
                     } catch (e) {
-                      ShowMyDialog(title: 'Error - miss translation', text: e.toString()).show(context);
+                      ShowMyDialog(
+                        title: 'Error - miss translation',
+                        text: translate(ExceptionText(e.toString()).getMessage()),
+                      ).show(context);
                     }
                   },
                 ),
