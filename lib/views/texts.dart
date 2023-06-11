@@ -46,7 +46,7 @@ class AppText extends StatelessWidget {
       textAlign: align,
       stylizedTextColor: paletteColors.primary,
       color: color ?? _getColor(paletteColors, type: type),
-      fontFamily: 'Barlow',
+      fontFamily: 'Montserrat',
     );
   }
 }
