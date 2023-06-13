@@ -79,7 +79,8 @@ class StructureQuestionView extends StatelessWidget {
             ),
           ],
         ],
-        if (question is FreeTextQuestion)
+        if (question is FreeTextQuestion) ...[
+          const SizedBox(height: Dimens.paddingLarge),
           FreeTextQuestionView(
             initialText: (question as FreeTextQuestion).value,
             hint: (question as FreeTextQuestion).hint,
@@ -91,28 +92,37 @@ class StructureQuestionView extends StatelessWidget {
             canCopyAndPaste: (question as FreeTextQuestion).canCopyAndPaste,
             onChanged: onChange,
           ),
-        if (question is SingleSelectionQuestion)
+        ],
+        if (question is SingleSelectionQuestion) ...[
+          const SizedBox(height: Dimens.paddingLarge),
           SingleSelectQuestionView(
             values: (question as SingleSelectionQuestion).values,
             initialValue: (question as SingleSelectionQuestion).selectedValue,
             onChange: onChange,
           ),
-        if (question is CheckBoxQuestion)
+        ],
+        if (question is CheckBoxQuestion) ...[
+          const SizedBox(height: Dimens.paddingLarge),
           CheckBoxQuestionView(
             values: (question as CheckBoxQuestion).values!,
             valuesSelected: (question as CheckBoxQuestion).selectedValues ?? [],
             onChange: onChange,
           ),
-        if (question is CarrouselQuestion)
+        ],
+        if (question is CarrouselQuestion) ...[
+          const SizedBox(height: Dimens.paddingLarge),
           CarrouselQuestionView(
             items: (question as CarrouselQuestion).items,
             onChange: onChange,
           ),
-        if (question is PrioritisationListQuestion)
+        ],
+        if (question is PrioritisationListQuestion) ...[
+          const SizedBox(height: Dimens.paddingLarge),
           PrioritisationListView(
             values: (question as PrioritisationListQuestion).values ?? [],
             onChange: onChange,
           ),
+        ],
       ],
     );
   }

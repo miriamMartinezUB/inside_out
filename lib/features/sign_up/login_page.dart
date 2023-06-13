@@ -63,7 +63,7 @@ class LoginPage extends StatelessWidget {
                                 await loginProvider.logIn(form);
                               } catch (e) {
                                 ShowMyDialog(
-                                  title: 'Error - miss translation',
+                                  title: translate('error'),
                                   text: translate(ExceptionText(e.toString()).getMessage()),
                                 ).show(context);
                               }

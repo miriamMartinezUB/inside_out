@@ -20,7 +20,8 @@ class InformationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<InformationContent> informationContent = Database().content;
     final NavigationService navigationService = Provider.of<NavigationService>(context);
-
+    final double width = MediaQuery.of(context).size.width;
+    print(width);
     return PageWrapper(
       showAppBar: kIsWeb,
       isMainPage: true,
@@ -65,7 +66,7 @@ class InformationPage extends StatelessWidget {
                       mainAxisSpacing: Dimens.paddingMedium,
                       //  or aspect ratio
                       shrinkWrap: true,
-                      crossAxisCount: kIsWeb ? 5 : 2,
+                      crossAxisCount: width ~/ 196,
                       children: List.generate(
                         content.cards.length,
                         (indexCard) {

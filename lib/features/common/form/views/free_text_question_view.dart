@@ -62,6 +62,7 @@ class _FreeTextQuestionViewState extends State<FreeTextQuestionView> {
       enableInteractiveSelection: widget.canCopyAndPaste,
       controller: _controller,
       style: style,
+      scrollPhysics: const BouncingScrollPhysics(),
       maxLines: widget.isLong ? widget.minLines ?? 5 : 1,
       cursorColor: paletteColors.active,
       obscureText: isObscureText,

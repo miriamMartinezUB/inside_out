@@ -58,7 +58,7 @@ class SignUpPage extends StatelessWidget {
                       navigationService.navigateTo(Routes.home);
                     } catch (e) {
                       ShowMyDialog(
-                        title: 'Error - miss translation',
+                        title: translate('error'),
                         text: translate(ExceptionText(e.toString()).getMessage()),
                       ).show(context);
                     }

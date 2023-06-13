@@ -11,5 +11,6 @@ class ForgotPasswordProvider extends ChangeNotifier {
   Future<void> recoverPassword(AppForm form) async {
     String email = (form.questions.firstWhere((element) => element.title == 'email') as FreeTextQuestion).value ?? '';
     await authService.recoverPassword(email.trim());
+    //TODO tratar excepciones invalid email
   }
 }

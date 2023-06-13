@@ -204,12 +204,80 @@ class ActivitiesDataFiller {
         ActivityStep(
           form: AppForm(
             id: const Uuid().v4(),
-            actionText: 'finish',
+            actionText: 'next',
             questions: [
               InformationQuestion(
                 id: const Uuid().v4(),
                 content: [
                   SimpleText(text: 'anger_text'),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
+            actionText: 'next',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(
+                    text: 'anger_text2',
+                    bulletPoints: [
+                      BulletPoint('anger_text2_bulletPoint'),
+                      BulletPoint('anger_text2_bulletPoint2'),
+                      BulletPoint('anger_text2_bulletPoint3'),
+                      BulletPoint('anger_text2_bulletPoint4'),
+                      BulletPoint('anger_text2_bulletPoint5'),
+                      BulletPoint('anger_text2_bulletPoint6'),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
+            actionText: 'next',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(
+                    text: 'anger_text3',
+                    bulletPoints: [
+                      BulletPoint('anger_text3_bulletPoint'),
+                      BulletPoint('anger_text3_bulletPoint2'),
+                      BulletPoint('anger_text3_bulletPoint3'),
+                      BulletPoint('anger_text3_bulletPoint4'),
+                      BulletPoint('anger_text3_bulletPoint5'),
+                      BulletPoint('anger_text3_bulletPoint6'),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
+            actionText: 'finish',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(
+                    text: 'anger_text4',
+                    bulletPoints: [
+                      BulletPoint('anger_text4_bulletPoint'),
+                      BulletPoint('anger_text4_bulletPoint2'),
+                    ],
+                  ),
                 ],
               ),
             ],
@@ -225,12 +293,75 @@ class ActivitiesDataFiller {
         ActivityStep(
           form: AppForm(
             id: const Uuid().v4(),
-            actionText: 'finish',
+            actionText: 'next',
             questions: [
               InformationQuestion(
                 id: const Uuid().v4(),
                 content: [
                   SimpleText(text: 'sadness_text'),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
+            actionText: 'next',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(
+                    text: 'sadness_text2',
+                    bulletPoints: [
+                      BulletPoint('sadness_text2_bulletPoint'),
+                      BulletPoint('sadness_text2_bulletPoint2'),
+                      BulletPoint('sadness_text2_bulletPoint3'),
+                      BulletPoint('sadness_text2_bulletPoint4'),
+                      BulletPoint('sadness_text2_bulletPoint5'),
+                      BulletPoint('sadness_text2_bulletPoint6'),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
+            actionText: 'next',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(
+                    text: 'sadness_text3',
+                    bulletPoints: [
+                      BulletPoint('sadness_text3_bulletPoint'),
+                      BulletPoint('sadness_text3_bulletPoint2'),
+                      BulletPoint('sadness_text3_bulletPoint3'),
+                      BulletPoint('sadness_text3_bulletPoint4'),
+                      BulletPoint('sadness_text3_bulletPoint5'),
+                      BulletPoint('sadness_text3_bulletPoint6'),
+                      BulletPoint('sadness_text3_bulletPoint7'),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
+            actionText: 'finish',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(text: 'sadness_text4'),
                 ],
               ),
             ],
@@ -246,12 +377,74 @@ class ActivitiesDataFiller {
         ActivityStep(
           form: AppForm(
             id: const Uuid().v4(),
-            actionText: 'finish',
+            actionText: 'next',
             questions: [
               InformationQuestion(
                 id: const Uuid().v4(),
                 content: [
                   SimpleText(text: 'fear_text'),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
+            actionText: 'next',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(
+                    text: 'fear_text2',
+                    bulletPoints: [
+                      BulletPoint('fear_text2_bulletPoint'),
+                      BulletPoint('fear_text2_bulletPoint2'),
+                      BulletPoint('fear_text2_bulletPoint3'),
+                      BulletPoint('fear_text2_bulletPoint4'),
+                      BulletPoint('fear_text2_bulletPoint5'),
+                      BulletPoint('fear_text2_bulletPoint6'),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
+            actionText: 'next',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(
+                    text: 'fear_text3',
+                    bulletPoints: [
+                      BulletPoint('fear_text3_bulletPoint'),
+                      BulletPoint('fear_text3_bulletPoint2'),
+                      BulletPoint('fear_text3_bulletPoint3'),
+                      BulletPoint('fear_text3_bulletPoint4'),
+                      BulletPoint('fear_text3_bulletPoint5'),
+                      BulletPoint('fear_text3_bulletPoint6'),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
+            actionText: 'finish',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(text: 'fear_text4'),
                 ],
               ),
             ],
@@ -267,12 +460,61 @@ class ActivitiesDataFiller {
         ActivityStep(
           form: AppForm(
             id: const Uuid().v4(),
+            actionText: 'next',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(text: 'happiness_text'),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
+            actionText: 'next',
+            questions: [
+              InformationQuestion(
+                id: const Uuid().v4(),
+                content: [
+                  SimpleText(
+                    text: 'happiness_text2',
+                    bulletPoints: [
+                      BulletPoint('happiness_text2_bulletPoint'),
+                      BulletPoint('happiness_text2_bulletPoint2'),
+                      BulletPoint('happiness_text2_bulletPoint3'),
+                      BulletPoint('happiness_text2_bulletPoint4'),
+                      BulletPoint('happiness_text2_bulletPoint5'),
+                      BulletPoint('happiness_text2_bulletPoint6'),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ActivityStep(
+          form: AppForm(
+            id: const Uuid().v4(),
             actionText: 'finish',
             questions: [
               InformationQuestion(
                 id: const Uuid().v4(),
                 content: [
-                  SimpleText(text: 'hapiness_text'),
+                  SimpleText(
+                    text: 'happiness_text2',
+                    bulletPoints: [
+                      BulletPoint('happiness_text3_bulletPoint'),
+                      BulletPoint('happiness_text3_bulletPoint2'),
+                      BulletPoint('happiness_text3_bulletPoint3'),
+                      BulletPoint('happiness_text3_bulletPoint4'),
+                      BulletPoint('happiness_text3_bulletPoint5'),
+                      BulletPoint('happiness_text3_bulletPoint6'),
+                      BulletPoint('happiness_text3_bulletPoint7'),
+                    ],
+                  ),
                 ],
               ),
             ],

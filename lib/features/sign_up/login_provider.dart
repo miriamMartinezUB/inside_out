@@ -38,12 +38,11 @@ class LoginProvider extends ChangeNotifier {
         case AuthError.wrongPassword:
         case AuthError.invalidCredential:
         case AuthError.userNotFound:
-          throw Exception(
-              'Estas credenciales son invalidas, porfavor comprueve que los campos sean correctos -miss translation');
+          throw Exception('exception_invalid_credential');
         case AuthError.invalidEmail:
-          throw Exception('Este email es invalido, porfavor comprueve que este bien escrito -miss translation');
+          throw Exception('exception_invalid_email');
         case AuthError.emptyFields:
-          throw Exception('Los campos obligatorios no pueden estar vacios -miss translation');
+          throw Exception('exception_empty_fields');
       }
     }
   }

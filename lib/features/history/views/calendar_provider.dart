@@ -55,24 +55,26 @@ class CalendarProvider extends ChangeNotifier {
   }
 
   Future<void> _getEvents() async {
-    List<Event> events = await _eventsStorage.all;
-    List<DateTime> days = [];
-    DateTime startDay = _firstDay;
-    if (isSameDay(startDay, _today)) {
-      days.add(startDay);
-    } else {
-      while (!isSameDay(startDay, _today)) {
+    _eventsStorage.all$.listen((events) {
+      List<DateTime> days = [];
+      DateTime startDay = _firstDay;
+      if (isSameDay(startDay, _today)) {
         days.add(startDay);
-        startDay = startDay.add(const Duration(days: 1));
+      } else {
+        while (!isSameDay(startDay, _today)) {
+          days.add(startDay);
+          startDay = startDay.add(const Duration(days: 1));
+        }
+        days.add(_today);
       }
-    }
-    _events = LinkedHashMap<DateTime, List<Event>>(
-      equals: isSameDay,
-      hashCode: _getHashCode,
-    )..addAll({for (DateTime day in days) day: events.where((element) => isSameDay(day, element.dateTime)).toList()});
-    selectedEvents = getEventsForDay(selectedDay);
-    loading = false;
-    notifyListeners();
+      _events = LinkedHashMap<DateTime, List<Event>>(
+        equals: isSameDay,
+        hashCode: _getHashCode,
+      )..addAll({for (DateTime day in days) day: events.where((element) => isSameDay(day, element.dateTime)).toList()});
+      selectedEvents = getEventsForDay(selectedDay);
+      loading = false;
+      notifyListeners();
+    });
   }
 
   List<Event> getEventsForDay(DateTime day) {

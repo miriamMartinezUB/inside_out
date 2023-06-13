@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:inside_out/infrastructure/navigation/navigation_service.dart';
 import 'package:inside_out/infrastructure/theme_service.dart';
 import 'package:inside_out/resources/palette_colors.dart';
@@ -62,7 +63,7 @@ class ShowMyDialog {
     for (ContentAction contentAction in actions) {
       result.add(
         AppTextButton(
-          text: contentAction.textAction,
+          text: translate(contentAction.textAction),
           onTap: contentAction.onPress,
           color: contentAction.color ?? _colorActions,
         ),

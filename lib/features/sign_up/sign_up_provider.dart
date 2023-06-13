@@ -35,16 +35,15 @@ class SignUpProvider extends ChangeNotifier {
     } catch (e) {
       switch (e) {
         case AuthError.emailAlreadyInUse:
-          throw Exception('Este email ya se encuentra en uso -miss translation');
+          throw Exception('exception_email_already_in_use');
         case AuthError.passwordNotEquals:
-          throw Exception('Las constraseñas no coinciden -miss translation');
+          throw Exception('exception_password_not_equals');
         case AuthError.invalidEmail:
-          throw Exception('Este email es invalido, porfavor comprueve que este bien escrito -miss translation');
+          throw Exception('exception_invalid_email');
         case AuthError.weakPassword:
-          throw Exception(
-              'La seguridd de la contraseña es muy debil pruebe con una que contenga minimo una mayuscula, una minuscula, un numero y un caracter -miss translation');
+          throw Exception('exception_weak_password');
         case AuthError.emptyFields:
-          throw Exception('Los campos obligatorios no pueden estar vacios -miss translation');
+          throw Exception('exception_empty_fields');
       }
     }
   }

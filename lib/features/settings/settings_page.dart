@@ -100,8 +100,8 @@ class SettingsPage extends StatelessWidget {
                             icon: Icons.delete,
                             onTap: () {
                               ShowMyDialog(
-                                  title: '¿Estas seguro que quieres eliminar tu cuenta? - miss translation',
-                                  text: 'Se eliminaran todos tus datos si continus - miss translation',
+                                  title: translate('remove_account_model_title'),
+                                  text: translate('remove_account_model_text'),
                                   actions: [
                                     ContentAction(
                                       textAction: 'accept',

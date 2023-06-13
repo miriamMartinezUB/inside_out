@@ -83,10 +83,13 @@ class BulletPoints extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText(
-              translate(bulletPoints[index].text),
-              align: textAlign,
-              type: textType,
+            Padding(
+              padding: EdgeInsets.only(top: index == 0 ? 0 : Dimens.paddingMedium),
+              child: AppText(
+                translate(bulletPoints[index].text),
+                align: textAlign,
+                type: textType,
+              ),
             ),
             if (bulletPoints[index].children != null && bulletPoints[index].children!.isNotEmpty)
               Padding(

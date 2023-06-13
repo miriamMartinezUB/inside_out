@@ -6,7 +6,7 @@ class ActivityId {
   static const String primaryEmotionsActivityId = '27dfb80f-1ce9-415b-9010-b0c714344e87';
   static const String angerActivityId = '80349c37-b9bc-4b94-8b73-30c350f160bb';
   static const String sadnessActivityId = 'a70fcd3e-1a02-4cbc-8815-383024d5d5a5';
-  static const String fearActivityId = '0e65daca-f5ab-4e15-9318-b14425be1cb7';
+  static const String fearActivityId = 'baacf16d-3443-441a-9896-d2f667ec4501';
   static const String happinessActivityId = '0e65daca-f5ab-4e15-9318-b14425be1cb7';
 }
 
